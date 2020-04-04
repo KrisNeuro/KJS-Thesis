@@ -12,10 +12,10 @@
 
 Rushmore1 = 	   	[225 189 109;  234 190 148;  11 119 94;  53 39 74;  242 48 15]/255;
   maleblue = Rushmore1(3,:); %dark teal green
-  fempurp = Rushmore1(4,:); %deep purple
+  propurp = Rushmore1(4,:); %deep purple
 
 GrandBudapest2 = 	[230 160 196;  198 205 247;  216 164 153;  114 148 212]/255;
-  %fempurp = GrandBudapest2(3,:);
+  %propurp = GrandBudapest2(3,:);
   %maleblue = GrandBudapest2(4,:);
   %maleblue = [2 64 27]/255; % Cavalcanti1(2)
   digreen = GrandBudapest2(4,:);
@@ -25,7 +25,7 @@ GrandBudapest2 = 	[230 160 196;  198 205 247;  216 164 153;  114 148 212]/255;
 
 Moonrise3 =    		[133 212 227;  244 181 189;  156 150 74;  205 192 140; 250 215 123]/255; % don’t use 1&4 together
   maleblue = Moonrise3(1,:);
-  fempurp = Moonrise3(3,:); 
+  propurp = Moonrise3(3,:); 
   %propurp = Moonrise3(2,:); %baby pink :\
   %digreen = Moonrise3(3,:);
   %estyel = Moonrise3(5,:);
