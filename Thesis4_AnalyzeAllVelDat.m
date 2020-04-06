@@ -14,7 +14,7 @@
 %       6. Z-score R^2 data (theta, gamma, delta)
 % 
 %   Calls on:
-%       - ThetaPhaseLagdH.m
+%       - ThetaPhaseLagdH2.m
 %       - Format4Bootstrap_thetaphaselagdH.m
 %       - BandPowerCrossCorr.m
 %       - regoutliers.m   (https://www.mathworks.com/matlabcentral/fileexchange/37212-regression-outliers)
@@ -39,7 +39,7 @@ if license == "731138"
     addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\m\sandbox')
 else
     root_drIn = [uigetdir(pwd,'Select root ReducedEEG data directory') filesep];
-    if ~exist('ThetaPhaseLagdH.m','file') || ~exist('Format4Bootstrap_thetaphaselagdH.m','file') || ~exist('BandPowerCrossCorr.m','file') || ~exist('Format4Bootstrap_Rsq.m','file')
+    if ~exist('ThetaPhaseLagdH2.m','file') || ~exist('Format4Bootstrap_thetaphaselagdH.m','file') || ~exist('BandPowerCrossCorr.m','file') || ~exist('Format4Bootstrap_Rsq.m','file')
         addpath(uigetdir(pwd,'Select file path containing ThetaPhaseLagdH, Format4Bootstrap_thetaphaselagdH, & BandPowerCrossCorr')); end
     if ~exist('mtcsg.m','file')
         addpath(uigetdir(pwd,'Select file path containing mtcsg.m')); end
@@ -122,17 +122,15 @@ clear si g sos drIn Fs
 disp('Theta filtfilt complete!')
 
 %% 2. Theta Phase Lag analysis 
- % See: ThetaPhaseLagdH.m
+ % See: ThetaPhaseLagdH2.m
 disp('Beginning Theta phase lag analysis: threshold by dHPC theta power')
 for ai = 1:length(arenas)
     rt = arenas{ai};
     drIn = [root_drIn rt filesep];
-%     [ILDH,ILVH,ILPL,DHVH,DHPL,VHPL,dthresh,dat_pct] = ThetaPhaseLagdH(subjs,drIn);
     [ILDH,ILVH,ILPL,DHVH,DHPL,VHPL,dthresh,dat_pct] = ThetaPhaseLagdH2(subjs,drIn);
     
     % Save the data  (large file - contains all subjs)
     disp('Saving theta phase lag data...')
-%     fn = ['ThetaPhaseLags-' rt '-AllSpeeds-dHthresh.mat'];
     fn = ['ThetaPhaseLags2-' rt '-AllSpeeds-dHthresh.mat'];
     save([drIn fn],'dat_pct','DHPL','DHVH','dthresh','ILDH','ILPL','ILVH','root_drIn','subjs','VHPL','-v7.3')
     disp('Saved!')
@@ -144,7 +142,6 @@ clear ai
  % See: Format4Bootstrap_thetaphaselagdH.m
 
 disp('Loading theta phase lag data..')
-% fn = 'ThetaPhaseLags-BL-AllSpeeds-dHthresh.mat'; %file name to load (generated above in #2.)
 fn = 'ThetaPhaseLags2-BL-AllSpeeds-dHthresh.mat'; %file name to load (generated above in #2.)
 load([root_drIn 'BL' filesep fn],'ILDH','ILVH','ILPL','DHVH','DHPL','VHPL')
 clear fn
@@ -158,7 +155,6 @@ disp('Format4Bootstrap_ThetaPhaseLag complete.')
 clear ILDH ILVH ILPL DHVH DHPL VHPL
  
 % Save the data: Male and Female data
-% fn = 'ThetaPhaseLag-dHthresh-BL_boot.mat';
 fn = 'ThetaPhaseLag2-dHthresh-BL_boot.mat';
 save([root_drIn 'BL' filesep fn],'F*','M*','-v7.3')
 disp('Data saved: Theta phaselag, bootstrap format')
@@ -218,47 +214,47 @@ clear drIn
 
 
 %% 6. Zscore R^2 data (theta, gamma, delta)
- % See: ZscoreRsq_boot2.m                                                     **MAY NEED EDITS**
-% 
-%  % Theta
-%  load([root_drIn 'BL' filesep 'ThetaRsq-BL_boot.mat'],'M_*','F_ILDH','F_ILVH','F_ILPL','F_DHVH','F_DHPL','F_VHPL') 
-%  
-% [M_ILDH_z, M_ILVH_z, M_ILPL_z, M_DHVH_z, M_DHPL_z, M_VHPL_z, ...
-%     F_ILDH_z, F_ILVH_z, F_ILPL_z, F_DHVH_z, F_DHPL_z, F_VHPL_z,Z_all] = ...
-%     ZscoreRsq_boot2(M_ILDH, M_ILVH, M_ILPL, M_DHVH, M_DHPL, M_VHPL, ...
-%     F_ILDH, F_ILVH, F_ILPL, F_DHVH, F_DHPL, F_VHPL);
-% 
-%     % Save the data
-%     fn = 'ThetaRsq_z-BL_boot.mat';
-%     save([root_drIn 'BL' filesep fn],'F*','M*','Z_all')
-%     disp('Bootstrap z-scored Theta Rsq data saved!')
-%     clear fn M* F* Z_all
-% 
-%  % Gamma
-%  load([root_drIn 'BL' filesep 'GammaRsq-BL_boot.mat']) 
-% [M_ILDH_z, M_ILVH_z, M_ILPL_z, M_DHVH_z, M_DHPL_z, M_VHPL_z, ...
-%     F_ILDH_z, F_ILVH_z, F_ILPL_z, F_DHVH_z, F_DHPL_z, F_VHPL_z,Z_all] = ...
-%     ZscoreRsq_boot(M_ILDH, M_ILVH, M_ILPL, M_DHVH, M_DHPL, M_VHPL, ...
-%     F_ILDH, F_ILVH, F_ILPL, F_DHVH, F_DHPL, F_VHPL);
-% 
-%     % Save the data
-%     fn = 'GammaRsq_z-BL_boot.mat';
-%     save([root_drIn 'BL' filesep fn],'F*','M*','Z_all')
-%     disp('Bootstrap z-scored Gamma Rsq data saved!')
-%     clear fn M* F* Z_all
-%     
-%  % Delta
-%  load([root_drIn 'BL' filesep 'DeltaRsq-BL_boot.mat']) 
-% [M_ILDH_z, M_ILVH_z, M_ILPL_z, M_DHVH_z, M_DHPL_z, M_VHPL_z, ...
-%     F_ILDH_z, F_ILVH_z, F_ILPL_z, F_DHVH_z, F_DHPL_z, F_VHPL_z,Z_all] = ...
-%     ZscoreRsq_boot(M_ILDH, M_ILVH, M_ILPL, M_DHVH, M_DHPL, M_VHPL, ...
-%     F_ILDH, F_ILVH, F_ILPL, F_DHVH, F_DHPL, F_VHPL); %#ok<*ASGLU>
-% 
-%     % Save the data
-%     fn = 'DeltaRsq_z-BL_boot.mat';
-%     save([root_drIn 'BL' filesep fn],'F*','M*','Z_all')
-%     disp('Bootstrap z-scored Delta Rsq data saved!')
-%     clear fn M* F* Z_all
+ % See: ZscoreRsq_boot2.m 
+
+ % Theta
+load([root_drIn 'BL' filesep 'ThetaRsq-BL_boot.mat'],'M_*','F_ILDH','F_ILVH','F_ILPL','F_DHVH','F_DHPL','F_VHPL') 
+
+[M_ILDH_z, M_ILVH_z, M_ILPL_z, M_DHVH_z, M_DHPL_z, M_VHPL_z, ...
+    F_ILDH_z, F_ILVH_z, F_ILPL_z, F_DHVH_z, F_DHPL_z, F_VHPL_z,Z_all] = ...
+    ZscoreRsq_boot2(M_ILDH, M_ILVH, M_ILPL, M_DHVH, M_DHPL, M_VHPL, ...
+    F_ILDH, F_ILVH, F_ILPL, F_DHVH, F_DHPL, F_VHPL);
+ 
+   % Save the data
+    fn = 'ThetaRsq_z-BL_boot.mat';
+    save([root_drIn 'BL' filesep fn],'F*','M*','Z_all')
+    disp('Bootstrap z-scored Theta Rsq data saved!')
+    clear fn M* F* Z_all
+
+% Gamma
+ load([root_drIn 'BL' filesep 'GammaRsq-BL_boot.mat']) 
+[M_ILDH_z, M_ILVH_z, M_ILPL_z, M_DHVH_z, M_DHPL_z, M_VHPL_z, ...
+    F_ILDH_z, F_ILVH_z, F_ILPL_z, F_DHVH_z, F_DHPL_z, F_VHPL_z,Z_all] = ...
+    ZscoreRsq_boot(M_ILDH, M_ILVH, M_ILPL, M_DHVH, M_DHPL, M_VHPL, ...
+    F_ILDH, F_ILVH, F_ILPL, F_DHVH, F_DHPL, F_VHPL);
+
+    % Save the data
+    fn = 'GammaRsq_z-BL_boot.mat';
+    save([root_drIn 'BL' filesep fn],'F*','M*','Z_all')
+    disp('Bootstrap z-scored Gamma Rsq data saved!')
+    clear fn M* F* Z_all
+    
+ % Delta
+ load([root_drIn 'BL' filesep 'DeltaRsq-BL_boot.mat']) 
+[M_ILDH_z, M_ILVH_z, M_ILPL_z, M_DHVH_z, M_DHPL_z, M_VHPL_z, ...
+    F_ILDH_z, F_ILVH_z, F_ILPL_z, F_DHVH_z, F_DHPL_z, F_VHPL_z,Z_all] = ...
+    ZscoreRsq_boot(M_ILDH, M_ILVH, M_ILPL, M_DHVH, M_DHPL, M_VHPL, ...
+    F_ILDH, F_ILVH, F_ILPL, F_DHVH, F_DHPL, F_VHPL); %#ok<*ASGLU>
+
+    % Save the data
+    fn = 'DeltaRsq_z-BL_boot.mat';
+    save([root_drIn 'BL' filesep fn],'F*','M*','Z_all')
+    disp('Bootstrap z-scored Delta Rsq data saved!')
+    clear fn M* F* Z_all
     
 disp('Thesis4_AnalyzeAllVelDat.m is complete.')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
