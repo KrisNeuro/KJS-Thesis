@@ -1,3 +1,6 @@
+# 0. AddScriptPaths.m
+User selects local directories containing .m scripts.
+
 # 1. Thesis1_ImportPreprocess
 Import &amp; preprocessing steps from NLX -> MAT format.
 
