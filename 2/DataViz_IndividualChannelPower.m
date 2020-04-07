@@ -1,23 +1,19 @@
 %% DataViz: All individual channels from all usable subjects
-% 
-% Calls on:
-%   - BLlistCheck.m
-%   - colorcet
+%
+%   CALLS ON:
+%       - colorcet.m  (source: https://peterkovesi.com/projects/colourmaps/)
 % 
 % KJS init: 2019-12-16, completed 2019-12-17
 % 
 %% Setup
-% Add paths containing code
-addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\m\code') %contains BLlistCheck
-addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\toolboxes') %contains colorcet
-
 subjs = {'A201' 'A202' 'A301' 'A602' 'E105' 'E106' 'E107' 'E108' 'E201'}; % Subject ID listing. A*=male  E*=female
-
-root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\RawEEG\BL\'; %root data input directory
-figdrOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\figs\PowSpec_AllChannels\BL\';
+root_drIn = [uigetdir(pwd,'Select RawEEG\BL data directory') filesep]; %root data input directory
+    %root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\RawEEG\BL\'; 
+figdrOut = [uigetdir(pwd,'Set figure output directory: PowSpec_AllChannels\BL') filesep]; 
+    %figdrOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\figs\PowSpec_AllChannels\BL\';
 
 Fs = 2000; %sampling frequency (Hz)
-window = Fs*0.4;
+window = Fs*0.4; 
 
 %% Loop thru subjects
 for si = 1:length(subjs)
@@ -25,10 +21,14 @@ for si = 1:length(subjs)
     
     % Get list of recordings (BLlist)
     list = dir([root_drIn subjs{si}]);
-    BLlist = BLlistCheck(list);
+    BLlist = {files(contains({files(:).name},'BL')).name}';
     clear list
+    % Remove any non-experimental trials
+    if any(contains(BLlist,"_Rex1")) 
+        BLlist = BLlist(~contains(BLlist,"_Rex1"));
+    end
     
-    % Preallocate space
+    % Preallocate output space
     IL = zeros(200,2,length(BLlist)); %frequencies, channels, recordings
     PL = zeros(200,2,length(BLlist));
     DH = zeros(200,6,length(BLlist));
@@ -47,6 +47,7 @@ for si = 1:length(subjs)
         f = f(i);
         Pxx = Pxx(i,:);
         
+        % **This layout is dependent on headstage mapping!**
         IL(:,:,ri) = Pxx(:,1:2);
         DH(:,:,ri) = Pxx(:,3:8);
         VH(:,:,ri) = Pxx(:,9:14);
@@ -62,7 +63,7 @@ for si = 1:length(subjs)
         l2 = plot(f,10*log10(squeeze(IL(:,2,:))),'r');
         axis square
         box off
-        title('IL')
+        title('mPFC-IL')
         xlabel('Frequency (Hz)');
         ylabel('Power (dB)');
         legend([l1(1) l2(1)],{'Ch.1','Ch.2'})
@@ -74,7 +75,7 @@ for si = 1:length(subjs)
         l2 = plot(f,10*log10(squeeze(PL(:,2,:))),'r');
         axis square
         box off
-        title('PL')
+        title('mPFC-PL')
         xlabel('Frequency (Hz)');
         ylabel('Power (dB)');
         legend([l1(1) l2(1)],{'Ch.15','Ch.16'})
@@ -116,30 +117,32 @@ for si = 1:length(subjs)
         clear l*
 
     %% Save figures
-    saveas(h4,[figdrOut subjs{si} filesep subjs{si} '_AllChan-vHPC.tif'])
+    saveas(h4,[figdrOut subjs{si} filesep subjs{si} '_AllChan-vHPC.png'])
     saveas(h4,[figdrOut subjs{si} filesep subjs{si} '_AllChan-vHPC.fig'])
     close(h4); clear h4
     
-    saveas(h3,[figdrOut subjs{si} filesep subjs{si} '_AllChan-dHPC.tif'])
+    saveas(h3,[figdrOut subjs{si} filesep subjs{si} '_AllChan-dHPC.png'])
     saveas(h3,[figdrOut subjs{si} filesep subjs{si} '_AllChan-dHPC.fig'])
     close(h3); clear h3
     
-    saveas(h2,[figdrOut subjs{si} filesep subjs{si} '_AllChan-PL.tif'])
+    saveas(h2,[figdrOut subjs{si} filesep subjs{si} '_AllChan-PL.png'])
     saveas(h2,[figdrOut subjs{si} filesep subjs{si} '_AllChan-PL.fig'])
     close(h2); clear h2
     
-    saveas(h1,[figdrOut subjs{si} filesep subjs{si} '_AllChan-IL.tif'])
+    saveas(h1,[figdrOut subjs{si} filesep subjs{si} '_AllChan-IL.png'])
     saveas(h1,[figdrOut subjs{si} filesep subjs{si} '_AllChan-IL.fig'])
     close(h1); clear h1
     
     %% Save data
     disp('Saving data..')
-    save(['K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\BL\' subjs{si} filesep 'PowSpecPerChan.mat'],'BLlist','DH','f','Fs','IL','PL','VH')
+    fd = [figdrOut subjs{si} filesep];
+        if ~exist(fd,'dir'); mkdir(fd); end
+    fn = 'PowSpecPerChan.mat'; %file name
+    save([figdrOut fn],'BLlist','DH','f','Fs','IL','PL','VH')
     disp('Data saved!')
     
-    clear IL PL DH VH BLlist f
-end
-    % done on 2019-12-16
+    clear IL PL DH VH BLlist f fn fd
+end %loop subjects
 clear si window Fs
 
 
@@ -148,12 +151,12 @@ clear si window Fs
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Pool all data per brain region (channel regardless)
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subjs = {'A201' 'A202' 'A301' 'A602' 'E105' 'E106' 'E107' 'E108' 'E201'}; % Subject ID listing. A*=male  E*=female
+subjs = {'A201' 'A202' 'A301' 'A602' 'E105' 'E106' 'E107' 'E108' 'E201'}; % Subject ID listing. A*=male  E*=female   (same as above)
 
 %% Setup
 % Init figures
-    h1 = figure('units','normalized','outerposition',[0 0 1 1]); %IL
-    h2 = figure('units','normalized','outerposition',[0 0 1 1]); %PL
+    h1 = figure('units','normalized','outerposition',[0 0 1 1]); %mPFC-IL
+    h2 = figure('units','normalized','outerposition',[0 0 1 1]); %mPFC-PL
     h3 = figure('units','normalized','outerposition',[0 0 1 1]); %dHPC
     h4 = figure('units','normalized','outerposition',[0 0 1 1]); %vHPC
 
@@ -167,18 +170,18 @@ end
 clear si cmap
 
 %% Load & plot first subject's data
-load(['K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\BL\' subjs{1} filesep 'PowSpecPerChan.mat'],'DH','f','IL','PL','VH')
+load([figdrOut subjs{1} filesep 'PowSpecPerChan.mat'],'DH','f','IL','PL','VH')
+%load(['K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\BL\' subjs{1} filesep 'PowSpecPerChan.mat'],'DH','f','IL','PL','VH')
     
-figure(h1) %IL
+figure(h1) %mPFC-IL
 i1 = plot(f,10*log10(squeeze(IL(:,1,:))),'color',map(:,1));
 hold on
 plot(f,10*log10(squeeze(IL(:,2,:))),'color',map(:,1))
 i1 = i1(1);
 % legend(i1(1),subjs{1})
-
 % leg1 = get(gca,'Legend');
 
-figure(h2) %PL
+figure(h2) %mPFC-PL
 p1 = plot(f,10*log10(squeeze(PL(:,1,:))),'color',map(:,1));
 hold on
 plot(f,10*log10(squeeze(PL(:,2,:))),'color',map(:,1))
@@ -208,14 +211,15 @@ plot(f,10*log10(squeeze(VH(:,6,:))),'color',map(:,1))
 v1 = v1(1);
 % legend(v1(1),subjs{1})
 
-clear DH IL PL VH f
+clear DH IL PL VH
 
 %% Loop thru subjects, append to figures
 for si = 2:length(subjs)
     disp(subjs{si})
     
     % Load data
-    load(['K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\BL\' subjs{si} filesep 'PowSpecPerChan.mat'],'DH','f','IL','PL','VH')
+    load([figdrOut subjs{si} filesep 'PowSpecPerChan.mat'],'DH','IL','PL','VH')
+    %load(['K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\BL\' subjs{si} filesep 'PowSpecPerChan.mat'],'DH','f','IL','PL','VH')
     
     % Plot IL
     figure(h1)
@@ -256,7 +260,7 @@ clear si
 clear *2
 
 %% Format figures
-% IL
+% mPFC-IL
 figure(h1)
 axis square
 box off
@@ -266,7 +270,7 @@ ylabel('Power (dB)')
 legend(i1,subjs,'location','northeast')
 set(gca,'fontsize',16,'titlefontsizemultiplier',1.5)
 
-% PL
+% mPFC-PL
 figure(h2)
 axis square
 box off
@@ -297,26 +301,25 @@ legend(v1,subjs,'location','northeast')
 set(gca,'fontsize',16,'titlefontsizemultiplier',1.5)
 
 %% Save figures
-fd = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\figs\PowSpec_AllChannels\BL\'; %directory
 
 % IL
-    saveas(h1,[fd 'IL-AllChan.fig'])
-    saveas(h1,[fd 'IL-AllChan.tif'])
+    saveas(h1,[figdrOut 'IL-AllChan.fig'])
+    saveas(h1,[figdrOut 'IL-AllChan.png'])
     close(h1); clear h1 i1
     
 % PL
-    saveas(h2,[fd 'PL-AllChan.fig'])
-    saveas(h2,[fd 'PL-AllChan.tif'])
+    saveas(h2,[figdrOut 'PL-AllChan.fig'])
+    saveas(h2,[figdrOut 'PL-AllChan.png'])
     close(h2); clear h2 p1
     
 % dHPC
-    saveas(h3,[fd 'dHPC-AllChan.fig'])
-    saveas(h3,[fd 'dHPC-AllChan.tif'])
+    saveas(h3,[figdrOut 'dHPC-AllChan.fig'])
+    saveas(h3,[figdrOut 'dHPC-AllChan.png'])
     close(h3); clear h3 d1
     
 % vHPC
-    saveas(h4,[fd 'vHPC-AllChan.fig'])
-    saveas(h4,[fd 'vHPC-AllChan.tif'])
+    saveas(h4,[figdrOut 'vHPC-AllChan.fig'])
+    saveas(h4,[figdrOut 'vHPC-AllChan.png'])
     close(h4); clear h4 v1
 
 %%
