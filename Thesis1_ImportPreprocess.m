@@ -1,67 +1,37 @@
 %% Thesis1_ImportPreprocess.m
 % 
-%   This script *should* run standalone.
-% 
 %   Steps:
 %     1. Import & Pre-process data (pre-cleaning), per trial
 %     2. Get total distance traveled (for this subject, per arena type)
 %     3. Get distribution of subj's mvmt. velocities for all recordings per arena type
 %     4. Get cumulative distribution of movement linear velocity for all subjects
 % 
-%   Calls on:
-%       - ImportCSC2.m
-%       - PowSpec.m
-%       - ImportVTBL.m, ImportVTEPM.m
-%       - TotalDistanceTraveled.m
-%       - VelDist.m
-%       - VelCumDist.m
-%       - export_fig.m (https://www.mathworks.com/matlabcentral/fileexchange/23629-export_fig)
-% 
-% KJS init 2020-02-11, edits 2020-02-12, 2020-02-17
+% KJS init 2020-02-11, edits 2020-02-12, 2020-02-17, 2020-04-07
 
-%% SETUP
+%% SETUP  ***USER MUST HARD-CODE THESE VARIABLES FOR EACH NEW EXPERIMENTAL SET****
 subjs = {'A201' 'A202' 'A301' 'A602' 'E105' 'E106' 'E107' 'E108' 'E201'}; % Subject ID listing. A*=male  E*=female    ***USER MUST HARD-CODE THESE VARIABLES FOR EACH NEW EXPERIMENTAL SET****
-arenas = {'BL' 'EPM'}; % recording arenas.     ***USER MUST HARD-CODE THESE VARIABLES FOR EACH NEW EXPERIMENTAL SET****
+arenas = {'BL' 'EPM'}; % recording arenas
 
-% Add paths: Data directories & function scripts
-if license == "731138" %user = KJS
-    disp('Hi, Kris. Script paths and data directories have been added.')
-    % Directories
-        ra_drIn = 'K:\Datasets Storage\Neuralynx\Kristin\'; % going to be appended later into: raw_drIn
-        fig_drOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\figs\'; % for figure/dataviz outputs
-    % Function scripts
-        addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\m\code') % contains KJS-written scripts
-        addpath(genpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\m\code\ReducedCodeFilterOnly')) % contains A.Wilber scripts
-        addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\toolboxes\removePLI') % contains removePLI
-        addpath(genpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\m\code\MouseHPC\shared\io')) % scripts called in VT import
-        addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\m\code\MouseHPC\shared\util') % scripts called in VT import
-        addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\m\code\MouseHPC\shared\linearize') % scripts called in VT import
-        addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\toolboxes\FMAToolbox\Analyses') % contains LinearVelocity
-        addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\toolboxes\FMAToolbox\General') % contains Diff, used in LinearVelocity
-        addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\toolboxes\export_fig') %export_fig
-else %user = anyone else
-    % Directories
-        ra_drIn = [uigetdir(pwd, 'Select raw data root input directory (NLX format)') filesep];
-        fig_drOut = [uigetdir(pwd, 'Select root figure output directory') filesep];
-    % Function scripts
-        addpath(uigetdir(pwd,'Select file path containing function scripts'))
-        if ~exist('ImportCSC2.m','file')
-            addpath(uigetdir(pwd,'Select file path containing ImportCSC2.m')); end
-        if ~exist('PowSpec.m','file')
-            addpath(uigetdir(pwd,'Select file path containing PowSpec.m')); end
-        if ~exist('HilbKJS.m','file')
-            addpath(uigetdir(pwd,'Select file path containing HilbKJS.m')); end
-        if ~exist('ImportVTBL.m','file') || ~exist('ImportVTEPM.m','file')
-            addpath(uigetdir(pwd,'Select file path containing ImportVTBL.m & ImportVTEPM.m')); end
-        if ~exist('LinearVelocity.m','file')
-            addpath(uigetdir(pwd,'Select file path containing FMAToolbox/LinearVelocity')); end
-        if ~exist('TotalDistanceTraveled.m','file')
-            addpath(uigetdir(pwd,'Select file path containing TotalDistanceTraveled.m')); end
-        if ~exist('VelCumDist.m','file') || ~exist('VelDist.m','file')
-            addpath(uigetdir(pwd,'Select file path containing VelCumDist.m & VelDist.m')); end
-        if ~exist('export_fig.m','file')
-            addpath(uigetdir(pwd,'Select file path containing export_fig toolbox')); end
-end
+% Set data and figure I/O directories
+% Inputs
+disp('Select raw data root input directory (NLX format)') %to be appended later into variable 'raw_drIn'
+    ra_drIn = [uigetdir(pwd, 'Select raw data root input directory (NLX format)') filesep]; 
+    fprintf('ra_drIn: %s\n',ra_drIn)
+disp('Select VT data root input directory, subfolders contain VT1_PrcFields_OrdCor_SmoothedNoBins') %to be appended later into variable 'raw_drIn'
+    vt_drin = [uigetdir(pwd, 'Select VT data root input directory') filesep];
+    fprintf('vt_drin: %s\n',vt_drin)
+
+% Outputs
+disp('Select 16-channel precleaned data output directory')
+    rt_drIn = [uigetdir(pwd, 'Select 16-channel precleaned data output directory') filesep];
+    fprintf('rt_drIn: %s\n',rt_drIn)
+disp('Select root figure output directory') % root figure output directory. (subfolders will be auto-generated)
+    fig_drOut = [uigetdir(root_drIn, 'Select root figure output directory') filesep]; 
+    fprintf('fig_drOut: %s\n',fig_drOut)
+%disp('Select VT data root output directory (for .mat format)') 
+%    vd_drOut = [uigetdir(root_drIn, 'Select VT data root output directory (for .mat format)') filesep];
+%    fprintf('vd_drOut: %s\n',vd_drOut)
+
 
 %% 1. Import & Preprocess data
 for si = 1:length(subjs)
@@ -69,7 +39,7 @@ for si = 1:length(subjs)
     fprintf('Analyzing data for %s...\n\n',subjID)
     
     % Raw NLX data directory for this subject
-    if subjID(1) == 'A' %male
+    if strcmp(subjID(1),'A') %male
         raw_drIn = [ra_drIn 'M' filesep subjID filesep]; 
     else %female
         raw_drIn = [ra_drIn 'F' filesep subjID filesep]; 
@@ -78,20 +48,17 @@ for si = 1:length(subjs)
     for ai = 1:length(arenas) %BL, EPM
         rt = arenas{ai};
         
-        % Set data directories
-        if license == "731138" %user = KJS
-            root_drIn = ['K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\RawEEG\' rt filesep]; % for 16-chan pre-cleaned AllDat
-            vt_drIn = ['K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\VT\' rt '\NLX' filesep]; % contains: subj\sessID\'VT1_PrcFields_OrdCor_SmoothedNoBins.nvt'
-            vd_drOut = ['K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\VT\' rt '\MAT\']; % for VT-related data outputs
-        else
-            root_drIn = [uigetdir(pwd, 'Select 16-channel precleaned data output directory') filesep];
-            vt_drIn = [uigetdir(pwd, 'Select VT data root input directory, subfolders contain VT1_PrcFields_OrdCor_SmoothedNoBins') filesep];
-            vd_drOut = [uigetdir(pwd, 'Select VT data root output directory (for .mat format)') filesep];
-        end
+        % Set data directories for this arena
+        root_drIn = [rt_drIn rt filesep]; % for 16-chan pre-cleaned AllDat
+            %root_drIn = ['K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\RawEEG\' rt filesep];
+        vt_drIn = [vt_drin rt '\NLX' filesep]; % contains: subj\sessID\'VT1_PrcFields_OrdCor_SmoothedNoBins.nvt'
+            %vt_drIn = ['K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\VT\' rt '\NLX' filesep];
+        vd_drOut = [vt_drin rt '\MAT' filesep]; % for VT-related data outputs
+            %vd_drOut = ['K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\VT\' rt '\MAT\']; 
         
         % Fetch list of trials
         files = dir(raw_drIn);
-        [Rxlist] = {files(contains({files(:).name},rt)).name}'; % List of recording sessions - OK
+        [Rxlist] = {files(contains({files(:).name},rt)).name}'; % List of recording sessions for this arena
         clear files
     
         % Exclude any non-experimental trials (Reference vs. SubjGND testing in BLlist) 
@@ -145,12 +112,14 @@ for si = 1:length(subjs)
 
             %% Save single-recording dataset: Precleaned 16 channels + VT
             fprintf('Saving data: Recording %i of %i for %s...\n',ri,length(Rxlist),subjID)
-            fn = [subjID '_' Rxlist{ri} '_AllDat.mat'];
-            save([root_drIn subjID filesep fn],'AllDat','drInvid','EEG','eegtsec','ExpKeys','f','fourierCoefs','frex','Fs','pos','prefAngle','Pxx','rt','Rxlist','subjID','thetadata','-v7.3')
+            fd = [root_drIn subjID filesep]; %subject's output directory
+                if ~exist(fd,'dir); mkdir(fd); end %make dir if necessary
+            fn = [subjID '_' Rxlist{ri} '_AllDat.mat']; %file name
+            save([fd fn],'AllDat','drInvid','EEG','eegtsec','ExpKeys','f','fourierCoefs','frex','Fs','pos','prefAngle','Pxx','rt','Rxlist','subjID','thetadata','-v7.3')
             disp('Data saved!')
 
             % Reset workspace for next recording
-            clear AllDat drInvid EEG eegtsec ExpKeys f fourierCoefs frex Fs itpc pos prefAngle Pxx thetadata fn 
+            clear AllDat drInvid EEG eegtsec ExpKeys f fourierCoefs frex Fs itpc pos prefAngle Pxx thetadata fn fd
         end %trials
         clear ri
         
@@ -162,22 +131,20 @@ for si = 1:length(subjs)
         clear files
 
         % Save figure
-        fd = [fig_drOut 'VT\' rt '\' subjID '\Velocity\']; % Set figure output directory for this subejct
-        if ~exist(fd,'dir')  % Create if it doesn't exist
-            mkdir(fd)
-        end
-        saveas(dh,[fd subjID '_TotalDistanceTraveled.tif'])
+        fd = [fig_drOut 'VT\' rt '\' subjID '\Velocity\']; % Set figure output directory for this subject
+            if ~exist(fd,'dir'); mkdir(fd); end  % Create dir if it doesn't exist
+        saveas(dh,[fd subjID '_TotalDistanceTraveled.png'])
         saveas(dh,[fd subjID '_TotalDistanceTraveled.fig'])
         close(dh)
         clear dh fd
         
         % Save data separately: d and h
         if ~exist([vd_drOut subjID],'dir') % Make output data directory if it doesn't exist
-            mkdir([vd_drOut subjID])
-        end
-        save([vd_drOut subjID filesep subjID '_' rt '_TotalDistanceTraveled.mat'],'d','h','Rxlist','-v7.3')
-        clear d h
+            mkdir([vd_drOut subjID]); end
+        fn = [subjID '_' rt '_TotalDistanceTraveled.mat']; %file name
+        save([vd_drOut subjID filesep fn],'d','h','Rxlist','-v7.3')
         fprintf('Total distance traveled for %s: saved.\n',subjID)
+        clear d h fn
 
         
         %% 3. Get distribution of subj's mvmt. velocities for all recordings (per arena)
@@ -185,14 +152,14 @@ for si = 1:length(subjs)
         fprintf('Calculating linear movement velocity distribution for %s %s...\n',subjID,rt)
         [Vrex,Vall,h1] = VelDist(subjID,rt,Rxlist,root_drIn);
         
-        % Save figure   - TEST?
+        % Save figure 
         disp('Saving figure...')
         fd = [fig_drOut 'VT\' rt filesep subjID '\Velocity\']; %figure output directory
-        if ~exist(fd,'dir'); mkdir(fd); end %create directory if needed
-        saveas(h1,[fd subjID '_' rt '_VelDist.tif']) %with 2kHz upsampled VT
-        saveas(h1,[fd subjID '_' rt  '_VelDist.fig']) %with 2kHz upsampled VT
+            if ~exist(fd,'dir'); mkdir(fd); end %create directory if needed
+        saveas(h1,[fd subjID '_' rt '_VelDist.png'])
+        saveas(h1,[fd subjID '_' rt '_VelDist.fig']) 
         disp('Saved.')
-        close; clear h1 fd
+        close(h1); clear h1 fd
 
         % Save data separately: Vrex
         disp('Saving linear movement velocity distribution...')
@@ -210,10 +177,10 @@ end %subjects
 clear ra_drIn si vt_drIn
 
 %% 4. Get cumulative distribution of movement linear velocity for all subjects: BL arena only
-vd_drOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\VT\BL\MAT\';
+vd_drOut = [vt_drin rt '\MAT' filesep]; 
 [X,Y,H1] = VelCumDist(subjs,vd_drOut); %#ok<ASGLU>
 
-% Save figure as .tif  
+% Save figure as .tif
 disp('Saving velocity figure and cumulative distribution data...')
 fn = [fig_drOut 'VT\BL\Familiar_VelocityCumDist-upsampled']; % figure output directory + file name
 export_fig(fn,'-tif',H1)
@@ -223,7 +190,7 @@ clear H1 fn
 % Save data separately: X and Y
 save([vd_drOut 'Familiar_VelocityCumuDist.mat'],'X','Y','subjs','rt','-v7.3')     % done on 2020-01-21 (manually, not using VelCumDist fxn)
 disp('Saved.')
-clear X Y
+clear X Y vd_drOut
 
 disp('Thesis1_ImportPreprocess.m is complete.')
 
