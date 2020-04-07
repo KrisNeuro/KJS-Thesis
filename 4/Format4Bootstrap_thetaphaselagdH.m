@@ -40,7 +40,9 @@ function [M_ILDH,M_ILVH,M_ILPL,M_DHVH,M_DHPL,M_VHPL, F_ILDH,F_ILVH,F_ILPL,F_DHVH
 Msubjs = subjs(contains(subjs,'A')); %male subject IDs
 Fsubjs = subjs(contains(subjs,'E')); %female subject IDs
 
+
 %% Males
+
 % Preallocate output space
 M_ILDH = cell(length(Msubjs), max(cellfun('prodofsize',ILDH(1:4)))/length(Msubjs));  % mPFCil-dHPC
 M_ILVH = cell(length(Msubjs), max(cellfun('prodofsize',ILDH(1:4)))/length(Msubjs));  % mPFCil-vHPC
@@ -187,34 +189,3 @@ end %Fsubjs
 clear si 
 
 end %function
-
-
-
-%% script not used below. IGNORE
-%     Loop thru trials
-%     for ti = 1:size(idx,1)  %#ok<*NODEF>
-%         hidx = find(idx(ti,:)==1); %#ok<*IDISVAR> %index for which hormone state to output   
-%         [F_ILDH{si,hidx}(ti,:)] = ILDH{1,sidx}{4,ti};
-%         [F_ILVH{si,hidx}(ti,:)] = ILVH{1,sidx}{4,ti};
-%         [F_ILPL{si,hidx}(ti,:)] = ILPL{1,sidx}{4,ti};
-%         [F_DHVH{si,hidx}(ti,:)] = DHVH{1,sidx}{4,ti};
-%         [F_DHPL{si,hidx}(ti,:)] = DHPL{1,sidx}{4,ti};
-%         [F_VHPL{si,hidx}(ti,:)] = VHPL{1,sidx}{4,ti};
-%         clear hidx       
-%     end 
-%     clear ti
-% 
-% %     Remove empty cells
-%     for i = 1:4 %loop thru columns/hormone states
-%         id = find(F_ILDH{si,i}(:,1)==0); %index of empty rows to remove
-%         F_ILDH{si,i}(id,:) = [];
-%         F_ILVH{si,i}(id,:) = [];
-%         F_ILPL{si,i}(id,:) = [];
-%         F_DHVH{si,i}(id,:) = [];
-%         F_DHPL{si,i}(id,:) = [];
-%         F_VHPL{si,i}(id,:) = [];
-%         clear id
-%     end
-%     clear i sidx subjID idx
-% end %Fsubjs
-% clear si ILDH ILPL ILVH DHPL DHVH VHPL 
