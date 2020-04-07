@@ -1,14 +1,14 @@
-%% ImportCSC_2.m 
-% imports CSC files from NLX format from drIn
-% It also filters for theta and does power analysis on the theta band.
+%% ImportCSC2.m 
+% Imports and pre-cleans CSC files from NLX format from drIn.
+% Also filters for theta band and does power analysis on the theta band.
 %
 % CALLS UPON:
 % - NLXNameCheck.m
 % - ReadCSC_TF_tsd.m
 % - Data.m
 % - Range.m
-% - removePLI.m     Downloaded from: https://github.com/mrezak/removePLI
-% - PowerEnvelopeKJS.m
+% - removePLI.m     (source: https://github.com/mrezak/removePLI)
+% - PowerEnvelope.m
 % - StartTime.m, EndTime.m
 % 
 % OUTPUTS:
@@ -17,18 +17,11 @@
 %   - Fs            Sampling frequency of downsampled data (2000 Hz)
 % 
 % KJS edit 2019-04-11: Flexibility for function input
-% KJS edit 2019-06-03: Changed H: to P:
 % KJS edit 2019-10-28: Changed P: to K: (CoM IT server transfer)
 % KJS edit 2019-12-20: Added flexibility to addpath at the beginning,shifted those addpaths to ThesisDesign
 % 
 function [EEG,thetadata,AllDat,Fs]= ImportCSC2(drIn)
 %% Setup
-if ~exist('ReadCSC_TF_tsd.m','file')
-    genpath(addpath(uigetdir(pwd,'Select file path containing A.Wilber scripts')))
-end
-if ~exist('removePLI.m','file')
-    addpath(uigetdir(pwd,'Select file path containing removePLI.m'))
-end
 
 % Ensure drIn ends with a file separator
 if ~strcmp(drIn(end),filesep)
@@ -38,8 +31,8 @@ end
 tic;	%begin timer
 list = dir([drIn '*.ncs']);	%get listing of .ncs files in drIn
 
-
-if ~isempty(list) 	%check that CSC files exist in drIn
+% Check that CSC files exist in drIn
+if ~isempty(list) 	
     disp('CSC files found.');
 else
     fprintf('Error: CSC files not found. Press RETURN to continue.');
@@ -82,7 +75,7 @@ for i=1:length(list)    %loop thru channels (1-16)
         F = filtfilt(sos,g,s);
         clear s sos g Apass Fpass1 Fpass2 h Hd lowlimit highlimit N ts      
         
-%% 60Hz attenuation filter (removePLI)
+%% 60Hz attenuation filter (removePLI.m)
     M = 6; 		% number of harmonics to remove
     B = [50 .05 1];		
     P = [0.1 4 1];  	
@@ -119,20 +112,20 @@ end
     [sos,g] = zp2sos(z,p,k);
     filt = dfilt.df2sos(sos,g);
     
-	thetadata.(ch).s = [];
+    thetadata.(ch).s = [];
     thetadata.(ch).s = filter(filt,F);	% All data filtered for theta, downsampled to 2kHz
     clear Fn Wp Ws Rp Rs n Wn sos z p k filt g
     
     %% Theta Power vs Time 
     pow = (thetadata.(ch).s).^2;
     
-         %% PowerEnvelopeKJS
-        [ts_env,pow_env, PeaksIdx] = PowerEnvelopeKJS(t,pow);
+         %% PowerEnvelope
+        [ts_env,pow_env, PeaksIdx] = PowerEnvelope(t,pow);
             disp('Power Envelope ok.'); 
         
              tstart = StartTime(eeg);
              tend = EndTime(eeg);
-             pow_ts_interp = tstart:100:tend;            % timestamp intervals corresponds to 100 Hz sampling rate
+             pow_ts_interp = tstart:100:tend;    % timestamp intervals corresponds to 100 Hz sampling rate
              pow_env_interp = interp1(ts_env,pow_env,pow_ts_interp);    
 
             % binsize in number of sample points at 100Hz sampling rate (downsampled from 32kHz)
