@@ -113,7 +113,7 @@ for si = 1:length(subjs)
             %% Save single-recording dataset: Precleaned 16 channels + VT
             fprintf('Saving data: Recording %i of %i for %s...\n',ri,length(Rxlist),subjID)
             fd = [root_drIn subjID filesep]; %subject's output directory
-                if ~exist(fd,'dir); mkdir(fd); end %make dir if necessary
+                if ~exist(fd,'dir'); mkdir(fd); end %make dir if necessary
             fn = [subjID '_' Rxlist{ri} '_AllDat.mat']; %file name
             save([fd fn],'AllDat','drInvid','EEG','eegtsec','ExpKeys','f','fourierCoefs','frex','Fs','pos','prefAngle','Pxx','rt','Rxlist','subjID','thetadata','-v7.3')
             disp('Data saved!')
@@ -178,7 +178,7 @@ clear ra_drIn si vt_drIn
 
 %% 4. Get cumulative distribution of movement linear velocity for all subjects: BL arena only
 vd_drOut = [vt_drin rt '\MAT' filesep]; 
-[X,Y,H1] = VelCumDist(subjs,vd_drOut); %#ok<ASGLU>
+[X,Y,H1] = VelCumDist(subjs,vd_drOut);
 
 % Save figure as .tif
 disp('Saving velocity figure and cumulative distribution data...')
