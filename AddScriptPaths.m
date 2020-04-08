@@ -21,6 +21,8 @@ function [] = AddScriptPaths()
 % Full list of scripts called
 sxpts = {'BandPowerCrossCorr.m'
 'barPLV.m'
+'BootStat_MvF.m'
+'BootStat_FHorms.m'
 'ChanScreen.m'
 'coherencyc.m'
 'colorcet.m'
