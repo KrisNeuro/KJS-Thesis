@@ -178,7 +178,7 @@ clear ra_drIn si vt_drIn
 
 %% 4. Get cumulative distribution of movement linear velocity for all subjects: BL arena only
 vd_drOut = [vt_drin rt '\MAT' filesep]; 
-[X,Y,H1] = VelCumDist(subjs,vd_drOut);
+[X,Y,H1] = VelCumDist(subjs,vd_drOut); 
 
 % Save figure as .tif
 disp('Saving velocity figure and cumulative distribution data...')
