@@ -6,23 +6,22 @@ function [] = AddScriptPaths()
 % 	Open-source functions/packages:		SOURCE:
 %	- chronux 				http://chronux.org/
 %	- colorcet 				https://peterkovesi.com/projects/colourmaps/
-%	- export_fig 				https://github.com/altmany/export_fig
-%	- FMAToolbox				http://fmatoolbox.sourceforge.net/
-%   	- NLX to MATLAB         		https://neuralynx.com/software/category/matlab-netcom-utilities
+%	- export_fig 			https://github.com/altmany/export_fig
+%	- FMAToolbox			http://fmatoolbox.sourceforge.net/
+%   - NLX to MATLAB         https://neuralynx.com/software/category/matlab-netcom-utilities
 %	- padcat				https://www.mathworks.com/matlabcentral/fileexchange/22909-padcat
 %	- removePLI				https://github.com/mrezak/removePLI
-%	- shadedErrorBar			https://www.mathworks.com/matlabcentral/fileexchange/26311-raacampbell-shadederrorbar
-%	- regoutliers 				https://www.mathworks.com/matlabcentral/fileexchange/37212-regression-outliers
+%	- shadedErrorBar		https://www.mathworks.com/matlabcentral/fileexchange/26311-raacampbell-shadederrorbar
+%	- regoutliers 			https://www.mathworks.com/matlabcentral/fileexchange/37212-regression-outliers
 %
 %
 % KJS init: 2020-04-07
 %
 
+
 % Full list of scripts called
 sxpts = {'BandPowerCrossCorr.m'
 'barPLV.m'
-'BootStat_MvF.m'
-'BootStat_FHorms.m'
 'ChanScreen.m'
 'coherencyc.m'
 'colorcet.m'
