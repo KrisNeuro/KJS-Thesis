@@ -36,22 +36,12 @@ subjs = {'A201' 'A202' 'A301' 'A602' 'E105' 'E106' 'E107' 'E108' 'E201'}; % Subj
 nperms=1;
 x = linspace(0,100); %unity line for joint-prob figures
 
-% Set data directories & Add paths containing script
-if license == "731138" % user = KJS/Kabbaj lab
-    root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\BL\'; %data input
-    figdrOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\figs\'; %figure output directory 
-    if ~exist('colorcet.m','file'); addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\toolboxes'); end %colorcet.m
-    if ~exist('shadedErrorBar.m','file'); addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\m\code\shadedErrorBar'); end %shadedErrorBar.m
-    if ~exist('twosampF.m','file'); addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\m\code\YiQi\functionalanova'); end %twosampF.m
-    if ~exist('get_bootstrapped_sample.m','file') || ~exist('get_direct_prob.m','file'); addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\m\sandbox\');end
-else% user = anyone else
-    root_drIn = [uigetdir(pwd,'Select root input directory holding data: Reduced EEG, BL arena') filesep];
-    figdrOut = [uigetdir(pwd,'Select root figure output directory') filesep];
-    if ~exist('colorcet.m','file'); addpath(uigetdir(pwd,'Select folder containing colorcet.m')); end %colorcet.m
-    if ~exist('shadedErrorBar.m','file'); addpath(uigetdir(pwd,'Select folder containing shadedErrorBar.m')); end %shadedErrorBar.m
-    if ~exist('twosampF.m','file'); addpath(uigetdir(pwd,'Select folder containing twosampF.m')); end %twosampF.m
-    if ~exist('get_bootstrapped_sample.m','file') || ~exist('get_direct_prob.m','file'); addpath(uigetdir(pwd,'Select folder containing bootstrapping .m files')); end
-end
+% Set data directories
+root_drIn = [uigetdir(pwd,'Select root input directory holding data: Reduced EEG, BL arena') filesep];
+% root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\BL\'; %data input
+figdrOut = [uigetdir(pwd,'Select root figure output directory') filesep];
+% figdrOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\figs\'; %figure output directory 
+
 
 %% 1.0 Hierarchical bootstrap: Band power
 % Calls data: 'FreqBandPow-BL-5to15_boot.mat' 
@@ -69,30 +59,33 @@ end
 
 
 %% 1.1 MvF: Band Power
-
 tstart=tic;
+
 %mPFC-IL
 [M_IL_theta_boot, F_IL_theta_boot, M_IL_gamma_boot, F_IL_gamma_boot, M_IL_delta_boot, F_IL_delta_boot,...
     MF_IL_theta_p_test, MF_IL_gamma_p_test, MF_IL_delta_p_test, MF_thetapjm_IL, MF_gammapjm_IL,MF_deltapjm_IL] ...
     = BootStat_MvF(M_IL_theta,M_IL_gamma,M_IL_delta,F_IL_theta,F_IL_gamma,F_IL_delta);
+clear F_IL_delta F_IL_gamma F_IL_theta M_IL_delta M_IL_gamma M_IL_theta
+
 %dHPC
 [M_DH_theta_boot, F_DH_theta_boot, M_DH_gamma_boot, F_DH_gamma_boot, M_DH_delta_boot, F_DH_delta_boot,...
     MF_DH_theta_p_test, MF_DH_gamma_p_test, MF_DH_delta_p_test, MF_thetapjm_DH, MF_gammapjm_DH,MF_deltapjm_DH] ...
     = BootStat_MvF(M_DH_theta,M_DH_gamma,M_DH_delta,F_DH_theta,F_DH_gamma,F_DH_delta);
+clear F_DH_delta F_DH_gamma F_DH_theta M_DH_delta M_DH_gamma M_DH_theta
+
 %vHPC
 [M_VH_theta_boot, F_VH_theta_boot, M_VH_gamma_boot, F_VH_gamma_boot, M_VH_delta_boot, F_VH_delta_boot,...
     MF_VH_theta_p_test, MF_VH_gamma_p_test, MF_VH_delta_p_test, MF_thetapjm_VH, MF_gammapjm_VH,MF_deltapjm_VH]...
     = BootStat_MvF(M_VH_theta,M_VH_gamma,M_VH_delta,F_VH_theta,F_VH_gamma,F_VH_delta);
+clear F_VH_delta F_VH_gamma F_VH_theta M_VH_delta M_VH_gamma M_VH_theta
+
 %mPFC-PL
 [M_PL_theta_boot, F_PL_theta_boot, M_PL_gamma_boot, F_PL_gamma_boot, M_PL_delta_boot, F_PL_delta_boot,...
     MF_PL_theta_p_test, MF_PL_gamma_p_test, MF_PL_delta_p_test, MF_thetapjm_PL, MF_gammapjm_PL,MF_deltapjm_PL]...
     = BootStat_MvF(M_PL_theta,M_PL_gamma,M_PL_delta,F_PL_theta,F_PL_gamma,F_PL_delta);
-toc(tstart)
-  
-clear tstart F_DH_delta F_DH_gamma F_DH_theta F_IL_delta F_IL_gamma F_IL_theta...
-    F_VH_delta F_VH_gamma F_VH_theta F_PL_delta F_PL_gamma F_PL_theta ...
-    M_DH_delta M_DH_gamma M_DH_theta M_IL_delta M_IL_gamma M_IL_theta...
-    M_VH_delta M_VH_gamma M_VH_theta M_PL_delta M_PL_gamma M_PL_theta
+clear F_PL_delta F_PL_gamma F_PL_theta M_PL_delta M_PL_gamma M_PL_theta
+
+toc(tstart); clear tstart 
     
 % Male vs Female: Theta/Gamma/Delta band power. Single p-test
 MF_theta_p_test = [MF_IL_theta_p_test MF_DH_theta_p_test MF_VH_theta_p_test MF_PL_theta_p_test]';
@@ -109,8 +102,8 @@ T_MF = table(brain_area, MF_theta_p_test, MF_gamma_p_test, MF_delta_p_test);
     
 % Save the data
 disp('Saving band power bootstrap statistics..')
-fn = 'BandPowBootStats2-BL-5to15-MF.mat';
-save([root_drIn '5to15' filesep fn],'T_MF','MF_*','*_boot','-v7.3')
+fn = 'BandPowBootStats-BL-5to15-MvF.mat';
+save([root_drIn '5to15' filesep fn],'T_MF','MF_*','*_boot','subjs','-v7.3')
 disp('Saved!')
 clear fn 
 
@@ -190,7 +183,8 @@ tstart=tic;
 [fD_PL_gamma_boot,fP_PL_gamma_boot,fE_PL_gamma_boot,fDP_PL_gamma_p_test,fDE_PL_gamma_p_test,fPE_PL_gamma_p_test,DP_PL_gammapjm,DE_PL_gammapjm,PE_PL_gammapjm] = BootStat_FHorms(F_PL_D_gamma,F_PL_P_gamma,F_PL_E_gamma);
 [fD_PL_delta_boot,fP_PL_delta_boot,fE_PL_delta_boot,fDP_PL_delta_p_test,fDE_PL_delta_p_test,fPE_PL_delta_p_test,DP_PL_deltapjm,DE_PL_deltapjm,PE_PL_deltapjm] = BootStat_FHorms(F_PL_D_delta,F_PL_P_delta,F_PL_E_delta); 
 toc(tstart)
-clear tstart i F_IL* F_DH* F_VH* F_PL*
+clear tstart 
+%clear F_IL* F_DH* F_VH* F_PL*
 
 % Put p-value data into tables
   % Females/Hormones: Theta band
@@ -233,8 +227,8 @@ disp('Female/Hormones: Delta Band Power')
 
 % Save the data
 disp('Saving band power bootstrap statistics..')
-fn = 'BandPowBootStats2-BL-5to15-Hormones.mat';
-save([root_drIn '5to15' filesep fn],'T_f*','DE_*','DP_*','PE_*','*_boot','nperms','-v7.3')
+fn = 'BandPowBootStats-BL-5to15-Estrous.mat';
+save([root_drIn '5to15' filesep fn],'T_f*','DE_*','DP_*','PE_*','*_boot','-v7.3')
 disp('Saved!')
 clear fn 
 
@@ -243,217 +237,320 @@ clear fn
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% 1.6 Plot mean theta band joint-probability matrices: Females/Hormones
-h4 = figure('units','normalized','outerposition',[0 0 1 1]);
-ax1 = subplot(341); %IL - Diestrus v Proestrus
-    imagesc(mean(DP_IL_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('mPFC-IL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
-    colormap(ax1,jet)
-ax2 = subplot(342); %dHPC - Diestrus v Proestrus
-    imagesc(mean(DP_DH_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('dHPC'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
-    colormap(ax2,jet)
-ax3 = subplot(343); %vHPC - Diestrus v Proestrus
-    imagesc(mean(DP_VH_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('vHPC'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
-    colormap(ax3,jet)
-ax4 = subplot(344); %PL - Diestrus v Proestrus
-    imagesc(mean(DP_PL_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('mPFC-PL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
-    colormap(ax4,jet)
-ax5 = subplot(345); %IL - Diestrus v Estrus
-    imagesc(mean(DE_IL_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax5,jet)
-ax6 = subplot(346); %dHPC - Diestrus v Estrus
-    imagesc(mean(DE_DH_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax6,jet)
-ax7 = subplot(347); %vHPC - Diestrus v Estrus
-    imagesc(mean(DE_VH_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax7,jet)
-ax8 = subplot(348); %PL - Diestrus v Estrus
-    imagesc(mean(DE_PL_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax8,jet)
-ax9 = subplot(349); %IL - Proestrus v Estrus
-    imagesc(mean(PE_IL_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax9,jet)
-ax10 = subplot(3,4,10); %dHPC - Proestrus v Estrus
-    imagesc(mean(PE_DH_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax10,jet)
-ax11 = subplot(3,4,11); %vHPC - Proestrus v Estrus
-    imagesc(mean(PE_VH_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax11,jet)
-ax12 = subplot(3,4,12); %PL - Proestrus v Estrus
-    imagesc(mean(PE_PL_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax12,jet) 
-    
-% Save figure                                                                       (fixed)
-fn = ['ThetaBandPowBoot_Mean' num2str(nperms) 'JointProbMatrx_Horms'];
-saveas(h4,[fd fn '.tif'])
-saveas(h4,[fd fn '.fig'])
-disp('Theta phase lag/Hormones joint-probability matrix figure saved!')
-close(h4); clear h4 ax* fn
+% h4 = figure('units','normalized','outerposition',[0 0 1 1]);
+% ax1 = subplot(341); %IL - Diestrus v Proestrus
+%     imagesc(mean(DP_IL_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+%     title('mPFC-IL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
+%     colormap(ax1,jet)
+% ax2 = subplot(342); %dHPC - Diestrus v Proestrus
+%     imagesc(mean(DP_DH_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+%     title('dHPC'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
+%     colormap(ax2,jet)
+% ax3 = subplot(343); %vHPC - Diestrus v Proestrus
+%     imagesc(mean(DP_VH_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+%     title('vHPC'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
+%     colormap(ax3,jet)
+% ax4 = subplot(344); %PL - Diestrus v Proestrus
+%     imagesc(mean(DP_PL_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+%     title('mPFC-PL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
+%     colormap(ax4,jet)
+% ax5 = subplot(345); %IL - Diestrus v Estrus
+%     imagesc(mean(DE_IL_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax5,jet)
+% ax6 = subplot(346); %dHPC - Diestrus v Estrus
+%     imagesc(mean(DE_DH_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax6,jet)
+% ax7 = subplot(347); %vHPC - Diestrus v Estrus
+%     imagesc(mean(DE_VH_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax7,jet)
+% ax8 = subplot(348); %PL - Diestrus v Estrus
+%     imagesc(mean(DE_PL_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax8,jet)
+% ax9 = subplot(349); %IL - Proestrus v Estrus
+%     imagesc(mean(PE_IL_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax9,jet)
+% ax10 = subplot(3,4,10); %dHPC - Proestrus v Estrus
+%     imagesc(mean(PE_DH_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax10,jet)
+% ax11 = subplot(3,4,11); %vHPC - Proestrus v Estrus
+%     imagesc(mean(PE_VH_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax11,jet)
+% ax12 = subplot(3,4,12); %PL - Proestrus v Estrus
+%     imagesc(mean(PE_PL_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax12,jet) 
+%     
+% % Save figure                                                                       (fixed)
+% fn = ['ThetaBandPowBoot_Mean' num2str(nperms) 'JointProbMatrx_Horms'];
+% saveas(h4,[fd fn '.tif'])
+% saveas(h4,[fd fn '.fig'])
+% disp('Theta phase lag/Hormones joint-probability matrix figure saved!')
+% close(h4); clear h4 ax* fn
 
 
 %% 1.7 Plot mean gamma band joint-probability matrices: Females/Hormones              TO DO
-h5 = figure('units','normalized','outerposition',[0 0 1 1]);
-ax1 = subplot(341); %IL - Diestrus v Proestrus
-    imagesc(mean(DP_IL_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('mPFC-IL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
-    colormap(ax1,jet)
-ax2 = subplot(342); %dHPC - Diestrus v Proestrus
-    imagesc(mean(DP_DH_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('dHPC'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
-    colormap(ax2,jet)
-ax3 = subplot(343); %vHPC - Diestrus v Proestrus
-    imagesc(mean(DP_VH_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('vHPC'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
-    colormap(ax3,jet)
-ax4 = subplot(344); %PL - Diestrus v Proestrus
-    imagesc(mean(DP_PL_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('mPFC-PL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
-    colormap(ax4,jet)
-ax5 = subplot(345); %IL - Diestrus v Estrus
-    imagesc(mean(DE_IL_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax5,jet)
-ax6 = subplot(346); %dHPC - Diestrus v Estrus
-    imagesc(mean(DE_DH_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax6,jet)
-ax7 = subplot(347); %vHPC - Diestrus v Estrus
-    imagesc(mean(DE_VH_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax7,jet)
-ax8 = subplot(348); %PL - Diestrus v Estrus
-    imagesc(mean(DE_PL_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax8,jet)
-ax9 = subplot(349); %IL - Proestrus v Estrus
-    imagesc(mean(PE_IL_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax9,jet)
-ax10 = subplot(3,4,10); %dHPC - Proestrus v Estrus
-    imagesc(mean(PE_DH_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax10,jet)
-ax11 = subplot(3,4,11); %vHPC - Proestrus v Estrus
-    imagesc(mean(PE_VH_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax11,jet)
-ax12 = subplot(3,4,12); %PL - Proestrus v Estrus
-    imagesc(mean(PE_PL_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax12,jet) 
-    
-% Save figure
-saveas(h5,[fd 'GammaBandPowBoot_Mean1000JointProbMatrx_Horms.fig'])
-saveas(h5,[fd 'GammaBandPowBoot_Mean1000JointProbMatrx_Horms.tif'])
-disp('Gamma phase lag/Hormones joint-probability matrix figure saved!')
-close(h5); clear h5 ax*
+% h5 = figure('units','normalized','outerposition',[0 0 1 1]);
+% ax1 = subplot(341); %IL - Diestrus v Proestrus
+%     imagesc(mean(DP_IL_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+%     title('mPFC-IL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
+%     colormap(ax1,jet)
+% ax2 = subplot(342); %dHPC - Diestrus v Proestrus
+%     imagesc(mean(DP_DH_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+%     title('dHPC'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
+%     colormap(ax2,jet)
+% ax3 = subplot(343); %vHPC - Diestrus v Proestrus
+%     imagesc(mean(DP_VH_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+%     title('vHPC'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
+%     colormap(ax3,jet)
+% ax4 = subplot(344); %PL - Diestrus v Proestrus
+%     imagesc(mean(DP_PL_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+%     title('mPFC-PL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
+%     colormap(ax4,jet)
+% ax5 = subplot(345); %IL - Diestrus v Estrus
+%     imagesc(mean(DE_IL_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax5,jet)
+% ax6 = subplot(346); %dHPC - Diestrus v Estrus
+%     imagesc(mean(DE_DH_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax6,jet)
+% ax7 = subplot(347); %vHPC - Diestrus v Estrus
+%     imagesc(mean(DE_VH_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax7,jet)
+% ax8 = subplot(348); %PL - Diestrus v Estrus
+%     imagesc(mean(DE_PL_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax8,jet)
+% ax9 = subplot(349); %IL - Proestrus v Estrus
+%     imagesc(mean(PE_IL_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax9,jet)
+% ax10 = subplot(3,4,10); %dHPC - Proestrus v Estrus
+%     imagesc(mean(PE_DH_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax10,jet)
+% ax11 = subplot(3,4,11); %vHPC - Proestrus v Estrus
+%     imagesc(mean(PE_VH_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax11,jet)
+% ax12 = subplot(3,4,12); %PL - Proestrus v Estrus
+%     imagesc(mean(PE_PL_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax12,jet) 
+%     
+% % Save figure
+% saveas(h5,[fd 'GammaBandPowBoot_Mean1000JointProbMatrx_Horms.fig'])
+% saveas(h5,[fd 'GammaBandPowBoot_Mean1000JointProbMatrx_Horms.tif'])
+% disp('Gamma phase lag/Hormones joint-probability matrix figure saved!')
+% close(h5); clear h5 ax*
 
 %% 1.8 Plot mean delta band joint-probability matrices: Females/Hormones
-h6 = figure('units','normalized','outerposition',[0 0 1 1]);
-ax1 = subplot(341); %IL - Diestrus v Proestrus
-    imagesc(mean(DP_IL_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('mPFC-IL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
-    colormap(ax1,jet)
-ax2 = subplot(342); %dHPC - Diestrus v Proestrus
-    imagesc(mean(DP_DH_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('dHPC'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
-    colormap(ax2,jet)
-ax3 = subplot(343); %vHPC - Diestrus v Proestrus
-    imagesc(mean(DP_VH_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('vHPC'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
-    colormap(ax3,jet)
-ax4 = subplot(344); %PL - Diestrus v Proestrus
-    imagesc(mean(DP_PL_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('mPFC-PL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
-    colormap(ax4,jet)
-ax5 = subplot(345); %IL - Diestrus v Estrus
-    imagesc(mean(DE_IL_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax5,jet)
-ax6 = subplot(346); %dHPC - Diestrus v Estrus
-    imagesc(mean(DE_DH_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax6,jet)
-ax7 = subplot(347); %vHPC - Diestrus v Estrus
-    imagesc(mean(DE_VH_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax7,jet)
-ax8 = subplot(348); %PL - Diestrus v Estrus
-    imagesc(mean(DE_PL_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax8,jet)
-ax9 = subplot(349); %IL - Proestrus v Estrus
-    imagesc(mean(PE_IL_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax9,jet)
-ax10 = subplot(3,4,10); %dHPC - Proestrus v Estrus
-    imagesc(mean(PE_DH_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax10,jet)
-ax11 = subplot(3,4,11); %vHPC - Proestrus v Estrus
-    imagesc(mean(PE_VH_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax11,jet)
-ax12 = subplot(3,4,12); %PL - Proestrus v Estrus
-    imagesc(mean(PE_PL_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax12,jet) 
-    
-% Save figure
-saveas(h6,[fd 'DeltaBandPowBoot_Mean1000JointProbMatrx_Horms.fig'])
-saveas(h6,[fd 'DeltaBandPowBoot_Mean1000JointProbMatrx_Horms.tif'])
-disp('Delta phase lag/Hormones joint-probability matrix figure saved!')
-close(h6); clear h6 ax*
+% h6 = figure('units','normalized','outerposition',[0 0 1 1]);
+% ax1 = subplot(341); %IL - Diestrus v Proestrus
+%     imagesc(mean(DP_IL_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+%     title('mPFC-IL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
+%     colormap(ax1,jet)
+% ax2 = subplot(342); %dHPC - Diestrus v Proestrus
+%     imagesc(mean(DP_DH_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+%     title('dHPC'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
+%     colormap(ax2,jet)
+% ax3 = subplot(343); %vHPC - Diestrus v Proestrus
+%     imagesc(mean(DP_VH_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+%     title('vHPC'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
+%     colormap(ax3,jet)
+% ax4 = subplot(344); %PL - Diestrus v Proestrus
+%     imagesc(mean(DP_PL_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+%     title('mPFC-PL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5);
+%     colormap(ax4,jet)
+% ax5 = subplot(345); %IL - Diestrus v Estrus
+%     imagesc(mean(DE_IL_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax5,jet)
+% ax6 = subplot(346); %dHPC - Diestrus v Estrus
+%     imagesc(mean(DE_DH_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax6,jet)
+% ax7 = subplot(347); %vHPC - Diestrus v Estrus
+%     imagesc(mean(DE_VH_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax7,jet)
+% ax8 = subplot(348); %PL - Diestrus v Estrus
+%     imagesc(mean(DE_PL_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax8,jet)
+% ax9 = subplot(349); %IL - Proestrus v Estrus
+%     imagesc(mean(PE_IL_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax9,jet)
+% ax10 = subplot(3,4,10); %dHPC - Proestrus v Estrus
+%     imagesc(mean(PE_DH_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax10,jet)
+% ax11 = subplot(3,4,11); %vHPC - Proestrus v Estrus
+%     imagesc(mean(PE_VH_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax11,jet)
+% ax12 = subplot(3,4,12); %PL - Proestrus v Estrus
+%     imagesc(mean(PE_PL_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%     axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+%     set(gca,'fontsize',14);
+%     colormap(ax12,jet) 
+%     
+% % Save figure
+% saveas(h6,[fd 'DeltaBandPowBoot_Mean1000JointProbMatrx_Horms.fig'])
+% saveas(h6,[fd 'DeltaBandPowBoot_Mean1000JointProbMatrx_Horms.tif'])
+% disp('Delta phase lag/Hormones joint-probability matrix figure saved!')
+% close(h6); clear h6 ax*
                                                                             
 
 % Reset workspace for next process
-clear brain_area fD* fP* T_f* fd x
+% clear fD* fP* fE* T_f* fd x PE_* DE_* DP*
+clear T_f* fd x PE_* DE_* DP* F_*
+
+
+%% 1.9 Males vs Estrous stages: Band Power
+
+% Load bootstrapped male data: Band power
+if ~exist('M_DH_theta','var')
+    fn = 'BandPowBootStats-BL-5to15-MvF.mat';
+    load([root_drIn '5to15' filesep fn],'M_*')
+    clear fn 
+end
+
+% Ptest: Males vs Hormones
+%mPFC-IL
+[DM_IL_theta_p_test,DM_IL_theta_pjm] = get_direct_prob(M_IL_theta_boot, fD_IL_theta_boot); % theta: male vs diestrus
+[PM_IL_theta_p_test,PM_IL_theta_pjm] = get_direct_prob(M_IL_theta_boot, fP_IL_theta_boot); % male vs proestrus
+[EM_IL_theta_p_test,EM_IL_theta_pjm] = get_direct_prob(M_IL_theta_boot, fE_IL_theta_boot); % male vs estrus
+ [DM_IL_gamma_p_test,DM_IL_gamma_pjm] = get_direct_prob(M_IL_gamma_boot, fD_IL_gamma_boot); % gamma
+ [PM_IL_gamma_p_test,PM_IL_gamma_pjm] = get_direct_prob(M_IL_gamma_boot, fP_IL_gamma_boot);
+ [EM_IL_gamma_p_test,EM_IL_gamma_pjm] = get_direct_prob(M_IL_gamma_boot, fE_IL_gamma_boot);
+  [DM_IL_delta_p_test,DM_IL_delta_pjm] = get_direct_prob(M_IL_delta_boot, fD_IL_delta_boot); % delta
+  [PM_IL_delta_p_test,PM_IL_delta_pjm] = get_direct_prob(M_IL_delta_boot, fP_IL_delta_boot);
+  [EM_IL_delta_p_test,EM_IL_delta_pjm] = get_direct_prob(M_IL_delta_boot, fE_IL_delta_boot);
+
+% dHPC
+[DM_DH_theta_p_test,DM_DH_theta_pjm] = get_direct_prob(M_DH_theta_boot, fD_DH_theta_boot); % theta
+[PM_DH_theta_p_test,PM_DH_theta_pjm] = get_direct_prob(M_DH_theta_boot, fP_DH_theta_boot);
+[EM_DH_theta_p_test,EM_DH_theta_pjm] = get_direct_prob(M_DH_theta_boot, fE_DH_theta_boot);
+ [DM_DH_gamma_p_test,DM_DH_gamma_pjm] = get_direct_prob(M_DH_gamma_boot, fD_DH_gamma_boot); % gamma
+ [PM_DH_gamma_p_test,PM_DH_gamma_pjm] = get_direct_prob(M_DH_gamma_boot, fP_DH_gamma_boot);
+ [EM_DH_gamma_p_test,EM_DH_gamma_pjm] = get_direct_prob(M_DH_gamma_boot, fE_DH_gamma_boot);
+  [DM_DH_delta_p_test,DM_DH_delta_pjm] = get_direct_prob(M_DH_delta_boot, fD_DH_delta_boot); % delta
+  [PM_DH_delta_p_test,PM_DH_delta_pjm] = get_direct_prob(M_DH_delta_boot, fP_DH_delta_boot);
+  [EM_DH_delta_p_test,EM_DH_delta_pjm] = get_direct_prob(M_DH_delta_boot, fE_DH_delta_boot);
+  
+%  vHPC
+[DM_VH_theta_p_test,DM_VH_theta_pjm] = get_direct_prob(M_VH_theta_boot, fD_VH_theta_boot); % theta
+[PM_VH_theta_p_test,PM_VH_theta_pjm] = get_direct_prob(M_VH_theta_boot, fP_VH_theta_boot);
+[EM_VH_theta_p_test,EM_VH_theta_pjm] = get_direct_prob(M_VH_theta_boot, fE_VH_theta_boot);
+ [DM_VH_gamma_p_test,DM_VH_gamma_pjm] = get_direct_prob(M_VH_gamma_boot, fD_VH_gamma_boot); % gamma
+ [PM_VH_gamma_p_test,PM_VH_gamma_pjm] = get_direct_prob(M_VH_gamma_boot, fP_VH_gamma_boot);
+ [EM_VH_gamma_p_test,EM_VH_gamma_pjm] = get_direct_prob(M_VH_gamma_boot, fE_VH_gamma_boot);
+  [DM_VH_delta_p_test,DM_VH_delta_pjm] = get_direct_prob(M_VH_delta_boot, fD_VH_delta_boot); % delta
+  [PM_VH_delta_p_test,PM_VH_delta_pjm] = get_direct_prob(M_VH_delta_boot, fP_VH_delta_boot);
+  [EM_VH_delta_p_test,EM_VH_delta_pjm] = get_direct_prob(M_VH_delta_boot, fE_VH_delta_boot);
+
+% mPFC-PL
+[DM_PL_theta_p_test,DM_PL_theta_pjm] = get_direct_prob(M_PL_theta_boot, fD_PL_theta_boot); % theta
+[PM_PL_theta_p_test,PM_PL_theta_pjm] = get_direct_prob(M_PL_theta_boot, fP_PL_theta_boot);
+[EM_PL_theta_p_test,EM_PL_theta_pjm] = get_direct_prob(M_PL_theta_boot, fE_PL_theta_boot);
+ [DM_PL_gamma_p_test,DM_PL_gamma_pjm] = get_direct_prob(M_PL_gamma_boot, fD_PL_gamma_boot); % gamma
+ [PM_PL_gamma_p_test,PM_PL_gamma_pjm] = get_direct_prob(M_PL_gamma_boot, fP_PL_gamma_boot);
+ [EM_PL_gamma_p_test,EM_PL_gamma_pjm] = get_direct_prob(M_PL_gamma_boot, fE_PL_gamma_boot);
+  [DM_PL_delta_p_test,DM_PL_delta_pjm] = get_direct_prob(M_PL_delta_boot, fD_PL_delta_boot); % delta
+  [PM_PL_delta_p_test,PM_PL_delta_pjm] = get_direct_prob(M_PL_delta_boot, fP_PL_delta_boot);
+  [EM_PL_delta_p_test,EM_PL_delta_pjm] = get_direct_prob(M_PL_delta_boot, fE_PL_delta_boot);
+
+% Put p-value data into tables: Males vs Hormones
+  % Theta band
+DM_theta_p_test = [DM_IL_theta_p_test DM_DH_theta_p_test DM_VH_theta_p_test DM_PL_theta_p_test]';
+PM_theta_p_test = [PM_IL_theta_p_test PM_DH_theta_p_test PM_VH_theta_p_test PM_PL_theta_p_test]';
+EM_theta_p_test = [EM_IL_theta_p_test EM_DH_theta_p_test EM_VH_theta_p_test EM_PL_theta_p_test]';
+T_MvHorm_theta = table(brain_area, DM_theta_p_test, PM_theta_p_test, EM_theta_p_test);
+    T_MvHorm_theta.Properties.VariableNames{2} = 'DvMale';
+    T_MvHorm_theta.Properties.VariableNames{3} = 'PvMale';
+    T_MvHorm_theta.Properties.VariableNames{4} = 'EvMale';
+
+  % Gamma band
+DM_gamma_p_test = [DM_IL_gamma_p_test DM_DH_gamma_p_test DM_VH_gamma_p_test DM_PL_gamma_p_test]';
+PM_gamma_p_test = [PM_IL_gamma_p_test PM_DH_gamma_p_test PM_VH_gamma_p_test PM_PL_gamma_p_test]';
+EM_gamma_p_test = [EM_IL_gamma_p_test EM_DH_gamma_p_test EM_VH_gamma_p_test EM_PL_gamma_p_test]';
+T_MvHorm_gamma = table(brain_area, DM_gamma_p_test, PM_gamma_p_test, EM_gamma_p_test);
+    T_MvHorm_gamma.Properties.VariableNames{2} = 'DvMale';
+    T_MvHorm_gamma.Properties.VariableNames{3} = 'PvMale';
+    T_MvHorm_gamma.Properties.VariableNames{4} = 'EvMale';
+
+  % Delta band
+DM_delta_p_test = [DM_IL_delta_p_test DM_DH_delta_p_test DM_VH_delta_p_test DM_PL_delta_p_test]';
+PM_delta_p_test = [PM_IL_delta_p_test PM_DH_delta_p_test PM_VH_delta_p_test PM_PL_delta_p_test]';
+EM_delta_p_test = [EM_IL_delta_p_test EM_DH_delta_p_test EM_VH_delta_p_test EM_PL_delta_p_test]';
+T_MvHorm_delta = table(brain_area, DM_delta_p_test, PM_delta_p_test, EM_delta_p_test);
+    T_MvHorm_delta.Properties.VariableNames{2} = 'DvMale';
+    T_MvHorm_delta.Properties.VariableNames{3} = 'PvMale';
+    T_MvHorm_delta.Properties.VariableNames{4} = 'EvMale';
+clear *_p_test
+        
+% Display table outputs
+disp('Male vs Hormones: Theta Band Power')
+    disp(T_MvHorm_theta)
+disp('  ');     disp('  ');
+disp('Male vs Hormones: Gamma Band Power')
+    disp(T_MvHorm_gamma)
+disp('  ');     disp('  ');
+disp('Male vs Hormones: Delta Band Power')
+    disp(T_MvHorm_delta)
+
+% Save the data
+disp('Saving band power bootstrap statistics..')
+fn = 'BandPowBootStats-BL-5to15-MvHorms.mat';
+save([root_drIn '5to15' filesep fn],'T_*','DM_*','PM_*','EM_*','*_boot','-v7.3')
+disp('Saved!')
+clear fn 
+
 
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
