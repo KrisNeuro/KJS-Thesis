@@ -33,7 +33,6 @@
 
 %% Setup
 subjs = {'A201' 'A202' 'A301' 'A602' 'E105' 'E106' 'E107' 'E108' 'E201'}; % Subject ID listing. A*=male  E*=female 
-nperms=1;
 x = linspace(0,100); %unity line for joint-prob figures
 
 % Set data directories
@@ -120,7 +119,7 @@ annotation(h1,'textbox',[0.308740324594257 0.944323314529585 0.427370786516854 0
 fd = [figdrOut 'Bandpower' filesep]; %output directory
     if ~exist(fd,'dir'); mkdir(fd); end    
 fn = ['ThetaBandPowBoot_Mean' num2str(nperms) 'JointProbMatrx_MvF'];
-saveas(h1,[fd fn '.tif'])
+saveas(h1,[fd fn '.png'])
 saveas(h1,[fd fn '.fig'])
 close(h1); clear h1 ax* fn
 disp('Theta bandpower joint-probability matrix figure saved!')
@@ -137,7 +136,7 @@ annotation(h2,'textbox',[0.308740324594257 0.944323314529585 0.427370786516854 0
 
 % Save figure
 fn = ['GammaBandPowBoot_Mean' num2str(nperms) 'JointProbMatrx_MvF'];
-saveas(h2,[fd fn '.tif'])
+saveas(h2,[fd fn '.png'])
 saveas(h2,[fd fn '.fig'])
 close(h2); clear h2 ax* fn
 disp('Gamma bandpower joint-probability matrix figure saved!')
@@ -153,7 +152,7 @@ annotation(h3,'textbox',[0.308740324594257 0.944323314529585 0.427370786516854 0
 
 % Save figure
 fn = ['DeltaBandPowBoot_Mean' num2str(nperms) 'JointProbMatrx_MvF'];
-saveas(h3,[fd fn '.tif'])
+saveas(h3,[fd fn '.png'])
 saveas(h3,[fd fn '.fig'])
 close(h3); clear h3 ax* fn
 disp('Delta bandpower joint-probability matrix figure saved!')
@@ -301,7 +300,7 @@ clear fn
 %     
 % % Save figure                                                                       (fixed)
 % fn = ['ThetaBandPowBoot_Mean' num2str(nperms) 'JointProbMatrx_Horms'];
-% saveas(h4,[fd fn '.tif'])
+% saveas(h4,[fd fn '.png'])
 % saveas(h4,[fd fn '.fig'])
 % disp('Theta phase lag/Hormones joint-probability matrix figure saved!')
 % close(h4); clear h4 ax* fn
@@ -372,7 +371,7 @@ clear fn
 %     
 % % Save figure
 % saveas(h5,[fd 'GammaBandPowBoot_Mean1000JointProbMatrx_Horms.fig'])
-% saveas(h5,[fd 'GammaBandPowBoot_Mean1000JointProbMatrx_Horms.tif'])
+% saveas(h5,[fd 'GammaBandPowBoot_Mean1000JointProbMatrx_Horms.png'])
 % disp('Gamma phase lag/Hormones joint-probability matrix figure saved!')
 % close(h5); clear h5 ax*
 
@@ -441,7 +440,7 @@ clear fn
 %     
 % % Save figure
 % saveas(h6,[fd 'DeltaBandPowBoot_Mean1000JointProbMatrx_Horms.fig'])
-% saveas(h6,[fd 'DeltaBandPowBoot_Mean1000JointProbMatrx_Horms.tif'])
+% saveas(h6,[fd 'DeltaBandPowBoot_Mean1000JointProbMatrx_Horms.png'])
 % disp('Delta phase lag/Hormones joint-probability matrix figure saved!')
 % close(h6); clear h6 ax*
                                                                             
@@ -505,7 +504,7 @@ end
   [PM_PL_delta_p_test,PM_PL_delta_pjm] = get_direct_prob(M_PL_delta_boot, fP_PL_delta_boot);
   [EM_PL_delta_p_test,EM_PL_delta_pjm] = get_direct_prob(M_PL_delta_boot, fE_PL_delta_boot);
 
-% Put p-value data into tables: Males vs Hormones
+% Put p-value into tables: Males vs Hormones
   % Theta band
 DM_theta_p_test = [DM_IL_theta_p_test DM_DH_theta_p_test DM_VH_theta_p_test DM_PL_theta_p_test]';
 PM_theta_p_test = [PM_IL_theta_p_test PM_DH_theta_p_test PM_VH_theta_p_test PM_PL_theta_p_test]';
@@ -549,7 +548,7 @@ disp('Saving band power bootstrap statistics..')
 fn = 'BandPowBootStats-BL-5to15-MvHorms.mat';
 save([root_drIn '5to15' filesep fn],'T_*','DM_*','PM_*','EM_*','*_boot','-v7.3')
 disp('Saved!')
-clear fn 
+clear fn  brain_area
 
 
 
@@ -573,68 +572,37 @@ end
 nboot = 10^4; %# of bootstrap permutations
 f_n = 1; 
 
-%Preallocate output space
-MF_ILDH_p_test = zeros(1,nperms);
-MF_ILVH_p_test = zeros(1,nperms);
-MF_ILPL_p_test = zeros(1,nperms);
-MF_DHVH_p_test = zeros(1,nperms);
-MF_DHPL_p_test = zeros(1,nperms);
-MF_VHPL_p_test = zeros(1,nperms);
-MF_ILDH_pjm = zeros(100,100,nperms);
-MF_ILVH_pjm = zeros(100,100,nperms);
-MF_ILPL_pjm = zeros(100,100,nperms);
-MF_DHVH_pjm = zeros(100,100,nperms);
-MF_DHPL_pjm = zeros(100,100,nperms);
-MF_VHPL_pjm = zeros(100,100,nperms);
+% Get bootstrapped samples & directo probability test: M v F
+tstart=tic;
+M_ILDH_boot = get_bootstrapped_sample(M_ILDH, nboot, f_n); 
+M_ILVH_boot = get_bootstrapped_sample(M_ILVH, nboot, f_n); 
+M_ILPL_boot = get_bootstrapped_sample(M_ILPL, nboot, f_n); 
+M_DHVH_boot = get_bootstrapped_sample(M_DHVH, nboot, f_n); 
+M_DHPL_boot = get_bootstrapped_sample(M_DHPL, nboot, f_n); 
+M_VHPL_boot = get_bootstrapped_sample(M_VHPL, nboot, f_n); 
+F_ILDH_boot = get_bootstrapped_sample(F_ILDH, nboot, f_n);
+F_ILVH_boot = get_bootstrapped_sample(F_ILVH, nboot, f_n);
+F_ILPL_boot = get_bootstrapped_sample(F_ILPL, nboot, f_n);
+F_DHVH_boot = get_bootstrapped_sample(F_DHVH, nboot, f_n);
+F_DHPL_boot = get_bootstrapped_sample(F_DHPL, nboot, f_n);
+F_VHPL_boot = get_bootstrapped_sample(F_VHPL, nboot, f_n);
+[MF_ILDH_p_test,MF_ILDH_pjm] = get_direct_prob(M_ILDH_boot,F_ILDH_boot);
+[MF_ILVH_p_test,MF_ILVH_pjm] = get_direct_prob(M_ILVH_boot,F_ILVH_boot);
+[MF_ILPL_p_test,MF_ILPL_pjm] = get_direct_prob(M_ILPL_boot,F_ILPL_boot);
+[MF_DHVH_p_test,MF_DHVH_pjm] = get_direct_prob(M_DHVH_boot,F_DHVH_boot);
+[MF_DHPL_p_test,MF_DHPL_pjm] = get_direct_prob(M_DHPL_boot,F_DHPL_boot);
+[MF_VHPL_p_test,MF_VHPL_pjm] = get_direct_prob(M_VHPL_boot,F_VHPL_boot);
+toc(tstart)
 
-for i = 1:nperms %these take ~1min each
-    fprintf('Bootstrap stats: Permutation %i of %i\n',i,nperms)
-    tstart=tic;
-    M_ILDH_boot = get_bootstrapped_sample(M_ILDH, nboot, f_n); 
-    M_ILVH_boot = get_bootstrapped_sample(M_ILVH, nboot, f_n); 
-    M_ILPL_boot = get_bootstrapped_sample(M_ILPL, nboot, f_n); 
-    M_DHVH_boot = get_bootstrapped_sample(M_DHVH, nboot, f_n); 
-    M_DHPL_boot = get_bootstrapped_sample(M_DHPL, nboot, f_n); 
-    M_VHPL_boot = get_bootstrapped_sample(M_VHPL, nboot, f_n); 
-    F_ILDH_boot = get_bootstrapped_sample(F_ILDH, nboot, f_n);
-    F_ILVH_boot = get_bootstrapped_sample(F_ILVH, nboot, f_n);
-    F_ILPL_boot = get_bootstrapped_sample(F_ILPL, nboot, f_n);
-    F_DHVH_boot = get_bootstrapped_sample(F_DHVH, nboot, f_n);
-    F_DHPL_boot = get_bootstrapped_sample(F_DHPL, nboot, f_n);
-    F_VHPL_boot = get_bootstrapped_sample(F_VHPL, nboot, f_n);
-    [MF_ILDH_p_test(i),MF_ILDH_pjm(:,:,i)] = get_direct_prob(M_ILDH_boot,F_ILDH_boot);
-    [MF_ILVH_p_test(i),MF_ILVH_pjm(:,:,i)] = get_direct_prob(M_ILVH_boot,F_ILVH_boot);
-    [MF_ILPL_p_test(i),MF_ILPL_pjm(:,:,i)] = get_direct_prob(M_ILPL_boot,F_ILPL_boot);
-    [MF_DHVH_p_test(i),MF_DHVH_pjm(:,:,i)] = get_direct_prob(M_DHVH_boot,F_DHVH_boot);
-    [MF_DHPL_p_test(i),MF_DHPL_pjm(:,:,i)] = get_direct_prob(M_DHPL_boot,F_DHPL_boot);
-    [MF_VHPL_p_test(i),MF_VHPL_pjm(:,:,i)] = get_direct_prob(M_VHPL_boot,F_VHPL_boot);
-    toc(tstart)
-%     clear *_boot
-end 
-clear i tstart nboot f_n M_ILDH M_ILVH M_ILPL M_DHVH M_DHPL M_VHPL ...
-    F_ILDH F_ILVH F_ILPL F_DHVH F_DHPL F_VHPL
+clear tstart M_ILDH M_ILVH M_ILPL M_DHVH M_DHPL M_VHPL F_ILDH F_ILVH F_ILPL F_DHVH F_DHPL F_VHPL
 
-% Put p-value data into tables
-%   % mean values
-% T_MFmean = table(Connection, [mean(MF_ILDH_p_test(1:nperms)) mean(MF_ILVH_p_test(1:nperms)) mean(MF_ILPL_p_test(1:nperms)) mean(MF_DHVH_p_test(1:nperms)) mean(MF_DHPL_p_test(1:nperms)) mean(MF_VHPL_p_test(1:nperms))]');
-% T_MFmean.Properties.VariableNames{2} = 'MvF';
-%   % median values
-% T_MFmed = table(Connection, [median(MF_ILDH_p_test(1:nperms)) median(MF_ILVH_p_test(1:nperms)) median(MF_ILPL_p_test(1:nperms)) median(MF_DHVH_p_test(1:nperms)) median(MF_DHPL_p_test(1:nperms)) median(MF_VHPL_p_test(1:nperms))]');
-% T_MFmed.Properties.VariableNames{2} = 'MvF';
-  % single value
+% Put p-value data into table
 T_MF = table(Connection, [MF_ILDH_p_test(1) MF_ILVH_p_test(1) MF_ILPL_p_test(1) MF_DHVH_p_test(1) MF_DHPL_p_test(1) MF_VHPL_p_test(1)]');
+T_MF.Properties.VariableNames{2} = 'MvF';
 
-% Display table outputs
-%     disp('Male vs. Female: Theta Phase Lag')
-%     fprintf('Mean p-value: %i permutations\n',nperms)
-%     disp(T_MFmean)
-%     
-%     disp('Male vs. Female: Theta Phase Lag')
-%     fprintf('Median p-value: %i permutations\n',nperms)
-%     disp(T_MFmed)
-% 
-    disp('Male vs. Female: Theta Phase Lag')
-    disp(T_MF)
+% Display table output
+disp('Male vs. Female: Theta Phase Lag')
+disp(T_MF)
     
 % Save the data
 disp('Saving Theta Phase Lag bootstrap statistics: Sex differences..')
@@ -646,10 +614,10 @@ disp('Saved!')
 clear fn
 
 %% 2.2 Plot mean theta phase lag joint-probability matrices: M vs F 
-H1 = figure('units','normalized','outerposition',[0 0 1 1]);
-ax1 = subplot(231); %ILDH
-    imagesc(mean(MF_ILDH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; 
+%H1 = figure('units','normalized','outerposition',[0 0 1 1]);
+%ax1 = subplot(231); %ILDH
+%    imagesc(MF_ILDH_pjm); hold on; plot(x,x,'k','linew',2);
+%    axis xy square; 
 %     xlabel('Male ILDH'); ylabel('Female ILDH')
     xlabel('Female ILDH'); ylabel('Male ILDH')
     set(gca,'fontsize',14)
@@ -692,93 +660,56 @@ ax6 = subplot(236); %VHPL
 % Save figure
 fd = [figdrOut 'ThetaPhaseLag' filesep]; %output directory
     if ~exist(fd,'dir'); mkdir(fd); end    
-saveas(H1,[fd 'ThetaPhaseLagBoot_Mean1000JointProbMatrx_MvF.tif'])
+saveas(H1,[fd 'ThetaPhaseLagBoot_Mean1000JointProbMatrx_MvF.png'])
 saveas(H1,[fd 'ThetaPhaseLagBoot_Mean1000JointProbMatrx_MvF.fig'])
 close(H1); clear H1 ax*
 disp('Phase lag joint-probability matrix figure saved!')
-clear *_pjm
-
 
 % Clean workspace for next segment
-clear M_*  *_M
+clear M_*  *_M clear *_pjm
+
 
 %% 2.3 Females/Hormones: Theta phase lags    
 
-% Preallocate output space
- %ILDH
-fDP_ILDH_p_test = zeros(1,nperms); fDE_ILDH_p_test = zeros(1,nperms); fPE_ILDH_p_test = zeros(1,nperms);
-DP_ILDH_pjm = zeros(100,100,nperms); DE_ILDH_pjm = zeros(100,100,nperms); PE_ILDH_pjm = zeros(100,100,nperms);
- %ILVH
-fDP_ILVH_p_test = zeros(1,nperms); fDE_ILVH_p_test = zeros(1,nperms); fPE_ILVH_p_test = zeros(1,nperms);
-DP_ILVH_pjm = zeros(100,100,nperms); DE_ILVH_pjm = zeros(100,100,nperms); PE_ILVH_pjm = zeros(100,100,nperms);
- %ILPL
-fDP_ILPL_p_test = zeros(1,nperms); fDE_ILPL_p_test = zeros(1,nperms); fPE_ILPL_p_test = zeros(1,nperms);
-DP_ILPL_pjm = zeros(100,100,nperms); DE_ILPL_pjm = zeros(100,100,nperms); PE_ILPL_pjm = zeros(100,100,nperms);
- %DHVH
-fDP_DHVH_p_test = zeros(1,nperms); fDE_DHVH_p_test = zeros(1,nperms); fPE_DHVH_p_test = zeros(1,nperms);
-DP_DHVH_pjm = zeros(100,100,nperms); DE_DHVH_pjm = zeros(100,100,nperms); PE_DHVH_pjm = zeros(100,100,nperms);
- %DHPL
-fDP_DHPL_p_test = zeros(1,nperms); fDE_DHPL_p_test = zeros(1,nperms); fPE_DHPL_p_test = zeros(1,nperms);
-DP_DHPL_pjm = zeros(100,100,nperms); DE_DHPL_pjm = zeros(100,100,nperms); PE_DHPL_pjm = zeros(100,100,nperms);
- %VHPL
-fDP_VHPL_p_test = zeros(1,nperms); fDE_VHPL_p_test = zeros(1,nperms); fPE_VHPL_p_test = zeros(1,nperms);
-DP_VHPL_pjm = zeros(100,100,nperms); DE_VHPL_pjm = zeros(100,100,nperms); PE_VHPL_pjm = zeros(100,100,nperms);
+
 
 % Bootstrap Females/Hormones: Theta Phase lag
-  %These take ~30sec each loop
-for i = 1:nperms
-    fprintf('Bootstrap stats: Permutation %i of %i\n',i,nperms)
-    tstart=tic;
-    [fDP_ILDH_p_test(i),fDE_ILDH_p_test(i),fPE_ILDH_p_test(i),DP_ILDH_pjm(:,:,i),DE_ILDH_pjm(:,:,i),PE_ILDH_pjm(:,:,i)] = BootStat_FHorms(F_ILDH_D,F_ILDH_P,F_ILDH_E); %ILDH
-    [fDP_ILVH_p_test(i),fDE_ILVH_p_test(i),fPE_ILVH_p_test(i),DP_ILVH_pjm(:,:,i),DE_ILVH_pjm(:,:,i),PE_ILVH_pjm(:,:,i)] = BootStat_FHorms(F_ILVH_D,F_ILVH_P,F_ILVH_E); %ILVH
-    [fDP_ILPL_p_test(i),fDE_ILPL_p_test(i),fPE_ILPL_p_test(i),DP_ILPL_pjm(:,:,i),DE_ILPL_pjm(:,:,i),PE_ILPL_pjm(:,:,i)] = BootStat_FHorms(F_ILPL_D,F_ILPL_P,F_ILPL_E); %ILPL
-    [fDP_DHVH_p_test(i),fDE_DHVH_p_test(i),fPE_DHVH_p_test(i),DP_DHVH_pjm(:,:,i),DE_DHVH_pjm(:,:,i),PE_DHVH_pjm(:,:,i)] = BootStat_FHorms(F_DHVH_D,F_DHVH_P,F_DHVH_E); %DHVH
-    [fDP_DHPL_p_test(i),fDE_DHPL_p_test(i),fPE_DHPL_p_test(i),DP_DHPL_pjm(:,:,i),DE_DHPL_pjm(:,:,i),PE_DHPL_pjm(:,:,i)] = BootStat_FHorms(F_DHPL_D,F_DHPL_P,F_DHPL_E); %DHPL
-    [fDP_VHPL_p_test(i),fDE_VHPL_p_test(i),fPE_VHPL_p_test(i),DP_VHPL_pjm(:,:,i),DE_VHPL_pjm(:,:,i),PE_VHPL_pjm(:,:,i)] = BootStat_FHorms(F_VHPL_D,F_VHPL_P,F_VHPL_E); %VHPL
-    toc(tstart)
-end
+%% FIX THIS PART ASAP. NEED TO RETAIN _BOOT SAMPLED DATA, AS ABOVE **********************************************************************************************
+tstart=tic;
+[fDP_ILDH_p_test,fDE_ILDH_p_test,fPE_ILDH_p_test,DP_ILDH_pjm,DE_ILDH_pjm,PE_ILDH_pjm] = BootStat_FHorms(F_ILDH_D,F_ILDH_P,F_ILDH_E); %ILDH
+[fDP_ILVH_p_test,fDE_ILVH_p_test,fPE_ILVH_p_test,DP_ILVH_pjm,DE_ILVH_pjm,PE_ILVH_pjm] = BootStat_FHorms(F_ILVH_D,F_ILVH_P,F_ILVH_E); %ILVH
+[fDP_ILPL_p_test,fDE_ILPL_p_test,fPE_ILPL_p_test,DP_ILPL_pjm,DE_ILPL_pjm,PE_ILPL_pjm] = BootStat_FHorms(F_ILPL_D,F_ILPL_P,F_ILPL_E); %ILPL
+[fDP_DHVH_p_test,fDE_DHVH_p_test,fPE_DHVH_p_test,DP_DHVH_pjm,DE_DHVH_pjm,PE_DHVH_pjm] = BootStat_FHorms(F_DHVH_D,F_DHVH_P,F_DHVH_E); %DHVH
+[fDP_DHPL_p_test,fDE_DHPL_p_test,fPE_DHPL_p_test,DP_DHPL_pjm,DE_DHPL_pjm,PE_DHPL_pjm] = BootStat_FHorms(F_DHPL_D,F_DHPL_P,F_DHPL_E); %DHPL
+[fDP_VHPL_p_test,fDE_VHPL_p_test,fPE_VHPL_p_test,DP_VHPL_pjm,DE_VHPL_pjm,PE_VHPL_pjm] = BootStat_FHorms(F_VHPL_D,F_VHPL_P,F_VHPL_E); %VHPL
+toc(tstart)
 clear i tstart F_*
 
-% Put p-value data into tables
-  % mean values
-DvPmean = [mean(fDP_ILDH_p_test(1:nperms)) mean(fDP_ILVH_p_test(1:nperms)) mean(fDP_ILPL_p_test(1:nperms)) mean(fDP_DHVH_p_test(1:nperms)) mean(fDP_DHPL_p_test(1:nperms)) mean(fDP_VHPL_p_test(1:nperms))]';
-DvEmean = [mean(fDE_ILDH_p_test(1:nperms)) mean(fDE_ILVH_p_test(1:nperms)) mean(fDE_ILPL_p_test(1:nperms)) mean(fDE_DHVH_p_test(1:nperms)) mean(fDE_DHPL_p_test(1:nperms)) mean(fDE_VHPL_p_test(1:nperms))]';
-PvEmean = [mean(fPE_ILDH_p_test(1:nperms)) mean(fPE_ILVH_p_test(1:nperms)) mean(fPE_ILPL_p_test(1:nperms)) mean(fPE_DHVH_p_test(1:nperms)) mean(fPE_DHPL_p_test(1:nperms)) mean(fPE_VHPL_p_test(1:nperms))]';
-T_meanHormones = table(Connection, DvPmean, DvEmean, PvEmean);
-T_meanHormones.Properties.VariableNames{2} = 'DvP';
-T_meanHormones.Properties.VariableNames{3} = 'DvE';
-T_meanHormones.Properties.VariableNames{4} = 'PvE';
-clear DvPmean DvEmean PvEmean
-  % median values
-DvPmed = [median(fDP_ILDH_p_test(1:nperms)) median(fDP_ILVH_p_test(1:nperms)) median(fDP_ILPL_p_test(1:nperms)) median(fDP_DHVH_p_test(1:nperms)) median(fDP_DHPL_p_test) median(fDP_VHPL_p_test(1:nperms))]';
-DvEmed = [median(fDE_ILDH_p_test(1:nperms)) median(fDE_ILVH_p_test(1:nperms)) median(fDE_ILPL_p_test(1:nperms)) median(fDE_DHVH_p_test(1:nperms)) median(fDE_DHPL_p_test) median(fDE_VHPL_p_test(1:nperms))]';
-PvEmed = [median(fPE_ILDH_p_test(1:nperms)) median(fPE_ILVH_p_test(1:nperms)) median(fPE_ILPL_p_test(1:nperms)) median(fPE_DHVH_p_test(1:nperms)) median(fPE_DHPL_p_test) median(fPE_VHPL_p_test(1:nperms))]';
-T_medHormones = table(Connection, DvPmed, DvEmed, PvEmed);
-T_medHormones.Properties.VariableNames{2} = 'DvP';
-T_medHormones.Properties.VariableNames{3} = 'DvE';
-T_medHormones.Properties.VariableNames{4} = 'PvE';
-clear DvPmed DvEmed PvEmed
-        
+% Put p-value data into table
+dvp = [fDP_ILDH_p_test fDP_ILVH_p_test fDP_ILPL_p_test fDP_DHVH_p_test fDP_DHPL_p_test fDP_VHPL_p_test]';
+dve = [fDE_ILDH_p_test fDE_ILVH_p_test fDE_ILPL_p_test fDE_DHVH_p_test fDE_DHPL_p_test fDE_VHPL_p_test]';
+pve = [fPE_ILDH_p_test fPE_ILVH_p_test fPE_ILPL_p_test fPE_DHVH_p_test fPE_DHPL_p_test fPE_VHPL_p_test]';
+T_Estrous = table(Connection, dvp, dve, pve);
+T_Estrous.Properties.VariableNames{2} = 'DvP';
+T_Estrous.Properties.VariableNames{3} = 'DvE';
+T_Estrous.Properties.VariableNames{4} = 'PvE';
+clear dvp dve pve
+
 % Display table outputs
 disp('Female Hormones: Theta Phase Lag')
-fprintf('Mean p-value: %i permutations\n',nperms)
-disp(T_meanHormones)
-disp('  ')
-disp('Female Hormones: Theta Phase Lag')
-fprintf('Median p-value: %i permutations\n',nperms)
-disp(T_medHormones)
+disp(T_Estrous)
 
 % Save the data
 disp('Saving Theta Phase Lag bootstrap statistics: Female/Hormones..')
 fn = 'ThetaPhaseLagBootStats-dHthresh-BL-Hormones.mat';
-save([root_drIn fn],'T_*','fDP*','fDE*','fPE*','DP_*','DE_*','PE_*','-v7.3') %done on 2020-03-04
+save([root_drIn fn],'T_*','fDP*','fDE*','fPE*','DP_*','DE_*','PE_*','-v7.3')
 disp('Saved!')
 clear fn
 
 %% 2.4 Plot mean theta phase lag joint-probability matrices: Females/Hormones
-H2 = figure('units','normalized','outerposition',[0 0 1 1]);
-ax1 = subplot(341); %ILDH - Diestrus v Proestrus
-    imagesc(mean(DP_ILDH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+%H2 = figure('units','normalized','outerposition',[0 0 1 1]);
+%ax1 = subplot(341); %ILDH - Diestrus v Proestrus
+%    imagesc(mean(DP_ILDH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
     title('dHPC-mPFCIL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.25);
     colormap(ax1,jet)
@@ -841,13 +772,15 @@ ax12 = subplot(3,4,12); %VHPL - Proestrus v Estrus
 % Save figure
 fd = [figdrOut 'ThetaPhaseLag' filesep]; %output directory
 saveas(H2,[fd 'ThetaPhaseLagBoot_Mean1000JointProbMatrx_Horms.fig'])
-saveas(H2,[fd 'ThetaPhaseLagBoot_Mean1000JointProbMatrx_Horms.tif'])
+saveas(H2,[fd 'ThetaPhaseLagBoot_Mean1000JointProbMatrx_Horms.png'])
 close(H2); clear H2 ax* fd 
 disp('Theta phase lag/Hormones joint-probability matrix figure saved!')
 
-
 % Clean up workspace
 clear fD* fP* F* T_* fE* *_pjm
+
+
+%% 
 
 % 
 % %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
