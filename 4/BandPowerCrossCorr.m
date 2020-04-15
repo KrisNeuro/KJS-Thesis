@@ -1,6 +1,14 @@
 function [] = BandPowerCrossCorr(subjs,root_drIn,arenas,plotOp)
 %% BandPowerCrossCorr.m
+% [] = BandPowerCrossCorr(subjs,root_drIn,arenas,plotOp)
 % Batch processing band-power cross-correlations: All movement velocities
+%
+% Fetches data:
+%  - Per arena, per subject: all LFP data, all velocities ([drIn subjs{si} '_ReducedData.mat'],'DHIP','IL','PL','VHIP')
+%
+% Calls functions:
+%  -mtcsg.m    (from A. Adhikari)
+%  -regoutliers.m (https://www.mathworks.com/matlabcentral/fileexchange/37212-regression-outliers)
 % 
 %  KJS init (as fxn): 2020-02-14  Adapted from BandPowerCrossCorr_AllVelocityBL.m
  
@@ -206,7 +214,7 @@ for si= 1:length(subjs) %loop thru subjects
 
         %% Save data (per animal, per recording arena)
         fn = [subjs{si} '_' rt '_BandPowerCrossCorr.mat']; %file name
-            save([drIn fn],'drIn','Fs','Rsquare','Rsquare_orig')
+        save([drIn fn],'drIn','Fs','Rsquare','Rsquare_orig','-v7.3')
         fprintf('Bandpower cross-corr data saved for %s %s.\n',subjs{si},rt)
 
         % Reset workspace
@@ -214,5 +222,5 @@ for si= 1:length(subjs) %loop thru subjects
     end %arenas
     clear ai
 end %subjects
-clear si
-end %function
+
+end %eof
