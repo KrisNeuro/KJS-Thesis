@@ -12,9 +12,7 @@ function [] = BandPowerCrossCorr(subjs,root_drIn,arenas,plotOp)
 % 
 %  KJS init (as fxn): 2020-02-14  Adapted from BandPowerCrossCorr_AllVelocityBL.m
  
-%%
-% % List of hormone state abbreviations for sub-struct outputs
-% horms = {'D' 'P' 'E' 'M'};
+%% Setup
 
 % mtcsg parameters   (x,nFFT,Fs,WinLength,nOverlap,NW,Detrend,nTapers);
 Fs = 2000; %sampling frequency (Hz)
