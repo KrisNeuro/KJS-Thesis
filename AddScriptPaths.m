@@ -79,13 +79,14 @@ sxpts = {'BandPowerCrossCorr.m'
 'TotalDistanceTraveled.m' 
 'twosampF.m'
 'VelDist.m' 
-'VelCumDist.m'};
+'VelCumDist.m'
+'ZscoreRsq_boot2.m'};
 
 
 % Function scripts
 disp('Select KJSThesis-master folder containing Thesis .m files')
 gitRepo = [uigetdir(pwd,'Select KJSThesis-master folder containing Thesis .m files') filesep]; % Thesis scripts
-	addpath(genpath(gitRepo)) 
+addpath(genpath(gitRepo)) 
 
 % Toolboxes
 disp('Select root .m toolbox folder')
