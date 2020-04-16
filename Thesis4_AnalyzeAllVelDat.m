@@ -163,13 +163,22 @@ clear plotOp
 drIn = [root_drIn 'BL' filesep]; %BL arena recordings only
 bandz = {'Theta' 'Gamma' 'Delta'}; %frequency bands of interest
 
+% Load index for female hormone states
+    %    idx format:
+    %     (:,1) = Diestrus
+    %     (:,2) = Proestrus
+    %     (:,3) = Estrus
+    %     (:,4) = Metestrus
+fnn = 'FemaleIDX.mat'; % file name to load
+load([drIn fnn],'IDX'); clear fnn                   %this file path may not be correct. Check where it was saved in 'Thesis1_*.m'
+
 for bi = 1:length(bandz) %loop Theta, Gamma, Delta bands
     fprintf('Bootstrap formatting R^2 %s band..\n',bandz{bi})
 
     [M_ILDH,M_ILVH,M_ILPL,M_DHVH,M_DHPL,M_VHPL,F_ILDH,F_ILVH,F_ILPL,F_DHVH,F_DHPL,F_VHPL,...
     F_ILDH_D,F_ILVH_D,F_ILPL_D,F_DHVH_D,F_DHPL_D,F_VHPL_D,F_ILDH_P,F_ILVH_P,F_ILPL_P,F_DHVH_P,F_DHPL_P,F_VHPL_P,...
     F_ILDH_E,F_ILVH_E,F_ILPL_E,F_DHVH_E,F_DHPL_E,F_VHPL_E,F_ILDH_M,F_ILVH_M,F_ILPL_M,F_DHVH_M,F_DHPL_M,F_VHPL_M]...
-    = Format4Bootstrap_Rsq2(subjs,drIn,bandz{bi}); %#ok<*ASGLU>
+    = Format4Bootstrap_Rsq(subjs,drIn,IDX,bandz{bi}); %#ok<*ASGLU>
 
     % Save R^2 data: MvF
     fn = [bandz{bi} 'Rsq-BL_boot.mat'];
@@ -177,7 +186,7 @@ for bi = 1:length(bandz) %loop Theta, Gamma, Delta bands
     fprintf('%s R^2 data saved.\n',bandz{bi})
     clear fn M_* F_*
 end
-clear bi drIn
+clear bi drIn IDX
 disp('Format4Bootstrap_Rsq2.m is complete.')
 
 
