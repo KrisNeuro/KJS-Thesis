@@ -1,12 +1,12 @@
 function [M_ILDH,M_ILVH,M_ILPL,M_DHVH,M_DHPL,M_VHPL,F_ILDH,F_ILVH,F_ILPL,F_DHVH,F_DHPL,F_VHPL,...
 F_ILDH_D,F_ILVH_D,F_ILPL_D,F_DHVH_D,F_DHPL_D,F_VHPL_D,F_ILDH_P,F_ILVH_P,F_ILPL_P,F_DHVH_P,F_DHPL_P,F_VHPL_P,...
-F_ILDH_E,F_ILVH_E,F_ILPL_E,F_DHVH_E,F_DHPL_E,F_VHPL_E,F_ILDH_M,F_ILVH_M,F_ILPL_M,F_DHVH_M,F_DHPL_M,F_VHPL_M] = Format4Bootstrap_Rsq2(subjs,drIn,Band)
-%% Format4Bootstrap_Rsq2
+F_ILDH_E,F_ILVH_E,F_ILPL_E,F_DHVH_E,F_DHPL_E,F_VHPL_E,F_ILDH_M,F_ILVH_M,F_ILPL_M,F_DHVH_M,F_DHPL_M,F_VHPL_M] = Format4Bootstrap_Rsq(subjs,drIn,IDX,Band)
+%% Format4Bootstrap_Rsq
 % 
 % [M_ILDH,M_ILVH,M_ILPL,M_DHVH,M_DHPL,M_VHPL,F_ILDH,F_ILVH,F_ILPL,F_DHVH,F_DHPL,F_VHPL,...
 % F_ILDH_D,F_ILVH_D,F_ILPL_D,F_DHVH_D,F_DHPL_D,F_VHPL_D,F_ILDH_P,F_ILVH_P,F_ILPL_P,F_DHVH_P,F_DHPL_P,F_VHPL_P,...
 % F_ILDH_E,F_ILVH_E,F_ILPL_E,F_DHVH_E,F_DHPL_E,F_VHPL_E,F_ILDH_M,F_ILVH_M,F_ILPL_M,F_DHVH_M,F_DHPL_M,F_VHPL_M] ...
-%     = Format4Bootstrap_Rsq2(subjs,drIn,Band)
+%     = Format4Bootstrap_Rsq(subjs,drIn,IDX,Band)
 % 
 %  BL data only: All running velocities considered
 % 
@@ -53,18 +53,18 @@ clear maxT
 for si = 1:length(Msubjs) %loop thru male subjects
     subjID = Msubjs{si}; %subject name
 
-    % Load R^2 data - all trials, including outlier points in correlation
+    % Load R^2 data - all trials, excluding outlier points in correlation
     fn = [subjID '_BL_BandPowerCrossCorr.mat'];
-    load([drIn subjID filesep fn],'Rsquare_orig') 
+    load([drIn subjID filesep fn],'Rsquare') 
     clear fn
     
-    for ri = 1:length(Rsquare_orig.(Band).il_dhip) %loop trials
-        [M_ILDH{si,ri}] = Rsquare_orig.(Band).il_dhip(ri);
-        [M_ILVH{si,ri}] = Rsquare_orig.(Band).il_vhip(ri);
-        [M_ILPL{si,ri}] = Rsquare_orig.(Band).il_pl(ri);
-        [M_DHVH{si,ri}] = Rsquare_orig.(Band).dhip_vhip(ri);
-        [M_DHPL{si,ri}] = Rsquare_orig.(Band).pl_dhip(ri);
-        [M_VHPL{si,ri}] = Rsquare_orig.(Band).pl_vhip(ri);
+    for ri = 1:length(Rsquare.(Band).il_dhip) %loop trials
+        [M_ILDH{si,ri}] = Rsquare.(Band).il_dhip(ri);
+        [M_ILVH{si,ri}] = Rsquare.(Band).il_vhip(ri);
+        [M_ILPL{si,ri}] = Rsquare.(Band).il_pl(ri);
+        [M_DHVH{si,ri}] = Rsquare.(Band).dhip_vhip(ri);
+        [M_DHPL{si,ri}] = Rsquare.(Band).pl_dhip(ri);
+        [M_VHPL{si,ri}] = Rsquare.(Band).pl_vhip(ri);
     end
     clear Rsq* subjID ri
 end %Msubjs
@@ -74,18 +74,18 @@ clear si
 for si = 1:length(Fsubjs) %loop thru female subjects
     subjID = Fsubjs{si}; %subject name
 
-    % Load R^2 data - all trials, including outlier points in correlation
+    % Load R^2 data - all trials, excluding outlier points in correlation
     fn = [subjID '_BL_BandPowerCrossCorr.mat'];
-    load([drIn subjID filesep fn],'Rsquare_orig') 
+    load([drIn subjID filesep fn],'Rsquare')
     clear fn
     
-    for ri = 1:length(Rsquare_orig.(Band).il_dhip) %loop trials
-        [F_ILDH{si,ri}] = Rsquare_orig.(Band).il_dhip(ri);
-        [F_ILVH{si,ri}] = Rsquare_orig.(Band).il_vhip(ri);
-        [F_ILPL{si,ri}] = Rsquare_orig.(Band).il_pl(ri);
-        [F_DHVH{si,ri}] = Rsquare_orig.(Band).dhip_vhip(ri);
-        [F_DHPL{si,ri}] = Rsquare_orig.(Band).pl_dhip(ri);
-        [F_VHPL{si,ri}] = Rsquare_orig.(Band).pl_vhip(ri);
+    for ri = 1:length(Rsquare.(Band).il_dhip) %loop trials
+        [F_ILDH{si,ri}] = Rsquare.(Band).il_dhip(ri);
+        [F_ILVH{si,ri}] = Rsquare.(Band).il_vhip(ri);
+        [F_ILPL{si,ri}] = Rsquare.(Band).il_pl(ri);
+        [F_DHVH{si,ri}] = Rsquare.(Band).dhip_vhip(ri);
+        [F_DHPL{si,ri}] = Rsquare.(Band).pl_dhip(ri);
+        [F_VHPL{si,ri}] = Rsquare.(Band).pl_vhip(ri);
     end
     clear Rsq* subjID ri
 end %Fsubjs
@@ -129,27 +129,16 @@ maxM = 3;
     F_DHPL_M = cell(length(Fsubjs),maxM);
     F_VHPL_M = cell(length(Fsubjs),maxM);
     clear maxM
-
     
 for si = 1:length(Fsubjs)
     subjID = Fsubjs{si}; %subject name
 
-%    Load index for hormone states across recordings
-%        idx format:
-%         (:,1) = Diestrus
-%         (:,2) = Proestrus
-%         (:,3) = Estrus
-%         (:,4) = Metestrus
-    fnn = [subjID '_ThetaFiltfilt.mat']; % file name to load
-    load([drIn subjID filesep fnn],'idx')
-    clear fnn
-        if size(idx,1) < size(idx,2)
-            idx = idx';
-        end
+%   Set index of hormone states for this subject
+    idx = IDX{si};
         
     % Load R^2 data - all trials, including outlier points in correlation
     fn = [subjID '_BL_BandPowerCrossCorr.mat'];
-    load([drIn subjID filesep fn],'Rsquare_orig') 
+    load([drIn subjID filesep fn],'Rsquare') 
     clear fn
     
     for ti = 1:4 %loop thru hormone states: column 1=Diestrus, 2=Proestrus, 3=Estrus, 4=Metestrus
@@ -157,33 +146,33 @@ for si = 1:length(Fsubjs)
         for ri = 1:length(hidx) %loop trials in this hormone state
             switch ti
                 case 1 %Diestrus
-                    F_ILDH_D{si,ri} = Rsquare_orig.(Band).il_dhip(hidx(ri)); 
-                    F_ILVH_D{si,ri} = Rsquare_orig.(Band).il_vhip(hidx(ri)); 
-                    F_ILPL_D{si,ri} = Rsquare_orig.(Band).il_pl(hidx(ri)); 
-                    F_DHVH_D{si,ri} = Rsquare_orig.(Band).dhip_vhip(hidx(ri)); 
-                    F_DHPL_D{si,ri} = Rsquare_orig.(Band).pl_dhip(hidx(ri)); 
-                    F_VHPL_D{si,ri} = Rsquare_orig.(Band).pl_vhip(hidx(ri)); 
+                    F_ILDH_D{si,ri} = Rsquare.(Band).il_dhip(hidx(ri)); 
+                    F_ILVH_D{si,ri} = Rsquare.(Band).il_vhip(hidx(ri)); 
+                    F_ILPL_D{si,ri} = Rsquare.(Band).il_pl(hidx(ri)); 
+                    F_DHVH_D{si,ri} = Rsquare.(Band).dhip_vhip(hidx(ri)); 
+                    F_DHPL_D{si,ri} = Rsquare.(Band).pl_dhip(hidx(ri)); 
+                    F_VHPL_D{si,ri} = Rsquare.(Band).pl_vhip(hidx(ri)); 
                 case 2 %Proestrus
-                    F_ILDH_P{si,ri} = Rsquare_orig.(Band).il_dhip(hidx(ri)); 
-                    F_ILVH_P{si,ri} = Rsquare_orig.(Band).il_vhip(hidx(ri)); 
-                    F_ILPL_P{si,ri} = Rsquare_orig.(Band).il_pl(hidx(ri)); 
-                    F_DHVH_P{si,ri} = Rsquare_orig.(Band).dhip_vhip(hidx(ri)); 
-                    F_DHPL_P{si,ri} = Rsquare_orig.(Band).pl_dhip(hidx(ri)); 
-                    F_VHPL_P{si,ri} = Rsquare_orig.(Band).pl_vhip(hidx(ri)); 
+                    F_ILDH_P{si,ri} = Rsquare.(Band).il_dhip(hidx(ri)); 
+                    F_ILVH_P{si,ri} = Rsquare.(Band).il_vhip(hidx(ri)); 
+                    F_ILPL_P{si,ri} = Rsquare.(Band).il_pl(hidx(ri)); 
+                    F_DHVH_P{si,ri} = Rsquare.(Band).dhip_vhip(hidx(ri)); 
+                    F_DHPL_P{si,ri} = Rsquare.(Band).pl_dhip(hidx(ri)); 
+                    F_VHPL_P{si,ri} = Rsquare.(Band).pl_vhip(hidx(ri)); 
                 case 3
-                    F_ILDH_E{si,ri} = Rsquare_orig.(Band).il_dhip(hidx(ri)); 
-                    F_ILVH_E{si,ri} = Rsquare_orig.(Band).il_vhip(hidx(ri)); 
-                    F_ILPL_E{si,ri} = Rsquare_orig.(Band).il_pl(hidx(ri)); 
-                    F_DHVH_E{si,ri} = Rsquare_orig.(Band).dhip_vhip(hidx(ri)); 
-                    F_DHPL_E{si,ri} = Rsquare_orig.(Band).pl_dhip(hidx(ri)); 
-                    F_VHPL_E{si,ri} = Rsquare_orig.(Band).pl_vhip(hidx(ri)); 
+                    F_ILDH_E{si,ri} = Rsquare.(Band).il_dhip(hidx(ri)); 
+                    F_ILVH_E{si,ri} = Rsquare.(Band).il_vhip(hidx(ri)); 
+                    F_ILPL_E{si,ri} = Rsquare.(Band).il_pl(hidx(ri)); 
+                    F_DHVH_E{si,ri} = Rsquare.(Band).dhip_vhip(hidx(ri)); 
+                    F_DHPL_E{si,ri} = Rsquare.(Band).pl_dhip(hidx(ri)); 
+                    F_VHPL_E{si,ri} = Rsquare.(Band).pl_vhip(hidx(ri)); 
                 case 4
-                    F_ILDH_M{si,ri} = Rsquare_orig.(Band).il_dhip(hidx(ri)); 
-                    F_ILVH_M{si,ri} = Rsquare_orig.(Band).il_vhip(hidx(ri)); 
-                    F_ILPL_M{si,ri} = Rsquare_orig.(Band).il_pl(hidx(ri)); 
-                    F_DHVH_M{si,ri} = Rsquare_orig.(Band).dhip_vhip(hidx(ri)); 
-                    F_DHPL_M{si,ri} = Rsquare_orig.(Band).pl_dhip(hidx(ri)); 
-                    F_VHPL_M{si,ri} = Rsquare_orig.(Band).pl_vhip(hidx(ri)); 
+                    F_ILDH_M{si,ri} = Rsquare.(Band).il_dhip(hidx(ri)); 
+                    F_ILVH_M{si,ri} = Rsquare.(Band).il_vhip(hidx(ri)); 
+                    F_ILPL_M{si,ri} = Rsquare.(Band).il_pl(hidx(ri)); 
+                    F_DHVH_M{si,ri} = Rsquare.(Band).dhip_vhip(hidx(ri)); 
+                    F_DHPL_M{si,ri} = Rsquare.(Band).pl_dhip(hidx(ri)); 
+                    F_VHPL_M{si,ri} = Rsquare.(Band).pl_vhip(hidx(ri)); 
             end %switch
             clear ri
         end %trials
