@@ -1,12 +1,12 @@
 function [M_ILDH,M_ILVH,M_ILPL,M_DHVH,M_DHPL,M_VHPL,F_ILDH,F_ILVH,F_ILPL,F_DHVH,F_DHPL,F_VHPL,...
 F_ILDH_D,F_ILVH_D,F_ILPL_D,F_DHVH_D,F_DHPL_D,F_VHPL_D,F_ILDH_P,F_ILVH_P,F_ILPL_P,F_DHVH_P,F_DHPL_P,F_VHPL_P,...
-F_ILDH_E,F_ILVH_E,F_ILPL_E,F_DHVH_E,F_DHPL_E,F_VHPL_E,F_ILDH_M,F_ILVH_M,F_ILPL_M,F_DHVH_M,F_DHPL_M,F_VHPL_M] = Format4Bootstrap_Rsq2(subjs,drIn,Band)
+F_ILDH_E,F_ILVH_E,F_ILPL_E,F_DHVH_E,F_DHPL_E,F_VHPL_E,F_ILDH_M,F_ILVH_M,F_ILPL_M,F_DHVH_M,F_DHPL_M,F_VHPL_M] = Format4Bootstrap_Rsq2(subjs,drIn,IDX,Band)
 %% Format4Bootstrap_Rsq2
 % 
 % [M_ILDH,M_ILVH,M_ILPL,M_DHVH,M_DHPL,M_VHPL,F_ILDH,F_ILVH,F_ILPL,F_DHVH,F_DHPL,F_VHPL,...
 % F_ILDH_D,F_ILVH_D,F_ILPL_D,F_DHVH_D,F_DHPL_D,F_VHPL_D,F_ILDH_P,F_ILVH_P,F_ILPL_P,F_DHVH_P,F_DHPL_P,F_VHPL_P,...
 % F_ILDH_E,F_ILVH_E,F_ILPL_E,F_DHVH_E,F_DHPL_E,F_VHPL_E,F_ILDH_M,F_ILVH_M,F_ILPL_M,F_DHVH_M,F_DHPL_M,F_VHPL_M] ...
-%     = Format4Bootstrap_Rsq2(subjs,drIn,Band)
+%     = Format4Bootstrap_Rsq2(subjs,drIn,IDX,Band)
 % 
 %  BL data only: All running velocities considered
 % 
@@ -76,7 +76,7 @@ for si = 1:length(Fsubjs) %loop thru female subjects
 
     % Load R^2 data - all trials, excluding outlier points in correlation
     fn = [subjID '_BL_BandPowerCrossCorr.mat'];
-    load([drIn subjID filesep fn],'Rsquare') 
+    load([drIn subjID filesep fn],'Rsquare')
     clear fn
     
     for ri = 1:length(Rsquare.(Band).il_dhip) %loop trials
@@ -129,23 +129,12 @@ maxM = 3;
     F_DHPL_M = cell(length(Fsubjs),maxM);
     F_VHPL_M = cell(length(Fsubjs),maxM);
     clear maxM
-
     
 for si = 1:length(Fsubjs)
     subjID = Fsubjs{si}; %subject name
 
-%    Load index for hormone states across recordings
-%        idx format:
-%         (:,1) = Diestrus
-%         (:,2) = Proestrus
-%         (:,3) = Estrus
-%         (:,4) = Metestrus
-    fnn = [subjID '_ThetaFiltfilt.mat']; % file name to load
-    load([drIn subjID filesep fnn],'idx')
-    clear fnn
-    if size(idx,1) < size(idx,2)
-        idx = idx';
-    end
+%   Set index of hormone states for this subject
+    idx = IDX{si};
         
     % Load R^2 data - all trials, including outlier points in correlation
     fn = [subjID '_BL_BandPowerCrossCorr.mat'];
