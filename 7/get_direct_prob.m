@@ -1,18 +1,18 @@
 function [p_test, p_joint_matrix] = get_direct_prob(sample1, sample2)
-%        get_direct_prob Returns the direct probability of items from sample2 being
+% get_direct_prob Returns the direct probability of items from sample2 being
 %   greater than or equal to those from sample1.
-%        Sample1 and Sample2 are two bootstrapped samples and this function
-%        directly computes the probability of items from sample 2 being greater
-%        than or equal to those from sample1. Since the bootstrapped samples are
-%        themselves posterior distributions, this is a way of computing a
-%        Bayesian probability. The joint matrix can also be returned to compute
-%        directly upon.
+%    Sample1 and Sample2 are two bootstrapped samples and this function
+%    directly computes the probability of items from sample 2 being greater
+%    than or equal to those from sample1. Since the bootstrapped samples are
+%    themselves posterior distributions, this is a way of computing a
+%    Bayesian probability. The joint matrix can also be returned to compute
+%    directly upon.
 
 %First, we want to find the ranges over which we need to build the
 %probability distributions.
     joint_low_val = min([min(sample1),min(sample2)]);
     joint_high_val = max([max(sample1),max(sample2)]);
-    
+
 %Now set up a matrix with axis between these extreme values for which we
 %will calculate the probabilities.
     p_joint_matrix = zeros([100,100]);
@@ -33,12 +33,12 @@ function [p_test, p_joint_matrix] = get_direct_prob(sample1, sample2)
     end
             
     %Normalize the joint probability matrix:
-    % p_joint_matrix = p_joint_matrix/sum(p_joint_matrix,'ALL');
-    p_joint_matrix = p_joint_matrix/sum(p_joint_matrix(:));
+    p_joint_matrix = p_joint_matrix/sum(p_joint_matrix,'ALL');
+    % p_joint_matrix = p_joint_matrix/sum(p_joint_matrix(:));
     
     %Get the volume of the joint probability matrix in the upper triangle:
-     % p_test = sum(triu(fliplr(p_joint_matrix)),'ALL');
-    temp =  triu(fliplr(p_joint_matrix));
-    p_test = sum(temp(:));
+    p_test = sum(triu(fliplr(p_joint_matrix)),'ALL');
+    %temp =  triu(fliplr(p_joint_matrix));
+    %p_test = sum(temp(:));
 
-end
+end %fxn
