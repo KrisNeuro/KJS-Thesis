@@ -1,25 +1,33 @@
 %% Thesis7_Analyze5to15BLDat_V3.m
 % 
 %   Steps:
-%       1.0 Hierarchical bootstrap: Band power (BL,5-15cm/s)
-%        1.1 MvF: Band Power 
-%        1.2 Plot mean theta band joint-probability matrices: M vs F 
-%        1.3 Plot mean gamma band joint-probability matrices: M vs F 
-%        1.4 Plot mean delta band joint-probability matrices: M vs F 
-%        1.5 Females/Hormones: Band Power
-%        1.6 Plot mean theta band joint-probability matrices: Females/Hormones
-%        1.7 Plot mean gamma band joint-probability matrices: Females/Hormones
-%        1.8 Plot mean delta band joint-probability matrices: Females/Hormones
-%       2.0 Hierarchical bootstrap: Theta phase lags (BL,mean dHPC power threshold)
-%        2.1 MvF: Theta phase lags 
-%        2.2 Plot mean theta phase lag joint-probability matrices: M vs F 
-%        2.3 Females/Hormones: Theta phase lags
-%        2.4 Plot mean theta phase lag joint-probability matrices: Females/Hormones
+%       1.0 Hierarchical bootstrap: Band power (BL, 5-15cm/s)
+%        1.1 Male v Female: Band Power
+%        1.2.1 Plot theta band joint-probability matrices: Male vs Female
+%        1.2.2 Plot gamma band joint-probability matrices: Male vs Female
+% 		 1.2.3 Plot delta band joint-probability matrices: Male vs Female
+% 		 1.3 Females/Estrous: Band Power
+% 		 1.4.1 Plot theta band joint-probability matrices: Females/Estrous
+% 		 1.4.2 Plot gamma band joint-probability matrices: Females/Estrous
+% 		 1.4.3 Plot delta band joint-probability matrices: Females/Estrous
+%        1.5 Males vs Hormone stages: Band Power 
+%        1.6.1 Plot theta band join-probability matrices: Male vs Hormones
+% 		 1.6.2 Plot gamma band join-probability matrices: Male vs Hormones
+% 		 1.6.3 Plot delta band join-probability matrices: Male vs Hormones
+%       2.0 Hierarchical bootstrap: Theta phase lags (BL, mean dHPC power threshold)
+%        2.1 Male v Female: Theta phase lags
+%        2.2 Plot theta phase lag joint-probability matrices: Male vs Female
+%        2.3 Females/Estrous: Theta phase lags
+%        2.4 Plot theta phase lag joint-probability matrices: Females/Estrous
+% 		 2.5 Males vs Hormone stages: Theta phase lags
+% 		 2.6 Plot theta phase lag joint-probability matrices: Male vs Hormones
 %       3.0 Hierarchical bootstrap: Theta, Gamma, Delta R^2
-%        3.1 MvF: R^2
-%        3.2 Plot mean R^2 joint-probability matrices: M vs F 
-%        3.3 Females/Hormones: R^2
-%        3.4 Plot mean R^2 joint-probability matrices: Females/Hormones
+%        3.1 Male v Female: R^2
+%        3.2 Plot R^2 joint-probability matrices: Male v Female
+%        3.3 Females/Estrous: R^2
+%        3.4 Plot R^2 joint-probability matrices: Females/Estrous
+% 		 3.5 Males vs Hormone stages: R^2
+%		 3.6 Plot R^2 joint-probability matrices: Males vs Hormone
 % 
 %   Calls on functions:
 %       - get_bootstrapped_sample.m
@@ -57,7 +65,7 @@ if ~exist('M_DH_theta','var') || ~exist('F_DH_theta','var')
 end
 
 
-%% 1.1 MvF: Band Power
+%% 1.1 Male v Female: Band Power
 tstart=tic;
 
 %mPFC-IL
@@ -106,7 +114,7 @@ save([root_drIn '5to15' filesep fn],'T_MF','MF_*','*_boot','subjs','-v7.3')
 disp('Saved!')
 clear fn 
 
-%% 1.2 Plot mean theta band joint-probability matrices: M vs F 
+%% 1.2.1 Plot theta band joint-probability matrices: Male vs Female
 [h1] = Plot_4pjm_MF(MF_thetapjm_IL,MF_thetapjm_DH,MF_thetapjm_VH,MF_thetapjm_PL,nperms,x);
 
 % Create textbox for figure title
@@ -125,7 +133,7 @@ close(h1); clear h1 ax* fn
 disp('Theta bandpower joint-probability matrix figure saved!')
 
 
-%% 1.3 Plot mean gamma band joint-probability matrices: M vs F 
+%% 1.2.2 Plot gamma band joint-probability matrices: Male vs Female
 [h2] = Plot_4pjm_MF(MF_gammapjm_IL,MF_gammapjm_DH,MF_gammapjm_VH,MF_gammapjm_PL,nperms,x);
 
 % Create textbox for figure title
@@ -141,7 +149,7 @@ saveas(h2,[fd fn '.fig'])
 close(h2); clear h2 ax* fn
 disp('Gamma bandpower joint-probability matrix figure saved!')
 
-%% 1.4 Plot mean delta band joint-probability matrices: M vs F 
+%% 1.2.3 Plot delta band joint-probability matrices: Male vs Female
 [h3] = Plot_4pjm_MF(MF_deltapjm_IL,MF_deltapjm_DH,MF_deltapjm_VH,MF_deltapjm_PL,nperms,x);
 
 % Create textbox for figure title
@@ -162,7 +170,7 @@ disp('Delta bandpower joint-probability matrix figure saved!')
 clear MF_* T_* *_boot *_M_theta *_M_gamma *_M_delta
 
 
-%% 1.5 Females/Hormones: Band Power
+%% 1.3 Females/Estrous: Band Power
 
 tstart=tic;
 % mPFC-IL 
@@ -235,8 +243,8 @@ clear fn
 %% PICK BACK UP HERE. PUT FEMALE HORMONE PLOTTING INTO ITS OWN FUNCTION, SIMILARLY TO PLOT_4PJM_MF.m
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% 1.6 Plot mean theta band joint-probability matrices: Females/Hormones
-% h4 = figure('units','normalized','outerposition',[0 0 1 1]);
+%% 1.4.1 Plot theta band joint-probability matrices: Females/Estrous
+% h141 = figure('units','normalized','outerposition',[0 0 1 1]);
 % ax1 = subplot(341); %IL - Diestrus v Proestrus
 %     imagesc(mean(DP_IL_thetapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
 %     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
@@ -300,14 +308,14 @@ clear fn
 %     
 % % Save figure                                                                       (fixed)
 % fn = ['ThetaBandPowBoot_Mean' num2str(nperms) 'JointProbMatrx_Horms'];
-% saveas(h4,[fd fn '.png'])
-% saveas(h4,[fd fn '.fig'])
+% saveas(h141,[fd fn '.png'])
+% saveas(h141,[fd fn '.fig'])
 % disp('Theta phase lag/Hormones joint-probability matrix figure saved!')
-% close(h4); clear h4 ax* fn
+% close(h141); clear h141 ax* fn
 
 
-%% 1.7 Plot mean gamma band joint-probability matrices: Females/Hormones              TO DO
-% h5 = figure('units','normalized','outerposition',[0 0 1 1]);
+%% 1.4.2 Plot gamma band joint-probability matrices: Females/Estrous              TO DO
+% h142 = figure('units','normalized','outerposition',[0 0 1 1]);
 % ax1 = subplot(341); %IL - Diestrus v Proestrus
 %     imagesc(mean(DP_IL_gammapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
 %     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
@@ -370,13 +378,13 @@ clear fn
 %     colormap(ax12,jet) 
 %     
 % % Save figure
-% saveas(h5,[fd 'GammaBandPowBoot_Mean1000JointProbMatrx_Horms.fig'])
-% saveas(h5,[fd 'GammaBandPowBoot_Mean1000JointProbMatrx_Horms.png'])
+% saveas(h142,[fd 'GammaBandPowBoot_Mean1000JointProbMatrx_Horms.fig'])
+% saveas(h142,[fd 'GammaBandPowBoot_Mean1000JointProbMatrx_Horms.png'])
 % disp('Gamma phase lag/Hormones joint-probability matrix figure saved!')
-% close(h5); clear h5 ax*
+% close(h142); clear h142 ax*
 
-%% 1.8 Plot mean delta band joint-probability matrices: Females/Hormones
-% h6 = figure('units','normalized','outerposition',[0 0 1 1]);
+%% 1.4.3 Plot delta band joint-probability matrices: Females/Estrous
+% h143 = figure('units','normalized','outerposition',[0 0 1 1]);
 % ax1 = subplot(341); %IL - Diestrus v Proestrus
 %     imagesc(mean(DP_IL_deltapjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
 %     axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
@@ -450,7 +458,7 @@ clear fn
 clear T_f* fd x PE_* DE_* DP* F_*
 
 
-%% 1.9 Males vs Estrous stages: Band Power
+%% 1.5 Males vs Estrous stages: Band Power
 
 % Load bootstrapped male data: Band power
 if ~exist('M_DH_theta','var')
@@ -548,8 +556,21 @@ disp('Saving band power bootstrap statistics..')
 fn = 'BandPowBootStats-BL-5to15-MvHorms.mat';
 save([root_drIn '5to15' filesep fn],'T_*','DM_*','PM_*','EM_*','*_boot','-v7.3')
 disp('Saved!')
-clear fn  brain_area
+clear fn  
 
+
+%% 1.6.1 Plot theta band join-probability matrices
+h161 = figure('units','normalized','outerposition',[0 0 1 1]);
+
+%% 1.6.2 Plot gamma band join-probability matrices
+h162 = figure('units','normalized','outerposition',[0 0 1 1]);
+
+%% 1.6.3 Plot delta band join-probability matrices
+h163 = figure('units','normalized','outerposition',[0 0 1 1]);
+
+
+% Clear workspace for next segment
+clear brain_area
 
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -568,11 +589,11 @@ if ~exist('M_ILDH','var') || ~exist('F_ILDH','var')
     clear fn 
 end
 
-%% 2.1 MvF: Theta phase lags
+%% 2.1 Male v Female: Theta phase lags
 nboot = 10^4; %# of bootstrap permutations
 f_n = 1; 
 
-% Get bootstrapped samples & directo probability test: M v F
+% Get bootstrapped samples : M v F
 tstart=tic;
 M_ILDH_boot = get_bootstrapped_sample(M_ILDH, nboot, f_n); 
 M_ILVH_boot = get_bootstrapped_sample(M_ILVH, nboot, f_n); 
@@ -586,6 +607,8 @@ F_ILPL_boot = get_bootstrapped_sample(F_ILPL, nboot, f_n);
 F_DHVH_boot = get_bootstrapped_sample(F_DHVH, nboot, f_n);
 F_DHPL_boot = get_bootstrapped_sample(F_DHPL, nboot, f_n);
 F_VHPL_boot = get_bootstrapped_sample(F_VHPL, nboot, f_n);
+
+% Perform direct probability tests: pboot is support of the hypothesis that Female>Male
 [MF_ILDH_p_test,MF_ILDH_pjm] = get_direct_prob(M_ILDH_boot,F_ILDH_boot);
 [MF_ILVH_p_test,MF_ILVH_pjm] = get_direct_prob(M_ILVH_boot,F_ILVH_boot);
 [MF_ILPL_p_test,MF_ILPL_pjm] = get_direct_prob(M_ILPL_boot,F_ILPL_boot);
@@ -613,67 +636,65 @@ save([root_drIn fn],'T_MF','MF_*','*_boot','-v7.3')
 disp('Saved!')
 clear fn
 
-%% 2.2 Plot mean theta phase lag joint-probability matrices: M vs F 
+%% 2.2 Plot theta phase lag joint-probability matrices: Male vs Female
 %H1 = figure('units','normalized','outerposition',[0 0 1 1]);
 %ax1 = subplot(231); %ILDH
 %    imagesc(MF_ILDH_pjm); hold on; plot(x,x,'k','linew',2);
 %    axis xy square; 
 %     xlabel('Male ILDH'); ylabel('Female ILDH')
-    xlabel('Female ILDH'); ylabel('Male ILDH')
-    set(gca,'fontsize',14)
-    colormap(ax1,jet)
-ax2 = subplot(232); %ILVH
-    imagesc(mean(MF_ILVH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; 
-    %     xlabel('Male ILDH'); ylabel('Female ILDH')
-    xlabel('Female ILDH'); ylabel('Male ILDH')
-    title('Theta phase lags: Joint-probability matrices')
-    set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5)
-    colormap(ax2,jet)
-ax3 = subplot(233); %ILPL
-    imagesc(mean(MF_ILPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; 
-    %     xlabel('Male ILDH'); ylabel('Female ILDH')
-    xlabel('Female ILDH'); ylabel('Male ILDH')
-    set(gca,'fontsize',14)
-    colormap(ax3,jet)
-ax4 = subplot(234); %DHVH
-    imagesc(mean(MF_DHVH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; 
-    %     xlabel('Male ILDH'); ylabel('Female ILDH')
-    xlabel('Female ILDH'); ylabel('Male ILDH')
-    set(gca,'fontsize',14)
-    colormap(ax4,jet)
-ax5 = subplot(235); %DHPL
-    imagesc(mean(MF_DHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Male DHPL'); ylabel('Female DHPL')
-    set(gca,'fontsize',14)
-    colormap(ax5,jet)
-ax6 = subplot(236); %VHPL
-    imagesc(mean(MF_VHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; 
-    %     xlabel('Male ILDH'); ylabel('Female ILDH')
-    xlabel('Female ILDH'); ylabel('Male ILDH')
-    set(gca,'fontsize',14)
-    colormap(ax6,jet)
+    % xlabel('Female ILDH'); ylabel('Male ILDH')
+    % set(gca,'fontsize',14)
+    % colormap(ax1,jet)
+% ax2 = subplot(232); %ILVH
+    % imagesc(mean(MF_ILVH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; 
+    % %     xlabel('Male ILDH'); ylabel('Female ILDH')
+    % xlabel('Female ILDH'); ylabel('Male ILDH')
+    % title('Theta phase lags: Joint-probability matrices')
+    % set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.5)
+    % colormap(ax2,jet)
+% ax3 = subplot(233); %ILPL
+    % imagesc(mean(MF_ILPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; 
+    % %     xlabel('Male ILDH'); ylabel('Female ILDH')
+    % xlabel('Female ILDH'); ylabel('Male ILDH')
+    % set(gca,'fontsize',14)
+    % colormap(ax3,jet)
+% ax4 = subplot(234); %DHVH
+    % imagesc(mean(MF_DHVH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; 
+    % %     xlabel('Male ILDH'); ylabel('Female ILDH')
+    % xlabel('Female ILDH'); ylabel('Male ILDH')
+    % set(gca,'fontsize',14)
+    % colormap(ax4,jet)
+% ax5 = subplot(235); %DHPL
+    % imagesc(mean(MF_DHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; xlabel('Male DHPL'); ylabel('Female DHPL')
+    % set(gca,'fontsize',14)
+    % colormap(ax5,jet)
+% ax6 = subplot(236); %VHPL
+    % imagesc(mean(MF_VHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; 
+    % %     xlabel('Male ILDH'); ylabel('Female ILDH')
+    % xlabel('Female ILDH'); ylabel('Male ILDH')
+    % set(gca,'fontsize',14)
+    % colormap(ax6,jet)
     
-% Save figure
-fd = [figdrOut 'ThetaPhaseLag' filesep]; %output directory
-    if ~exist(fd,'dir'); mkdir(fd); end    
-saveas(H1,[fd 'ThetaPhaseLagBoot_Mean1000JointProbMatrx_MvF.png'])
-saveas(H1,[fd 'ThetaPhaseLagBoot_Mean1000JointProbMatrx_MvF.fig'])
-close(H1); clear H1 ax*
-disp('Phase lag joint-probability matrix figure saved!')
+% % Save figure
+% fd = [figdrOut 'ThetaPhaseLag' filesep]; %output directory
+    % if ~exist(fd,'dir'); mkdir(fd); end    
+% saveas(H1,[fd 'ThetaPhaseLagBoot_Mean1000JointProbMatrx_MvF.png'])
+% saveas(H1,[fd 'ThetaPhaseLagBoot_Mean1000JointProbMatrx_MvF.fig'])
+% close(H1); clear H1 ax*
+% disp('Phase lag joint-probability matrix figure saved!')
 
 % Clean workspace for next segment
 clear M_*  *_M clear *_pjm
 
 
-%% 2.3 Females/Hormones: Theta phase lags    
+%% 2.3 Females/Estrous: Theta phase lags    
+% TO-DO
 
-
-
-% Bootstrap Females/Hormones: Theta Phase lag
 %% FIX THIS PART ASAP. NEED TO RETAIN _BOOT SAMPLED DATA, AS ABOVE **********************************************************************************************
 tstart=tic;
 [fDP_ILDH_p_test,fDE_ILDH_p_test,fPE_ILDH_p_test,DP_ILDH_pjm,DE_ILDH_pjm,PE_ILDH_pjm] = BootStat_FHorms(F_ILDH_D,F_ILDH_P,F_ILDH_E); %ILDH
@@ -706,81 +727,88 @@ save([root_drIn fn],'T_*','fDP*','fDE*','fPE*','DP_*','DE_*','PE_*','-v7.3')
 disp('Saved!')
 clear fn
 
-%% 2.4 Plot mean theta phase lag joint-probability matrices: Females/Hormones
+%% 2.4 Plot theta phase lag joint-probability matrices: Females/Estrous
 %H2 = figure('units','normalized','outerposition',[0 0 1 1]);
 %ax1 = subplot(341); %ILDH - Diestrus v Proestrus
 %    imagesc(mean(DP_ILDH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('dHPC-mPFCIL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.25);
-    colormap(ax1,jet)
-ax2 = subplot(342); %ILVH - Diestrus v Proestrus
-    imagesc(mean(DP_ILVH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('vHPC-mPFCIL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.25);
-    colormap(ax2,jet)
-ax3 = subplot(343); %PLDH - Diestrus v Proestrus
-    imagesc(mean(DP_DHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('dHPC-mPFCPL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.25);
-    colormap(ax3,jet)
-ax4 = subplot(344); %PLVH - Diestrus v Proestrus
-    imagesc(mean(DP_VHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
-    title('vHPC-mPFCPL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.25);
-    colormap(ax4,jet)
-ax5 = subplot(345); %ILDH - Diestrus v Estrus
-    imagesc(mean(DE_ILDH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax5,jet)
-ax6 = subplot(346); %ILVH - Diestrus v Estrus
-    imagesc(mean(DE_ILVH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax6,jet)
-ax7 = subplot(347); %PLDH - Diestrus v Estrus
-    imagesc(mean(DE_DHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax7,jet)
-ax8 = subplot(348); %VHPL - Diestrus v Estrus
-    imagesc(mean(DE_VHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Diestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax8,jet)
-ax9 = subplot(349); %ILDH - Proestrus v Estrus
-    imagesc(mean(PE_ILDH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax9,jet)
-ax10 = subplot(3,4,10); %ILVH - Proestrus v Estrus
-    imagesc(mean(PE_ILVH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax10,jet)
-ax11 = subplot(3,4,11); %PLDH - Proestrus v Estrus
-    imagesc(mean(PE_DHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax11,jet)
-ax12 = subplot(3,4,12); %VHPL - Proestrus v Estrus
-    imagesc(mean(PE_VHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
-    axis xy square; xlabel('Proestrus'); ylabel('Estrus');
-    set(gca,'fontsize',14);
-    colormap(ax12,jet) 
+    % axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+    % title('dHPC-mPFCIL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.25);
+    % colormap(ax1,jet)
+% ax2 = subplot(342); %ILVH - Diestrus v Proestrus
+    % imagesc(mean(DP_ILVH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+    % title('vHPC-mPFCIL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.25);
+    % colormap(ax2,jet)
+% ax3 = subplot(343); %PLDH - Diestrus v Proestrus
+    % imagesc(mean(DP_DHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+    % title('dHPC-mPFCPL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.25);
+    % colormap(ax3,jet)
+% ax4 = subplot(344); %PLVH - Diestrus v Proestrus
+    % imagesc(mean(DP_VHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
+    % title('vHPC-mPFCPL'); set(gca,'fontsize',14,'TitleFontSizeMultiplier',1.25);
+    % colormap(ax4,jet)
+% ax5 = subplot(345); %ILDH - Diestrus v Estrus
+    % imagesc(mean(DE_ILDH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+    % set(gca,'fontsize',14);
+    % colormap(ax5,jet)
+% ax6 = subplot(346); %ILVH - Diestrus v Estrus
+    % imagesc(mean(DE_ILVH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+    % set(gca,'fontsize',14);
+    % colormap(ax6,jet)
+% ax7 = subplot(347); %PLDH - Diestrus v Estrus
+    % imagesc(mean(DE_DHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+    % set(gca,'fontsize',14);
+    % colormap(ax7,jet)
+% ax8 = subplot(348); %VHPL - Diestrus v Estrus
+    % imagesc(mean(DE_VHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; xlabel('Diestrus'); ylabel('Estrus');
+    % set(gca,'fontsize',14);
+    % colormap(ax8,jet)
+% ax9 = subplot(349); %ILDH - Proestrus v Estrus
+    % imagesc(mean(PE_ILDH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+    % set(gca,'fontsize',14);
+    % colormap(ax9,jet)
+% ax10 = subplot(3,4,10); %ILVH - Proestrus v Estrus
+    % imagesc(mean(PE_ILVH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+    % set(gca,'fontsize',14);
+    % colormap(ax10,jet)
+% ax11 = subplot(3,4,11); %PLDH - Proestrus v Estrus
+    % imagesc(mean(PE_DHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+    % set(gca,'fontsize',14);
+    % colormap(ax11,jet)
+% ax12 = subplot(3,4,12); %VHPL - Proestrus v Estrus
+    % imagesc(mean(PE_VHPL_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
+    % axis xy square; xlabel('Proestrus'); ylabel('Estrus');
+    % set(gca,'fontsize',14);
+    % colormap(ax12,jet) 
     
-% Save figure
-fd = [figdrOut 'ThetaPhaseLag' filesep]; %output directory
-saveas(H2,[fd 'ThetaPhaseLagBoot_Mean1000JointProbMatrx_Horms.fig'])
-saveas(H2,[fd 'ThetaPhaseLagBoot_Mean1000JointProbMatrx_Horms.png'])
-close(H2); clear H2 ax* fd 
+% % Save figure
+% fd = [figdrOut 'ThetaPhaseLag' filesep]; %output directory
+% saveas(H2,[fd 'ThetaPhaseLagBoot_Mean1000JointProbMatrx_Horms.fig'])
+% saveas(H2,[fd 'ThetaPhaseLagBoot_Mean1000JointProbMatrx_Horms.png'])
+% close(H2); clear H2 ax* fd 
 disp('Theta phase lag/Hormones joint-probability matrix figure saved!')
 
-% Clean up workspace
+% %% 2.5 Males vs Hormones: Theta phase lags
+% TO-DO
+	% Save the data
+
+% %% 2.6 Plot theta phase lag joint-probability matrices: Male vs Hormones
+% TO-DO
+	% Save figure
+
+% Clean up workspace for next segment
 clear fD* fP* F* T_* fE* *_pjm
 
 
-%% 
 
 % 
 % %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -801,7 +829,7 @@ for bi = 1:length(Bands) %loop theta, gamma, delta bands
     load([root_drIn fn],'F_*','M_*')
     clear fn 
     
-    %% 3.1 MvF: R^2 
+    %% 3.1 Male v Female: R^2 
     %Preallocate output space
     MF_ILDH_p_test = zeros(1,nperms);
     MF_ILVH_p_test = zeros(1,nperms);
@@ -866,7 +894,7 @@ for bi = 1:length(Bands) %loop theta, gamma, delta bands
     disp('Saved!')
     clear fn T_* *_p_test 
     
-    %% 3.2 Plot mean R^2 joint-probability matrices: M vs F 
+    %% 3.2 Plot R^2 joint-probability matrices: Male vs Female
     H1 = figure('units','normalized','outerposition',[0 0 1 1]);
     ax1 = subplot(231); %ILDH
         imagesc(mean(MF_ILDH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
@@ -910,7 +938,7 @@ for bi = 1:length(Bands) %loop theta, gamma, delta bands
     fprintf('%s R^2 joint-probability matrix figure saved!\n',Bands{bi})
     clear *_pjm 
 
-    %% 3.3 Females/Hormones: R^2
+    %% 3.3 Females/Estrous: R^2
     clear *_M %not using Metestrus data
     
     % Preallocate output space
@@ -983,8 +1011,8 @@ for bi = 1:length(Bands) %loop theta, gamma, delta bands
     disp('Saved!')
     clear fn T_* *_p_test
 
-    %% 3.4 Plot mean R^2 joint-probability matrices: Females/Hormones
-    H2 = figure('units','normalized','outerposition',[0 0 1 1]);
+    %% 3.4 Plot R^2 joint-probability matrices: Females/Estrous
+    H34 = figure('units','normalized','outerposition',[0 0 1 1]);
     ax1 = subplot(341); %ILDH - Diestrus v Proestrus
         imagesc(mean(DP_ILDH_pjm(:,:,1:nperms),3)); hold on; plot(x,x,'k','linew',2);
         axis xy square; xlabel('Diestrus'); ylabel('Proestrus');
@@ -1048,13 +1076,30 @@ for bi = 1:length(Bands) %loop theta, gamma, delta bands
     
     % Save figure
     fd = [figdrOut 'BandpowerCorrelations' filesep]; %output directory  
-    fn = [Bands{bi} 'RsqBoot_Mean' num2str(nperms) 'JointProbMatrx_Horms'];
-    saveas(H2,[fd fn '.tif'])
-    saveas(H2,[fd fn '.fig'])
-    close(H2); clear H2 ax* fn
-    fprintf('%s R^2 joint-probability matrix figure saved!\n',Bands{bi})
-    clear *_pjm fD* fP* F* T_* fE* 
-    
+    fn = [Bands{bi} 'RsqBoot' num2str(nperms) 'JointProbMatrx_Estrous'];
+    saveas(H34,[fd fn '.png'])
+    saveas(H34,[fd fn '.fig'])
+    close(H34); clear H34 ax* fn
+    fprintf('%s R^2 Estrous joint-probability matrix figure saved!\n',Bands{bi})
+    clear *_pjm
+	% clear *_pjm fD* fP* F* T_* fE* 
+	
+	%% 3.5 Males vs Hormone stages:
+		% TO-DO 
+		% Save the data
+		
+	%% 3.6 Plot R^2 joint-probability matrices: Males vs Hormone stages
+		% TO-DO 
+	H36 = figure;
+	% Save figure
+	% fd = [figdrOut 'BandpowerCorrelations' filesep]; %output directory  
+	fn = [Bands{bi} 'RsqBoot' num2str(nperms) 'JointProbMatrx_MvHorms'];
+	saveas(H36,[fd fn '.png'])
+	saveas(H36,[fd fn '.fig'])
+	close(H36); clear H36 ax* fn
+	fprintf('%s MvHorms R^2 joint-probability matrix figure saved!\n',Bands{bi})
+	
+    clear *_pjm fD* fP* F* T_* fE*
 end %frequency band
 clear bi fd
 
