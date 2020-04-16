@@ -32,6 +32,10 @@ disp('Select root figure output directory') % root figure output directory. (sub
 %    vd_drOut = [uigetdir(root_drIn, 'Select VT data root output directory (for .mat format)') filesep];
 %    fprintf('vd_drOut: %s\n',vd_drOut)
 
+% Preallocate some outputs (pooling across subjects)
+RX = cell(1,length(subjs)); %master list of familiar arena trials
+IDX = cell(1,length(subjs(contains(subjs,'E')))); %master list of female estrous state indices
+    %^ 1 cell per female subject. [ntrials x 4] (Diest,Proest,Est,Metest)
 
 %% 1. Import & Preprocess data
 for si = 1:length(subjs)
@@ -65,6 +69,9 @@ for si = 1:length(subjs)
         if any(contains(Rxlist,"_Rex1")) 
             Rxlist = Rxlist(~contains(Rxlist,"_Rex1"));
         end
+        
+        % Copy Rxlist to master trial list
+        RX{si} = Rxlist;
 
         % LOOP THRU RECORDINGS
         for ri = 1:length(Rxlist)
@@ -168,6 +175,18 @@ for si = 1:length(subjs)
         disp('Velocity distribution data saved.')
         clear fn Vall Vrex
     
+        % Female subjects: Generate index of hormone states across trials
+        if contains(subjID,'E')
+            Didx = contains(Rxlist,'_D'); %diestrus trials
+            Pidx = contains(Rxlist,'_P'); %proestrus trials
+            Eidx = contains(Rxlist,'_E'); %estrus trials
+            Midx = contains(Rxlist,'_M'); %metestrus trials
+            idx = [Didx Pidx Eidx Midx]; %logical matrix
+            Fsi = si - length(subjs(contains(subjs,'A'))); %subject index (without males)
+            IDX{Fsi} = double(idx);
+            clear Didx Pidx Eidx Midx trials idx Fsi
+        end
+        
         % Reset workspace for next subject
         fprintf('%s data import & pre-processing complete!\n\n',subjID)
         clear Rxlist rt root_drIn vd_drOut vt_drIn
@@ -192,7 +211,20 @@ save([vd_drOut 'Familiar_VelocityCumuDist.mat'],'X','Y','subjs','rt','-v7.3')   
 disp('Saved.')
 clear X Y vd_drOut
 
-disp('Thesis1_ImportPreprocess.m is complete.')
 
+%% 5. Save master trial list
+save([root_drIn 'RXlist.mat'],'RX','subjs')
+clear RX
+disp('Master trial list "RX" is saved.')
+
+%% 6. Save female master estrous index
+Fsubjs = subjs(contains(subjs,'E'));
+save([root_drIn 'FemaleIDX.mat'],'IDX','Fsubjs')
+clear IDX Fsubjs
+disp('Master estrous trial index "IDX" is saved.')
+
+
+fprintf('\n\n\n')
+disp('Thesis1_ImportPreprocess.m is complete.')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %end of script
