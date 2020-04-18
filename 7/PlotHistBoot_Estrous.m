@@ -1,7 +1,7 @@
 function [H1] = PlotHistBoot_Estrous()
 H1 = figure('units','normalized','outerposition',[0 0 1 1]);
 
-numbins = 100; %number of b
+numbins = 100; %number of bins for histogram
 facealpha = 0.6; %Transparency of histogram bars, specified as a scalar value between 0 and 1 inclusive (default = 0.6)
 
 a1 = subplot(311); %Diestrus
