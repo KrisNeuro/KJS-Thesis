@@ -173,35 +173,35 @@ Analyzing familiar arena data via hierarchical bootstrapping: 5-15 cm/s movement
 
 Steps:
 1.0 Hierarchical bootstrap: Band power (BL, 5-15cm/s)
- 1.1 Male v Female: Band Power
- 1.2 Plot band power bootstrap sample distributions: Male vs Female
-  1.2.1 Plot theta band bootstrap sample distributions: Male vs Female
-  1.2.2 Plot gamma band bootstrap sample distributions: Male vs Female
-  1.2.3 Plot delta band bootstrap sample distributions: Male vs Female
- 1.3 Females/Estrous: Band Power
- 1.4 Plot band power bootstrap sample distributions: Females/Estrous
-  1.4.1 Plot theta band bootstrap sample distributions: Females/Estrous
-  1.4.2 Plot gamma band bootstrap sample distributions: Females/Estrous
-  1.4.3 Plot delta band bootstrap sample distributions: Females/Estrous
- 1.5 Males vs Hormone stages: Band Power 
- 1.6 Plot band power bootstrap sample distributions: Male vs Hormones
-  1.6.1 Plot theta band bootstrap sample distributions: Male vs Hormones
-  1.6.2 Plot gamma band bootstrap sample distributions: Male vs Hormones
-  1.6.3 Plot delta band bootstrap sample distributions: Male vs Hormones
+1.1 Male v Female: Band Power
+1.2 Plot band power bootstrap sample distributions: Male vs Female
+1.2.1 Plot theta band bootstrap sample distributions: Male vs Female
+1.2.2 Plot gamma band bootstrap sample distributions: Male vs Female
+1.2.3 Plot delta band bootstrap sample distributions: Male vs Female
+1.3 Females/Estrous: Band Power
+1.4 Plot band power bootstrap sample distributions: Females/Estrous
+1.4.1 Plot theta band bootstrap sample distributions: Females/Estrous
+1.4.2 Plot gamma band bootstrap sample distributions: Females/Estrous
+1.4.3 Plot delta band bootstrap sample distributions: Females/Estrous
+1.5 Males vs Hormone stages: Band Power 
+1.6 Plot band power bootstrap sample distributions: Male vs Hormones
+1.6.1 Plot theta band bootstrap sample distributions: Male vs Hormones
+1.6.2 Plot gamma band bootstrap sample distributions: Male vs Hormones
+1.6.3 Plot delta band bootstrap sample distributions: Male vs Hormones
 2.0 Hierarchical bootstrap: Theta phase lags (BL, mean dHPC power threshold)
- 2.1 Male v Female: Theta phase lags
- 2.2 Plot theta phase lag bootstrap sample distributions: Male vs Female
- 2.3 Females/Estrous: Theta phase lags
- 2.4 Plot theta phase lag bootstrap sample distributions: Females/Estrous
- 2.5 Males vs Hormone stages: Theta phase lags
- 2.6 Plot theta phase lag bootstrap sample distributions: Male vs Hormones
+2.1 Male v Female: Theta phase lags
+2.2 Plot theta phase lag bootstrap sample distributions: Male vs Female
+2.3 Females/Estrous: Theta phase lags
+2.4 Plot theta phase lag bootstrap sample distributions: Females/Estrous
+2.5 Males vs Hormone stages: Theta phase lags
+2.6 Plot theta phase lag bootstrap sample distributions: Male vs Hormones
 3.0 Hierarchical bootstrap: Theta, Gamma, Delta R^2
- 3.1 Male v Female: R^2
- 3.2 Plot R^2 bootstrap sample distributions: Male v Female
- 3.3 Females/Estrous: R^2
- 3.4 Plot R^2 bootstrap sample distributions: Females/Estrous
- 3.5 Males vs Hormone stages: R^2
- 3.6 Plot R^2 bootstrap sample distributions: Males vs Hormone
+3.1 Male v Female: R^2
+3.2 Plot R^2 bootstrap sample distributions: Male v Female
+3.3 Females/Estrous: R^2
+3.4 Plot R^2 bootstrap sample distributions: Females/Estrous
+3.5 Males vs Hormone stages: R^2
+3.6 Plot R^2 bootstrap sample distributions: Males vs Hormone
 
 Calls functions (listed alphabetically):
  - BootStat_MvF.m
