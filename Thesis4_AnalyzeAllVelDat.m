@@ -4,23 +4,24 @@
 %       - Theta phase lag analysis: Filtered by mean dHPC power threshold
 %       - Band power cross-correlations (theta, gamma, delta): To be Z-scored
 % 
-% 
 %   Steps:
-%       1. ThetaFiltfilt 
+%       1. Filter for theta band (ThetaFiltfilt)
 %       2. Theta Phase Lag analysis
 %       3. Format data for bootstrapping: Theta phase lag, width @ half-max
 %       4. Band power cross-correlations (theta, gamma, delta) 
 %       5. Format data for bootstrapping: Band power cross-corr (R^2)
 %       6. Z-score R^2 data (theta, gamma, delta)
+%
+% 	*Requires MATLAB Signal Processing Toolbox be installed*
 % 
-%   Calls on:
-%       - ThetaPhaseLagdH2.m
-%       - Format4Bootstrap_thetaphaselagdH.m
-%       - BandPowerCrossCorr.m
-%       - regoutliers.m   (https://www.mathworks.com/matlabcentral/fileexchange/37212-regression-outliers)
-%       - mtcsg.m         (from A.Adhikari)
-%       - Format4Bootstrap_Rsq2.m
-%       - ZscoreRsq_boot2.m
+%   Calls functions (listed alphabetically):
+% 	- BandPowerCrossCorr.m
+% 	- Format4Bootstrap_Rsq.m
+% 	- Format4Bootstrap_thetaphaselagdH.m
+% 	- mtcsg.m (from A.Adhikari)
+% 	- regoutliers.m   (https://www.mathworks.com/matlabcentral/fileexchange/37212-regression-outliers)
+% 	- ThetaPhaseLagdH2.m
+% 	- ZscoreRsq_boot.m
 % 
 % KJS init 2020-02-12, edit 2020-02-13, 2020-02-14
 
@@ -107,6 +108,7 @@ clear si g sos drIn Fs
 disp('Theta filtfilt complete!')
 
 
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 2. Theta Phase Lag analysis 
  % See: ThetaPhaseLagdH2.m
 disp('Beginning Theta phase lag analysis: threshold by dHPC theta power')
@@ -117,7 +119,7 @@ for ai = 1:length(arenas)
     
     % Save the data  (large file - contains all subjs)
     disp('Saving theta phase lag data...')
-    fn = ['ThetaPhaseLags2-' rt '-AllSpeeds-dHthresh.mat'];
+    fn = ['ThetaPhaseLags-' rt '-AllSpeeds-dHthresh.mat'];
     save([drIn fn],'dat_pct','DHPL','DHVH','dthresh','ILDH','ILPL','ILVH','root_drIn','subjs','VHPL','-v7.3')
     disp('Saved!')
     clear dthresh rt drIn IL* DH* VH* dat_pct fn
@@ -125,6 +127,7 @@ end
 clear ai
 
 
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 3. Format BL data for bootstrapping: Theta phase lag, width @ half-max
  % See: Format4Bootstrap_thetaphaselagdH.m
 disp('Loading theta phase lag data..')
@@ -145,8 +148,9 @@ fn = 'ThetaPhaseLag2-dHthresh-BL_boot.mat';
 save([root_drIn 'BL' filesep fn],'F*','M*','-v7.3')
 disp('Data saved: Theta phaselag, bootstrap format')
 clear fn F* M*
-            
-            
+
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 4. Band power cross-correlations (theta, gamma, delta) 
  % See: BandPowerCrossCorr.m
 
@@ -157,20 +161,20 @@ BandPowerCrossCorr(subjs,root_drIn,arenas,plotOp);
 clear plotOp
 
 
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 5. Format data for bootstrapping: Band power xcorr, R^2_orig, MvF
- % See: Format4Bootstrap_Rsq2.m
+ % See: Format4Bootstrap_Rsq.m
  
 drIn = [root_drIn 'BL' filesep]; %BL arena recordings only
 bandz = {'Theta' 'Gamma' 'Delta'}; %frequency bands of interest
 
-% Load index for hormone states across recording                     %    *************
+% Load index for hormone states across trials
 %    idx format:
 %     (:,1) = Diestrus
 %     (:,2) = Proestrus
 %     (:,3) = Estrus
 %     (:,4) = Metestrus
-fnn = 'FemaleIDX.mat'; % file name to load
-load([drIn fnn],'IDX'); clear fnn
+load([drIn 'FemaleIDX.mat'],'IDX');
 
 for bi = 1:length(bandz) %loop Theta, Gamma, Delta bands
     fprintf('Bootstrap formatting R^2 %s band..\n',bandz{bi})
@@ -178,7 +182,7 @@ for bi = 1:length(bandz) %loop Theta, Gamma, Delta bands
     [M_ILDH,M_ILVH,M_ILPL,M_DHVH,M_DHPL,M_VHPL,F_ILDH,F_ILVH,F_ILPL,F_DHVH,F_DHPL,F_VHPL,...
     F_ILDH_D,F_ILVH_D,F_ILPL_D,F_DHVH_D,F_DHPL_D,F_VHPL_D,F_ILDH_P,F_ILVH_P,F_ILPL_P,F_DHVH_P,F_DHPL_P,F_VHPL_P,...
     F_ILDH_E,F_ILVH_E,F_ILPL_E,F_DHVH_E,F_DHPL_E,F_VHPL_E,F_ILDH_M,F_ILVH_M,F_ILPL_M,F_DHVH_M,F_DHPL_M,F_VHPL_M]...
-    = Format4Bootstrap_Rsq2(subjs,drIn,bandz{bi}); %#ok<*ASGLU>
+    = Format4Bootstrap_Rsq(subjs,drIn,IDX,bandz{bi}); %#ok<*ASGLU>
 
     % Save R^2 data: MvF
     fn = [bandz{bi} 'Rsq-BL_boot.mat'];
@@ -187,9 +191,10 @@ for bi = 1:length(bandz) %loop Theta, Gamma, Delta bands
     clear fn M_* F_*
 end
 clear bi bandz drIn IDX 
-disp('Format4Bootstrap_Rsq2.m is complete.')
+disp('Format4Bootstrap_Rsq.m is complete.')
 
 
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 6. Zscore R^2 data (theta, gamma, delta)
  % See: ZscoreRsq_boot2.m 
  

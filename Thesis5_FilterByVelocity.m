@@ -18,7 +18,7 @@
 %       6. Save velocity-filtered data (all BL arena trials, per subj): 'subjID_ReducedDataPerSpeed.mat'
 %       7. Calculate time spent in each velocity range
 % 
-%   Calls on:
+%   Calls function:
 %       - GetDataDuration.m
 % 
 % KJS init 2020-02-12
@@ -27,15 +27,14 @@
 subjs = {'A201' 'A202' 'A301' 'A602' 'E105' 'E106' 'E107' 'E108' 'E201'}; % Subject ID listing. A*=male  E*=female    ***USER MUST HARD-CODE THESE VARIABLES FOR EACH NEW EXPERIMENTAL SET****
 
 % Add file directories & script paths
-if license == "731138" 
-    root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\'; %input data directory. Generates: raw_drIn, drIn
-    figdrOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\figs\VT\BL\'; %figure output directory head
-    if ~exist('GetDataDuration.m','file'); addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\m\code'); end
-else
-    root_drIn = [uigetdir(pwd,'Select root input directory holding data: Reduced EEG, BL arena') filesep];
-    figdrOut = [uigetdir(pwd,'Select directory for figure output storage') filesep];
-    if ~exist('GetDataDuration.m','file'); addpath(uigetdir(pwd,'Add path containing GetDataDuration.m')); end
-end   
+disp('Select root input directory holding data: Reduced EEG, BL arena')
+root_drIn = [uigetdir(pwd,'Select root input directory holding data: Reduced EEG, BL arena') filesep]; %input data directory. Generates: raw_drIn, drIn
+% root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\'; 
+
+disp('Select directory for figure output storage')
+figdrOut = [uigetdir(pwd,'Select directory for figure output storage') filesep]; %figure output directory root
+% figdrOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\figs\VT\BL\'; 
+
 
 %% Loop thru subjects
 for si = 1:length(subjs) %loop thru subjects
@@ -141,7 +140,7 @@ for si = 1:length(subjs) %loop thru subjects
         title('15+ cm/s')
         axis square
         box off
-        xlabel('cm/s')
+        xlabel('cm/s'); 
         ylabel('counts')
         xlim([14.5 21.5])
     subplot(212)
@@ -163,7 +162,7 @@ for si = 1:length(subjs) %loop thru subjects
             fd = [figdrOut subjs{si} filesep 'Velocity' filesep]; %figure output directory
             if ~exist(fd,'dir'); mkdir(fd); end %make directory if needed
     %         saveas(gcf,[fd subjs{si} '_BLVelocityParsed.fig'])
-            saveas(gcf,[fd subjs{si} '_BLVelocityParsed.tif'])
+            saveas(gcf,[fd subjs{si} '_BLVelocityParsed.png'])
             fprintf('Velocity distribution figure saved for %s\n',subjs{si})
             close(gcf)
             clear h h1 fd fi

@@ -5,6 +5,8 @@
 %     2. Get total distance traveled (for this subject, per arena type)
 %     3. Get distribution of subj's mvmt. velocities for all recordings per arena type
 %     4. Get cumulative distribution of movement linear velocity for all subjects
+% 	  5. Save data: Master trial list (all subjects)
+% 	  6. Save data: Female estrous index (master)
 % 
 % KJS init 2020-02-11, edits 2020-02-12, 2020-02-17, 2020-04-07
 
@@ -26,11 +28,8 @@ disp('Select 16-channel precleaned data output directory')
     rt_drIn = [uigetdir(pwd, 'Select 16-channel precleaned data output directory') filesep];
     fprintf('rt_drIn: %s\n',rt_drIn)
 disp('Select root figure output directory') % root figure output directory. (subfolders will be auto-generated)
-    fig_drOut = [uigetdir(root_drIn, 'Select root figure output directory') filesep]; 
+    fig_drOut = [uigetdir(rt_drIn, 'Select root figure output directory') filesep]; 
     fprintf('fig_drOut: %s\n',fig_drOut)
-%disp('Select VT data root output directory (for .mat format)') 
-%    vd_drOut = [uigetdir(root_drIn, 'Select VT data root output directory (for .mat format)') filesep];
-%    fprintf('vd_drOut: %s\n',vd_drOut)
 
 % Preallocate some outputs (pooling across subjects)
 RX = cell(1,length(subjs)); %master list of familiar arena trials
@@ -196,7 +195,7 @@ end %subjects
 clear ra_drIn si vt_drIn
 
 %% 4. Get cumulative distribution of movement linear velocity for all subjects: BL arena only
-vd_drOut = [vt_drin rt '\MAT' filesep]; 
+vd_drOut = [vt_drin 'BL\MAT' filesep]; 
 [X,Y,H1] = VelCumDist(subjs,vd_drOut); 
 
 % Save figure as .tif
@@ -212,17 +211,16 @@ disp('Saved.')
 clear X Y vd_drOut
 
 
-%% 5. Save master trial list
-save([root_drIn 'RXlist.mat'],'RX','subjs')
+%% 5. Save data: Master trial list (all subjects)
+save([rt_drIn 'BL' filesep 'RXlist.mat'],'RX','subjs')
 clear RX
 disp('Master trial list "RX" is saved.')
 
-%% 6. Save female master estrous index
+%% 6. Save data: Female estrous index (master)
 Fsubjs = subjs(contains(subjs,'E'));
-save([root_drIn 'FemaleIDX.mat'],'IDX','Fsubjs')
+save([rt_drIn 'BL' filesep 'FemaleIDX.mat'],'IDX','Fsubjs')
 clear IDX Fsubjs
 disp('Master estrous trial index "IDX" is saved.')
-
 
 fprintf('\n\n\n')
 disp('Thesis1_ImportPreprocess.m is complete.')

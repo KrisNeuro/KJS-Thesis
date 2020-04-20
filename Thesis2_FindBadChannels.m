@@ -4,16 +4,16 @@
 % 
 %   Steps:
 %       1. Mean power spectra per channel (16)
-%       2. YiQi's PLV Analysis
+%       2. Phase-Locking Value (PLV) Analysis (credit: Yiqi Xu)
 %        2.1  Coherencyc analysis (Chronux toolbox)
 %        2.2  Hilbert Transform/PLV
 %        2.3  Calculate & plot mean PLV across channels
 % 
-%   Calls on:
-%       - ChanScreen.m
-%       - MeanPowSpecFig.m
-%       - coherencyc.m (from Chronux toolbox: http://chronux.org/)
-%       - barPLV.m
+% 	Calls functions (listed alphabetically):
+% 	- barPLV.m
+% 	- ChanScreen.m
+% 	- coherencyc.m (from Chronux toolbox: http://chronux.org/)
+% 	- MeanPowSpecFig.m
 % 
 % KJS init 2020-02-11, edit 2020-02-12
 
@@ -24,13 +24,12 @@ Nch = 16; % number of channels in headstage
 % Parameters for coherencyc.m (Chronux)
 params.trialave=0; %0=do not average over trials
 params.Fs = 2000; %LFP sampling rate (Hz)
-% params.tapers = [30 59]; %[TW K]
-params.tapers = [45 89]; %[TW K]
+params.tapers = [30 59]; %[TW K]
 params.err = [2 0.05]; %2 error bars, 0.05 pvalue
 params.fpass=[0.5 100]; %bandpass
 params.pad = 0; %padding factor for FFT. 0=pad to the next highest power of 2 of length(N)
 
-% Produce and autosave figures?
+% Produce and auto-save figures?
 figopt = input('Produce and save dataviz figures? (y/n): ','s');
 if strcmp(figopt,'y')
     figopt = true;
@@ -38,35 +37,31 @@ else
     figopt = false;
 end
 
-% Set data and figure directories & paths containing script
-if license =="731138"
-    root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\RawEEG\'; % root input data directory (precleaned 16ch data)
-    root_drOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\'; % root output data directory
-    fig_drOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\figs\'; % figure/dataviz outputs
-    cp_root = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\DATA-Backup\PreAnalysis\';
-    % Make sure paths to code are recognized
-    if ~exist('ChanScreen.m','file') || ~exist('MeanPowSpecFig.m','file')
-        addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\m\code\'); end
-    if ~exist('coherencyc.m','file')
-        addpath(genpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\toolboxes\chronux\spectral_analysis\')); end
-    if ~exist('barPLV.m','file')
-        addpath('K:\Personal Folders\Kristin Schoepfer\MATLAB\gitRepo\m\code\YiQi'); end
-    
-else
-    root_drIn = [uigetdir(pwd,'Select RawEEG data directory') filesep];
-    root_drOut = [uigetdir(pwd,'Select ReducedEEG data directory') filesep];
-    fig_drOut = [uigetdir(pwd, 'Select root figure output directory') filesep];
-    cp_root = [uigetdir(pwd, 'Select root CP data output directory') filesep];
-    % Make sure paths to code are recognized
-    if ~exist('ChanScreen.m','file')|| ~exist('MeanPowSpecFig.m','file')
-        addpath(uigetdir(pwd,'Select file path containing ChanScreen.m & MeanPowSpecFig.m')); end
-    if ~exist('coherencyc.m','file')
-        addpath(uigetdir(pwd,'Select file path containing Chronux spectral analysis  (Chronux/spectral_analysis/')); end
-    if ~exist('barPLV.m','file')
-        addpath(uigetdir(pwd,'Select file path containing YiQi PLV scripts')); end
-end
+% Set data and figure directories 
+disp('Select RawEEG data directory')
+root_drIn = [uigetdir(pwd,'Select RawEEG data directory') filesep]; % root input data directory (precleaned 16ch data)
+% root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\RawEEG\'; 
+fprintf('root_drIn: %s\n',root_drIn)
 
-%% Loop thru subjects
+disp('Select ReducedEEG data directory (data output)')
+root_drOut = [uigetdir(root_drIn,'Select ReducedEEG data directory') filesep]; % root output data directory
+% root_drOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\'; 
+fprintf('root_drOut: %s\n',root_drOut)
+
+disp('Select root figure output directory') 
+fig_drOut = [uigetdir(pwd, 'Select root figure output directory') filesep]; % figure/dataviz outputs
+% fig_drOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\figs\'; 
+fprintf('fig_drOut: %s\n',fig_drOut)
+
+disp('Select root CP data output directory')
+cp_root = [uigetdir(root_drOut, 'Select root CP data output directory') filesep];
+% cp_root = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\DATA-Backup\PreAnalysis\';
+fprintf('cp_root: %s\n',cp_root)
+
+% Load RXlist (master trial list)
+load([root_drIn 'RXlist.mat'],'RX')
+
+%% Loop subjects
 for si = 1:length(subjs) 
     disp(subjs{si})
     drIn = [root_drIn 'BL' filesep subjs{si} filesep]; %subject's data dir (16ch precleaned data, AllDat)
@@ -74,13 +69,14 @@ for si = 1:length(subjs)
       if ~exist(CPdrOut,'dir'); mkdir(CPdrOut); end  %make directory if necessary
 
     % Get list of recordings of this type (Rxlist)
-    files = dir(drIn);
-    [Rxlist] = {files(contains({files(:).name},'BL')).name}';
-    clear files
-      % Remove first recording if necessary (Reference vs. SubjGND test in BL) 
-      if any(contains(Rxlist,"_Rex1")) 
-         Rxlist = Rxlist(~contains(Rxlist,"_Rex1"));
-      end
+	Rxlist = RX{si};
+    % files = dir(drIn);
+    % [Rxlist] = {files(contains({files(:).name},'BL')).name}';
+    % clear files
+      % % Remove first recording if necessary (Reference vs. SubjGND test in BL) 
+      % if any(contains(Rxlist,"_Rex1")) 
+         % Rxlist = Rxlist(~contains(Rxlist,"_Rex1"));
+      % end
     files = strcat(drIn, Rxlist); % appends file path in front of Rxlist (can load files while anywhere)
     
     %% 1. Generate mean Power spectra per channel (16)
@@ -134,7 +130,8 @@ for si = 1:length(subjs)
     disp('Mean Pxx per channel data is saved!')
     clear fn pdrOut PX mPxx 
     
-    %% 2. YiQi's PLV Analysis
+	
+    %% 2. Phase-Locking Value (PLV) Analysis (credit: Yiqi Xu)
     % Uses phase-locking value (PLV) from 0.5-100 Hz to determine outlier channels per brain region.   
     for ri = 1:length(files) %loop thru trials
         sessID = Rxlist{ri}(1:end-11);
@@ -179,6 +176,7 @@ for si = 1:length(subjs)
         end %channels
         clear iS iS2
 
+		
       %% 2.2 Hilbert Transform/PLV
         AllDat = AllDat + hilbert(AllDat);
         Dat_angle = angle(AllDat);
@@ -203,8 +201,8 @@ for si = 1:length(subjs)
     end %trials
     clear ri files
        
+	   
   %% 2.3 Calculate and plot mean PLV across channels
-  
     files = dir(CPdrOut); % List of *_coherencyc.mat files to process (files generated above)
     files= strcat(CPdrOut,{files(contains({files(:).name},'_coherencyc.mat')).name}'); %PLV files, with file path
 

@@ -42,16 +42,18 @@ for si = 1:length(subjs) %loop thru subjects
 end
 
 % Set file paths
-if license == "731138"
-    root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\RawEEG\'; % root input data directory (precleaned 16ch data)
-    root_drOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\'; % root output data directory
-else
-    root_drIn = [uigetdir(pwd,'Select RawEEG data directory') filesep];
-    root_drOut = [uigetdir(pwd,'Select ReducedEEG data directory') filesep];
-end
+disp('Select RawEEG data directory')
+root_drIn = [uigetdir(pwd,'Select RawEEG data directory') filesep];
+% root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\RawEEG\'; % root input data directory (precleaned 16ch data)
 
-%% Loop thru subjects
+disp('Select ReducedEEG data directory')
+root_drOut = [uigetdir(pwd,'Select ReducedEEG data directory') filesep];
+% root_drOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\'; % root output data directory
 
+% Load trial list (all subjects)
+load([root_drOut 'RXlist.mat'],'RX')
+
+%% Loop subjects
 for si = 1:length(subjs)
     fprintf('Calculating regional signals for %s...\n',subjs{si})
     
@@ -74,13 +76,12 @@ for si = 1:length(subjs)
         drOut = [root_drOut rt filesep subjs{si} filesep]; %subject's output data dir (4 regional LFPs)
         
         % Fetch Rxlist 
-        files = dir(drIn);
-        [Rxlist] = {files(contains({files(:).name},rt)).name}'; % List of recording sessions - OK
-        clear files
-            % Remove non-experiemental trials if necessary (Reference vs. SubjGND test in BL arena) 
-            if contains(Rxlist{1},'_Rex1')
-                Rxlist = Rxlist(2:end);
-            end
+		if ai==1
+			Rxlist = RX{si};
+		else
+			files = dir(drIn);
+			[Rxlist] = {files(contains({files(:).name},rt)).name}'; % List of recording sessions - OK
+		end
             
         % If female subject, create index of hormone state per trial
         if strcmp(subjs{si}(1),'E') && strcmp(rt,'BL')
@@ -104,7 +105,6 @@ for si = 1:length(subjs)
         theta = struct('IL',[],'DHIP',[],'VHIP',[],'PL',[]);
 
         %% Loop thru trials: Combine channels 
-        
         disp('Creating mean regional signals...')
         for ri = 1:length(Rxlist)
             fprintf('Trial %i of %i: %s\n',ri,length(Rxlist),Rxlist{ri}(1:end-11))
@@ -130,7 +130,6 @@ for si = 1:length(subjs)
             disp('.')
 
             %% Apply "good-channel" indices to thetadata
-            
             % Preallocate output space
             th_AllDat = zeros(1200001,length(list));
             th_angles = zeros(1200001,length(list)); 
@@ -201,10 +200,4 @@ disp('Thesis3_RemoveBadChannels.m is complete.')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % end of script
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% OPTIONAL: Analyze all-velocity datasets here
-% 1. Theta phase lag analysis (+dHPC mean power threshold)
-% 2. BandPowerCrossCorr_AllVelocity.m (*Need to add Z-scoring portion*)
-% 3. ?
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

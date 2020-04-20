@@ -181,5 +181,4 @@ for si = 1:length(Fsubjs)
     clear idx ti sidx subjID Rsq*
 end %Fsubjs
 clear si 
-
 end %function
