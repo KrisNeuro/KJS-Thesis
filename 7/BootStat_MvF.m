@@ -5,10 +5,14 @@ function [Mx_boot,Fx_boot,MF_p_test,MF_pjm] = BootStat_MvF(Mx,Fx)
 % Calculates bootstrap resampling of unidimensional data in a
 % single-variable sex differences comparison. 
 % 
+% INPUTS:
+% 	-*x 			Input data, cell format:rows=subjects; columns=trials
+%
 % OUTPUTS:
 %   - Mx_boot       Bootstrapped samples: Male
-%   - MF_*_p_test   Probability estimate of Female sample (variable2) being
-%                   greater than Male sample (variable1)
+%   - Fx_boot       Bootstrapped samples: Female
+%   - MF_*_p_test   Probability estimate of Female sample (variable2) being 
+%                   equal to or greater than Male sample (variable1)
 %   - MF_pjm        Joint-probability matrix (size: 100x100)
 % 
 %   CALLS FUNCTIONS:

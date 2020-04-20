@@ -87,7 +87,7 @@ for si = 1:length(subjs)
 
             %% Import CSC (EEG/LFP) files
             cd([raw_drIn Rxlist{ri}])
-            [EEG,thetadata,AllDat,Fs]= ImportCSC2(pwd); %this way works
+            [EEG,thetadata,AllDat,Fs]= ImportCSC(pwd); %this way works
 
             %% LFP Power Spectra (full data/all velocities considered, 16ch)
             [fourierCoefs,frex,Pxx,f,powspecfig,powspecfig2] = PowSpec(AllDat,Fs);

@@ -1,5 +1,11 @@
 function [Ax] = PlotHistBoot_MF(ax,Mx_boot,Fx_boot)
 % [Ax] = PlotHistBoot_MF(ax,Mx_boot,Fx_boot)
+% [Ax] = PlotHistBoot_Estrous(ax,Dx_boot,Px_boot,Ex_boot)
+% 
+% INPUTS:
+%   - ax        gca
+%   - Mx_boot   Male bootstrap samples
+%   - Fx_boot   Female bootstrap samples
 % 
 % KJS init: 2020-04-16
 
@@ -14,8 +20,9 @@ Fcol = [0.2078    0.1529    0.2902]; %female
 histogram(ax,Mx_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha,'FaceColor',Mcol)
 hold on
 histogram(ax,Fx_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha,'FaceColor',Fcol)
-set(gca,'fontsize',14,'titlefontsizemultiplier',1.5)
 box off
 axis square
+legend Male Female
+set(gca,'fontsize',18,'titlefontsizemultiplier',1.5)
 Ax=gca;
 end %function

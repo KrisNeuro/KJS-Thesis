@@ -20,8 +20,8 @@ GrandBudapest2 = 	[230 160 196;  198 205 247;  216 164 153;  114 148 212]/255;
   %maleblue = [2 64 27]/255; % Cavalcanti1(2)
   digreen = GrandBudapest2(4,:);
   propurp = GrandBudapest2(1,:);
-  estyel = GrandBudapest2(3,:);
-  metred = GrandBudapest2(2,:);
+  estyel = GrandBudapest2(2,:);
+  metred = GrandBudapest2(3,:);
 
 Moonrise3 =    		[133 212 227;  244 181 189;  156 150 74;  205 192 140; 250 215 123]/255; % don’t use 1&4 together
   maleblue = Moonrise3(1,:);
