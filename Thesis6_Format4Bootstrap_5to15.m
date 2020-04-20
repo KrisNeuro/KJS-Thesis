@@ -368,6 +368,15 @@ end
 % Append males onto 'A' for fANOVAs
 A = [A; 4; 4; 4; 4];
 
+% % Functional ANOVA: Male vs each stage  - did special on 4/19/20. Not totally compatible with the function
+% [DvM_ILstat,DvM_PLstat,DvM_DHstat,DvM_VHstat] = PlotBoot_PowSpec(f,Mil,Dil,Mpl,Dpl,Mdh,Ddh,Mvh,Dvh); % Diest v Male
+% [PvM_ILstat,PvM_PLstat,PvM_DHstat,PvM_VHstat] = PlotBoot_PowSpec(f,Mil,Pil,Mpl,Ppl,Mdh,Pdh,Mvh,Pvh); % Proest v Male
+% [EvM_ILstat,EvM_PLstat,EvM_DHstat,EvM_VHstat] = PlotBoot_PowSpec(f,Mil,Eil,Mpl,Epl,Mdh,Edh,Mvh,Evh); % Est v Male
+%     % Save data
+%     fn = 'FunctionalTestStatistics-powspec_5to15_BL_MvHorms-posthoc.mat';
+%     save([root_drIn '5to15' filesep fn],'-v7.3')
+%     clear fn
+
 % Plot Power spectra: Males vs Estrous stages, 0.5-100 Hz
 [H1,H2,H3,H4,ILstat,PLstat,DHstat,VHstat] = PlotBoot_PowSpecMvHorms(f,A,Dil,Pil,Eil,Mil,Ddh,Pdh,Edh,Mdh,Dvh,Pvh,Evh,Mvh,Dpl,Ppl,Epl,Mpl);
 
