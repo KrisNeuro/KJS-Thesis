@@ -38,9 +38,9 @@ Uses only trials from the familiar arena ('BL') as input.
 Steps:
  1. Mean power spectra per channel (16)
  2. Phase-Locking Value (PLV) Analysis (credit: Yiqi Xu)
-  2.1  Coherencyc analysis (Chronux toolbox)
-  2.2  Hilbert Transform/PLV
-  2.3  Calculate & plot mean PLV across channels
+ 2.1  Coherencyc analysis (Chronux toolbox)
+ 2.2  Hilbert Transform/PLV
+ 2.3  Calculate & plot mean PLV across channels
 
 Calls functions (listed alphabetically):
 - barPLV.m
