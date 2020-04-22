@@ -1015,6 +1015,11 @@ saveas(H26d,[fd 'ThetaPhaseLagBoot_VHPL_MvHorms.png'])
     close(H26d); clear H26d ans
 disp('Theta phase lag figures saved: Male vs Horms')
 
+
+%% 2.7 Plot theta phase lags by connection - all data
+
+% xticklabels({'\pi' '-\pi/2' '0' '\pi/2' '2\pi'})
+
 % Clean up workspace for next segment
 clear *_boot fd
 

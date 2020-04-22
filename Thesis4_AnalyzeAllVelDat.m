@@ -20,7 +20,7 @@
 % 	- Format4Bootstrap_thetaphaselagdH.m
 % 	- mtcsg.m (from A.Adhikari)
 % 	- regoutliers.m   (https://www.mathworks.com/matlabcentral/fileexchange/37212-regression-outliers)
-% 	- ThetaPhaseLagdH2.m
+% 	- ThetaPhaseLagdH.m
 % 	- ZscoreRsq_boot.m
 % 
 % KJS init 2020-02-12, edit 2020-02-13, 2020-02-14
@@ -110,12 +110,12 @@ disp('Theta filtfilt complete!')
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 2. Theta Phase Lag analysis 
- % See: ThetaPhaseLagdH2.m
+ % See: ThetaPhaseLagdH.m
 disp('Beginning Theta phase lag analysis: threshold by dHPC theta power')
 for ai = 1:length(arenas)
     rt = arenas{ai};
     drIn = [root_drIn rt filesep];
-    [ILDH,ILVH,ILPL,DHVH,DHPL,VHPL,dthresh,dat_pct] = ThetaPhaseLagdH2(subjs,drIn);
+    [ILDH,ILVH,ILPL,DHVH,DHPL,VHPL,dthresh,dat_pct] = ThetaPhaseLagdH(subjs,drIn);
     
     % Save the data  (large file - contains all subjs)
     disp('Saving theta phase lag data...')
@@ -141,14 +141,80 @@ F_ILDH_D,F_ILVH_D,F_ILPL_D,F_DHVH_D,F_DHPL_D,F_VHPL_D,F_ILDH_P,F_ILVH_P,F_ILPL_P
 F_ILDH_E,F_ILVH_E,F_ILPL_E,F_DHVH_E,F_DHPL_E,F_VHPL_E,F_ILDH_M,F_ILVH_M,F_ILPL_M,F_DHVH_M,F_DHPL_M,F_VHPL_M] ...
     = Format4Bootstrap_thetaphaselagdH(subjs,root_drIn,ILDH,ILVH,ILPL,DHVH,DHPL,VHPL);
 disp('Format4Bootstrap_ThetaPhaseLag complete.')
-clear ILDH ILVH ILPL DHVH DHPL VHPL
+
  
 % Save the data: Male and Female data
-fn = 'ThetaPhaseLag2-dHthresh-BL_boot.mat';
+fn = 'ThetaPhaseLag-dHthresh-BL_boot.mat';
 save([root_drIn 'BL' filesep fn],'F*','M*','-v7.3')
 disp('Data saved: Theta phaselag, bootstrap format')
 clear fn F* M*
 
+
+%% 3.1 Concatenate all trials - Theta Phase lags by connection
+ildh = []; ilvh = []; ilpl = []; dhvh = []; dhpl = []; vhpl = []; % Preallocate output space
+for i = 1:length(subjs)
+    ildh = [ildh; cell2mat([ILDH{1,i}(1,:)]')];
+    ilvh = [ilvh; cell2mat([ILVH{1,i}(1,:)]')];
+    ilpl = [ilpl; cell2mat([ILPL{1,i}(1,:)]')];
+    dhvh = [dhvh; cell2mat([DHVH{1,i}(1,:)]')];
+    dhpl = [dhpl; cell2mat([DHPL{1,i}(1,:)]')];
+    vhpl = [vhpl; cell2mat([VHPL{1,i}(1,:)]')];
+end
+clear i ILDH ILVH ILPL DHVH DHPL VHPL
+
+% Save the data
+fn = 'ThetaPhaseLags-dHthresh-BL-AllTrialsConcat.mat';
+save([root_drIn 'BL' filesep fn],'ildh','ilvh','ilpl','dhvh','dhpl','vhpl','subjs')
+disp('Concatenated theta phase lag time series saved.')
+
+
+%% 3.4 Generate phase lag histogram distributions (all trials by connection)
+%...
+clear ildh ilvh ilpl dhvh dhpl vhpl
+    
+    % Save the data
+%     fn = 'ThetaPhaseLags-dHthresh-BL-AllTrialsConcat-hist.mat';
+%     save([root_drIn fn],'edges','numbins','*_hist','*_hafmaxidx','*_widthhafmax','width*','x','-v7.3')
+
+%% 3.5 Find width @ 1/2 max on concatenated data
+% fn = 'ThetaPhaseLags-dHthresh-BL-AllTrialsConcat-hist.mat';
+% load([root_drIn fn],'*_hist','x')
+% load([root_drIn 'ThetaPhaseLags-dHthresh-BL-AllTrialsConcat.mat']) %check directory accuracy
+% ildh_phase_diff_hist=hist(ildh,edges);
+% halph_max_ildh=(max(ildh_phase_diff_hist))/2; %identifies half of the peak height of the histogram
+% [~,hafmaxidx] = (max(ildh_phase_diff_hist)); %i
+% width_at_halph_max_ildh=find(ildh_phase_diff_hist>halph_max_ildh); %finds indices of the bins which have height higher than the peak_height/2
+% width_at_halph_max_ildh=length(width_at_halph_max_ildh); %coun
+% ildh_widthhafmax = width_at_halph_max_ildh*mean(diff(edges));
+% ilvh_phase_diff_hist=hist(ilvh,edges);
+% % width at half of maximum peak
+% halph_max_ilvh=(max(ilvh_phase_diff_hist))/2;
+% [~,hafmaxidx] = (max(ilvh_phase_diff_hist));
+% ilvh_hafmaxidx = hafmaxidx;
+% width_at_halph_max_ilvh=find(ilvh_phase_diff_hist>halph_max_ilvh);
+% width_at_halph_max_ilvh=length(width_at_halph_max_ilvh);
+% ilvh_widthhafmax = width_at_halph_max_ilvh*mean(diff(edges));
+% dhpl_phase_diff_hist=hist(dhpl,edges);
+% halph_max_dhpl=(max(dhpl_phase_diff_hist))/2;
+% [~,dhpl_hafmaxidx] = (max(dhpl_phase_diff_hist));
+% [~,hafmaxidx] = (max(dhpl_phase_diff_hist));
+% width_at_halph_max_dhpl=find(dhpl_phase_diff_hist>halph_max_dhpl);
+% width_at_halph_max_dhpl=length(width_at_halph_max_dhpl);
+% dhpl_widthhafmax = width_at_halph_max_dhpl*mean(diff(edges)); 
+% vhpl_phase_diff_hist=hist(vhpl,edges);
+% halph_max_vhpl=(max(vhpl_phase_diff_hist))/2;
+% [~,hafmaxidx] = (max(vhpl_phase_diff_hist));
+% vhpl_hafmaxidx = hafmaxidx
+% width_at_halph_max_vhpl=find(vhpl_phase_diff_hist>halph_max_vhpl);
+% width_at_halph_max_vhpl=length(width_at_halph_max_vhpl);
+% vhpl_widthhafmax = width_at_halph_max_vhpl*mean(diff(edges)); 
+% [~,ildh_hafmaxidx] = (max(ildh_phase_diff_hist));
+% clear dhpl ildh vhpl ilvh
+
+    % Save the data
+    % fn = 'ThetaPhaseLags-dHthresh-BL-AllTrialsConcat-hist.mat';
+    % save([root_drIn 'BL' filesep fn],'edges','dhpl*','ildh*','ilvh*','vhpl*','numbins','width_*','x','-v7.3')
+    % clear ildh* ilvh* ilpl* dhvh* dhpl* vhpl* fn
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 4. Band power cross-correlations (theta, gamma, delta) 
@@ -203,7 +269,7 @@ for bi = 1:length(bandz) %loop Theta, Gamma, Delta bands
     
     % Load in R^2 data
     fn = [bandz{bi} 'Rsq-BL_boot.mat']; %file name to load
-    load([[root_drIn 'BL' filesep fn],'M_*','F_ILDH','F_ILVH','F_ILPL','F_DHVH','F_DHPL','F_VHPL')
+    load([root_drIn 'BL' filesep fn],'M_*','F_ILDH','F_ILVH','F_ILPL','F_DHVH','F_DHPL','F_VHPL')
     clear fn
     
     % Z-score
