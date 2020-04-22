@@ -57,11 +57,7 @@ for si = 1:length(subjs) %loop thru subjects
         
         % Load in subject's ReducedData
         fprintf('Loading %s data for %s...\n',rt,subjs{si})
-        if strcmp(subjs{si}(1),'A') %male
-            load([drIn subjs{si} '_ReducedData.mat'],'IL','PL','DHIP','VHIP','Rxlist') % load in data: all trials
-        else %female                  
-            load([drIn subjs{si} '_ReducedData.mat'],'IL','PL','DHIP','VHIP','Rxlist','idx') % load in data: all trials
-        end
+        load([drIn subjs{si} '_ReducedData.mat'],'IL','PL','DHIP','VHIP','Rxlist') % load in data: all trials
 
         % Reshape LFP data
         nrex = length(Rxlist); % number of trials
@@ -104,7 +100,7 @@ for si = 1:length(subjs) %loop thru subjects
     end %arenas
     clear ai idx
 end %subjects
-clear si g sos drIn Fs
+clear si g sos drIn Fs 
 disp('Theta filtfilt complete!')
 
 
