@@ -4,7 +4,6 @@
 % Plots Power spectra: Sex differences, with shading for SEM indicating subjects
 % 
 % Calls on scripts:
-%   - colorcet.m  (https://peterkovesi.com/projects/colourmaps/)
 %   - shadedErrorBar.m  (https://www.mathworks.com/matlabcentral/fileexchange/26311-raacampbell-shadederrorbar)
 %   - twosampF.m 
 % 
@@ -24,19 +23,16 @@ method = 1;
 parflag = 1;
 
 % Color maps
-maleblue = colorcet('L6'); %linear blue 192 
-    maleblue = maleblue(192,:); % MALES
-fempurp = colorcet('L8'); %linear blue magenta yellow
-    propurp = fempurp(65,:); %purple - FEMALES
-clear fempurp
+maleblue = [0.171931,0.744122,0.988253]; % MALES
+propurp = [0.490079,0.06569,0.568432]; %FEMALES
 
 %% Plot mPFC-IL
 H1 = figure('units','normalized','outerposition',[0 0 1 1]);
-p2 = shadedErrorBar(f,pow2db(Mil),{@mean,@(f) std(pow2db(Mil))/sqrt(size(Mil,1))},'lineprops',{'color',maleblue}); %subject-collapsed
+p2 = shadedErrorBar(f,pow2db(Mil),{@mean,@(x) std(pow2db(Mil))/sqrt(size(Mil,1))},'lineprops',{'color',maleblue}); %subject-collapsed
 p2.mainLine.LineWidth = 3;
 p2.mainLine.DisplayName = 'Male';
 hold on
-p1 = shadedErrorBar(f,pow2db(Fil),{@mean,@(f) std(pow2db(Fil))/sqrt(size(Fil,1))},'lineprops',{'color',propurp});
+p1 = shadedErrorBar(f,pow2db(Fil),{@mean,@(x) std(pow2db(Fil))/sqrt(size(Fil,1))},'lineprops',{'color',propurp});
 p1.mainLine.LineWidth = 3;
 p1.mainLine.DisplayName = 'Female';
 axis square
@@ -44,7 +40,7 @@ xlim([0.5 100])
 xticks(10:10:100)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
-title('mPFC-IL')
+title('IL')
 % legend([p1.mainLine, p2.mainLine],{'Female','Male'})
 set(gca,'fontsize',26)
 box off
@@ -55,11 +51,11 @@ set(gca,'TitleFontSizeMultiplier',1.75)
 
 %% Plot mPFC-PL
 H2 = figure('units','normalized','outerposition',[0 0 1 1]);
-p2 = shadedErrorBar(f,pow2db(Mpl),{@mean,@(f) std(pow2db(Mpl))/sqrt(size(Mpl,1))},'lineprops',{'color',maleblue}); 
+p2 = shadedErrorBar(f,pow2db(Mpl),{@mean,@(x) std(pow2db(Mpl))/sqrt(size(Mpl,1))},'lineprops',{'color',maleblue}); 
 p2.mainLine.LineWidth = 3;
 p2.mainLine.DisplayName = 'Male';
 hold on
-p1 = shadedErrorBar(f,pow2db(Fpl),{@mean,@(f) std(pow2db(Fpl))/sqrt(size(Fpl,1))},'lineprops',{'color',propurp});
+p1 = shadedErrorBar(f,pow2db(Fpl),{@mean,@(x) std(pow2db(Fpl))/sqrt(size(Fpl,1))},'lineprops',{'color',propurp});
 p1.mainLine.LineWidth = 3;
 p1.mainLine.DisplayName = 'Female';
 axis square
@@ -67,7 +63,7 @@ xlim([0.5 100])
 xticks(10:10:100)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
-title('mPFC-PL')
+title('PrL')
 legend([p1.mainLine, p2.mainLine],{'Female','Male'})
 set(gca,'fontsize',26)
 box off
@@ -78,11 +74,11 @@ set(gca,'TitleFontSizeMultiplier',1.75)
 
 %% Plot dHPC
 H3 = figure('units','normalized','outerposition',[0 0 1 1]);
-p2 = shadedErrorBar(f,pow2db(Mdh),{@mean,@(f) std(pow2db(Mdh))/sqrt(size(Mdh,1))},'lineprops',{'color',maleblue});
+p2 = shadedErrorBar(f,pow2db(Mdh),{@mean,@(x) std(pow2db(Mdh))/sqrt(size(Mdh,1))},'lineprops',{'color',maleblue});
 p2.mainLine.LineWidth = 3;
 p2.mainLine.DisplayName = 'Male';
 hold on
-p1 = shadedErrorBar(f,pow2db(Fdh),{@mean,@(f) std(pow2db(Fdh))/sqrt(size(Fdh,1))},'lineprops',{'color',propurp});
+p1 = shadedErrorBar(f,pow2db(Fdh),{@mean,@(x) std(pow2db(Fdh))/sqrt(size(Fdh,1))},'lineprops',{'color',propurp});
 p1.mainLine.LineWidth = 3;
 p1.mainLine.DisplayName = 'Female';
 axis square
@@ -101,11 +97,11 @@ set(gca,'TitleFontSizeMultiplier',1.75)
 
 %% Plot vHPC
 H4 = figure('units','normalized','outerposition',[0 0 1 1]);
-p2 = shadedErrorBar(f,pow2db(Mvh),{@mean,@(f) std(pow2db(Mvh))/sqrt(size(Mvh,1))},'lineprops',{'color',maleblue});
+p2 = shadedErrorBar(f,pow2db(Mvh),{@mean,@(x) std(pow2db(Mvh))/sqrt(size(Mvh,1))},'lineprops',{'color',maleblue});
 p2.mainLine.LineWidth = 3;
 p2.mainLine.DisplayName = 'Male';
 hold on
-p1 = shadedErrorBar(f,pow2db(Fvh),{@mean,@(f) std(pow2db(Fvh))/sqrt(size(Fvh,1))},'lineprops',{'color',propurp});
+p1 = shadedErrorBar(f,pow2db(Fvh),{@mean,@(x) std(pow2db(Fvh))/sqrt(size(Fvh,1))},'lineprops',{'color',propurp});
 p1.mainLine.LineWidth = 3;
 p1.mainLine.DisplayName = 'Female';
 axis square

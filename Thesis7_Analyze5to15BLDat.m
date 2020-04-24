@@ -64,7 +64,7 @@ fprintf('figdrOut: %s\n',figdrOut)
 fd = [figdrOut 'Bandpower' filesep]; %figure output directory
     if ~exist(fd,'dir'); mkdir(fd); end
 
-brain_area = {'IL'; 'dHPC'; 'vHPC'; 'PL'};
+brain_area = {'IL'; 'dHPC'; 'vHPC'; 'PrL'};
 nboot = 10^4; % number of times to resample data
 f_n = 1;
 
@@ -121,7 +121,7 @@ clear fn
 H121a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %mPFC-IL
     PlotHistBoot_MF(gca,M_IL_theta_boot,F_IL_theta_boot);
     xlabel('Theta band power (dB)'); ylabel('probability')
-    title('mPFC-IL');
+    title('IL');
 saveas(H121a,[fd 'BandPowBoot_Theta_IL_MvF.fig'])
     legend('off')
 saveas(H121a,[fd 'BandPowBoot_Theta_IL_MvF.png'])
@@ -148,7 +148,7 @@ saveas(H121c,[fd 'BandPowBoot_Theta_VH_MvF.png'])
 H121d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %mPFC-PL
     PlotHistBoot_MF(gca,M_PL_theta_boot,F_PL_theta_boot);
     xlabel('Theta band power (dB)'); ylabel('probability')
-    title('mPFC-PL');
+    title('PrL');
 saveas(H121d,[fd 'BandPowBoot_Theta_PL_MvF.fig'])
     legend('off')
 saveas(H121d,[fd 'BandPowBoot_Theta_PL_MvF.png'])
@@ -159,7 +159,7 @@ disp('Theta band power figures saved (MvF)')
 H122a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %mPFC-IL
     PlotHistBoot_MF(gca,M_IL_gamma_boot,F_IL_gamma_boot);
     xlabel('Gamma band power (dB)'); ylabel('probability')
-    title('mPFC-IL');
+    title('IL');
 saveas(H122a,[fd 'BandPowBoot_Gamma_IL_MvF.fig'])
     legend('off')
 saveas(H122a,[fd 'BandPowBoot_Gamma_IL_MvF.png'])
@@ -186,7 +186,7 @@ saveas(H122c,[fd 'BandPowBoot_Gamma_VH_MvF.png'])
 H122d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %mPFC-PL
     PlotHistBoot_MF(gca,M_PL_gamma_boot,F_PL_gamma_boot);
     xlabel('Gamma band power (dB)'); ylabel('probability')
-    title('mPFC-PL');
+    title('PrL');
 saveas(H122d,[fd 'BandPowBoot_Gamma_PL_MvF.fig'])
     legend('off')
 saveas(H122d,[fd 'BandPowBoot_Gamma_PL_MvF.png'])
@@ -197,7 +197,7 @@ disp('Gamma band power figures saved (MvF)')
 H123a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %mPFC-IL
     PlotHistBoot_MF(gca,M_IL_delta_boot,F_IL_delta_boot);
     xlabel('Delta band power (dB)'); ylabel('probability')
-    title('mPFC-IL');
+    title('IL');
 saveas(H123a,[fd 'BandPowBoot_Delta_IL_MvF.fig'])
     legend('off')
 saveas(H123a,[fd 'BandPowBoot_Delta_IL_MvF.png'])
@@ -224,7 +224,7 @@ saveas(H123c,[fd 'BandPowBoot_Delta_VH_MvF.png'])
 H123d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %mPFC-PL
     PlotHistBoot_MF(gca,M_PL_delta_boot,F_PL_delta_boot);
     xlabel('Delta band power (dB)'); ylabel('probability')
-    title('mPFC-PL');
+    title('PrL');
 saveas(H123d,[fd 'BandPowBoot_Delta_PL_MvF.fig'])
     legend('off')
 saveas(H123d,[fd 'BandPowBoot_Delta_PL_MvF.png'])
@@ -374,7 +374,7 @@ clear fn *pjm T_*
 H141a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); % mPFC-IL
     PlotHistBoot_Estrous(gca,fD_IL_theta_boot,fP_IL_theta_boot,fE_IL_theta_boot);
     xlabel('Theta band power (dB)'); ylabel('probability')
-    title('mPFC-IL')
+    title('IL')
 saveas(H141a,[fd 'BandPowBoot_Theta_IL_Estrous.fig'])
     legend('off')
 saveas(H141a,[fd 'BandPowBoot_Theta_IL_Estrous.png'])
@@ -401,7 +401,7 @@ saveas(H141c,[fd 'BandPowBoot_Theta_VH_Estrous.png'])
 H141d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); % mPFC-PL
     PlotHistBoot_Estrous(gca,fD_PL_theta_boot,fP_PL_theta_boot,fE_PL_theta_boot);
     xlabel('Theta band power (dB)'); ylabel('probability')
-    title('mPFC-PL')
+    title('PrL')
 saveas(H141d,[fd 'BandPowBoot_Theta_PL_Estrous.fig'])
     legend('off')
 saveas(H141d,[fd 'BandPowBoot_Theta_PL_Estrous.png'])
@@ -412,7 +412,7 @@ disp('Estrous theta bandpower histograms saved.')
 H142a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); % mPFC-IL
     PlotHistBoot_Estrous(gca,fD_IL_gamma_boot,fP_IL_gamma_boot,fE_IL_gamma_boot);
     xlabel('Gamma band power (dB)'); ylabel('probability')
-    title('mPFC-IL')
+    title('IL')
 saveas(H142a,[fd 'BandPowBoot_Gamma_IL_Estrous.fig'])
     legend('off')
 saveas(H142a,[fd 'BandPowBoot_Gamma_IL_Estrous.png'])
@@ -439,7 +439,7 @@ saveas(H142c,[fd 'BandPowBoot_Gamma_VH_Estrous.png'])
 H142d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); % mPFC-PL
     PlotHistBoot_Estrous(gca,fD_PL_gamma_boot,fP_PL_gamma_boot,fE_PL_gamma_boot);
     xlabel('Gamma band power (dB)'); ylabel('probability')
-    title('mPFC-PL')
+    title('PrL')
 saveas(H142d,[fd 'BandPowBoot_Gamma_PL_Estrous.fig'])
     legend('off')
 saveas(H142d,[fd 'BandPowBoot_Gamma_PL_Estrous.png'])
@@ -450,7 +450,7 @@ disp('Estrous gamma bandpower histograms saved.')
 H143a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); % mPFC-IL
     PlotHistBoot_Estrous(gca,fD_IL_delta_boot,fP_IL_delta_boot,fE_IL_delta_boot);
     xlabel('Delta band power (dB)'); ylabel('probability')
-    title('mPFC-IL')
+    title('IL')
 saveas(H143a,[fd 'BandPowBoot_Delta_IL_Estrous.fig'])
     legend('off')
 saveas(H143a,[fd 'BandPowBoot_Delta_IL_Estrous.png'])
@@ -477,7 +477,7 @@ saveas(H143c,[fd 'BandPowBoot_Delta_VH_Estrous.png'])
 H143d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); % mPFC-PL
     PlotHistBoot_Estrous(gca,fD_PL_delta_boot,fP_PL_delta_boot,fE_PL_delta_boot);
     xlabel('Delta band power (dB)'); ylabel('probability')
-    title('mPFC-PL')
+    title('PrL')
 saveas(H143d,[fd 'BandPowBoot_Delta_PL_Estrous.fig'])
     legend('off')
 saveas(H143d,[fd 'BandPowBoot_Delta_PL_Estrous.png'])
@@ -595,7 +595,7 @@ clear fn *_pjm brain_area T_*
 H161a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %mPFC-IL
     PlotHistBoot_MvHorms(gca,M_IL_theta_boot,fD_IL_theta_boot,fP_IL_theta_boot,fE_IL_theta_boot);
     xlabel('Theta band power (dB)'); ylabel('probability')
-    title('mPFC-IL')
+    title('IL')
     legend('location','northwest')
 saveas(H161a,[fd 'BandPowBoot_Theta_IL_MvHorms.fig'])
     legend('off')
@@ -623,7 +623,7 @@ saveas(H161c,[fd 'BandPowBoot_Theta_VH_MvHorms.png'])
 H161d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %mPFC-PL
     PlotHistBoot_MvHorms(gca,M_PL_theta_boot,fD_PL_theta_boot,fP_PL_theta_boot,fE_PL_theta_boot);
     xlabel('Theta band power (dB)'); ylabel('probability')
-    title('mPFC-PL')
+    title('PrL')
 saveas(H161d,[fd 'BandPowBoot_Theta_PL_MvHorms.fig'])
     legend('off')
 saveas(H161d,[fd 'BandPowBoot_Theta_PL_MvHorms.png'])
@@ -635,7 +635,7 @@ clear *_theta_boot ans
 H162a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %mPFC-IL
     PlotHistBoot_MvHorms(gca,M_IL_gamma_boot,fD_IL_gamma_boot,fP_IL_gamma_boot,fE_IL_gamma_boot);
     xlabel('Gamma band power (dB)'); ylabel('probability')
-    title('mPFC-IL')
+    title('IL')
     legend('location','northwest')
 saveas(H162a,[fd 'BandPowBoot_Gamma_IL_MvHorms.fig'])
     legend('off')
@@ -663,7 +663,7 @@ saveas(H162c,[fd 'BandPowBoot_Gamma_VH_MvHorms.png'])
 H162d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %mPFC-PL
     PlotHistBoot_MvHorms(gca,M_PL_gamma_boot,fD_PL_gamma_boot,fP_PL_gamma_boot,fE_PL_gamma_boot);
     xlabel('Gamma band power (dB)'); ylabel('probability')
-    title('mPFC-PL')
+    title('PrL')
 saveas(H162d,[fd 'BandPowBoot_Gamma_PL_MvHorms.fig'])
     legend('off')
 saveas(H162d,[fd 'BandPowBoot_Gamma_PL_MvHorms.png'])
@@ -675,7 +675,7 @@ clear *_gamma_boot ans
 H163a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %mPFC-IL
     PlotHistBoot_MvHorms(gca,M_IL_delta_boot,fD_IL_delta_boot,fP_IL_delta_boot,fE_IL_delta_boot);
     xlabel('Delta band power (dB)'); ylabel('probability')
-    title('mPFC-IL')
+    title('IL')
     legend('location','northwest')
 saveas(H163a,[fd 'BandPowBoot_Delta_IL_MvHorms.fig'])
     legend('off')
@@ -703,7 +703,7 @@ saveas(H163c,[fd 'BandPowBoot_Delta_VH_MvHorms.png'])
 H163d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %mPFC-PL
     PlotHistBoot_MvHorms(gca,M_PL_delta_boot,fD_PL_delta_boot,fP_PL_delta_boot,fE_PL_delta_boot);
     xlabel('Delta band power (dB)'); ylabel('probability')
-    title('mPFC-PL')
+    title('PrL')
 saveas(H163d,[fd 'BandPowBoot_Delta_PL_MvHorms.fig'])
     legend('off')
 saveas(H163d,[fd 'BandPowBoot_Delta_PL_MvHorms.png'])
@@ -780,7 +780,7 @@ fd = [figdrOut 'ThetaPhaseLag' filesep]; % figure output directory
 H22a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]);
     PlotHistBoot_MF(gca,M_ILDH_boot,F_ILDH_boot);
     xlabel('Theta phase lag: width @ half-max (rad.)'); ylabel('probability')
-    title('dHPC-mPFCIL');
+    title('dHPC-IL');
 saveas(H22a,[fd 'ThetaPhaseLagBoot_ILDH_MvF.fig'])
     legend('off')
 saveas(H22a,[fd 'ThetaPhaseLagBoot_ILDH_MvF.png'])
@@ -790,7 +790,7 @@ saveas(H22a,[fd 'ThetaPhaseLagBoot_ILDH_MvF.png'])
 H22b = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]);
     PlotHistBoot_MF(gca,M_ILVH_boot,F_ILVH_boot);
     xlabel('Theta phase lag: width @ half-max (rad.)'); ylabel('probability')
-    title('vHPC-mPFCIL')
+    title('vHPC-IL')
 saveas(H22b,[fd 'ThetaPhaseLagBoot_ILVH_MvF.fig'])
     legend('off')
 saveas(H22b,[fd 'ThetaPhaseLagBoot_ILVH_MvF.png'])
@@ -800,7 +800,7 @@ saveas(H22b,[fd 'ThetaPhaseLagBoot_ILVH_MvF.png'])
 H22c = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]);
     PlotHistBoot_MF(gca,M_DHPL_boot,F_DHPL_boot);
     xlabel('Theta phase lag: width @ half-max (rad.)'); ylabel('probability')
-    title('dHPC-mPFCPL')
+    title('dHPC-PrL')
 saveas(H22c,[fd 'ThetaPhaseLagBoot_DHPL_MvF.fig'])
     legend('off')
 saveas(H22c,[fd 'ThetaPhaseLagBoot_DHPL_MvF.png'])
@@ -810,7 +810,7 @@ saveas(H22c,[fd 'ThetaPhaseLagBoot_DHPL_MvF.png'])
 H22d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]);
     PlotHistBoot_MF(gca,M_VHPL_boot,F_VHPL_boot);
     xlabel('Theta phase lag: width @ half-max (rad.)'); ylabel('probability')
-    title('vHPC-mPFCPL'); clear ans
+    title('vHPC-PrL'); clear ans
 saveas(H22d,[fd 'ThetaPhaseLagBoot_VHPL_MvF.fig'])
     legend('off')
     saveas(H22d,[fd 'ThetaPhaseLagBoot_VHPL_MvF.png'])
@@ -892,7 +892,7 @@ clear fn nboot f_n T_* *_pjm
 H24a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILDH
     PlotHistBoot_Estrous(gca,fD_ILDH_boot,fP_ILDH_boot,fE_ILDH_boot);
     xlabel('Theta phase lag: width @ half-max (rad.)'); ylabel('probability')
-    title('dHPC-mPFCIL')
+    title('dHPC-IL')
 saveas(H24a,[fd 'ThetaPhaseLagBoot_ILDH_Estrous.fig'])
     legend('off')
     saveas(H24a,[fd 'ThetaPhaseLagBoot_ILDH_Estrous.png'])
@@ -901,7 +901,7 @@ saveas(H24a,[fd 'ThetaPhaseLagBoot_ILDH_Estrous.fig'])
 H24b = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILVH
     PlotHistBoot_Estrous(gca,fD_ILVH_boot,fP_ILVH_boot,fE_ILVH_boot);
     xlabel('Theta phase lag: width @ half-max (rad.)'); ylabel('probability')
-    title('vHPC-mPFCIL')
+    title('vHPC-IL')
 saveas(H24b,[fd 'ThetaPhaseLagBoot_ILVH_Estrous.fig'])
     legend('off')
 saveas(H24b,[fd 'ThetaPhaseLagBoot_ILVH_Estrous.png'])
@@ -910,7 +910,7 @@ saveas(H24b,[fd 'ThetaPhaseLagBoot_ILVH_Estrous.png'])
 H24c = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %DHPL
     PlotHistBoot_Estrous(gca,fD_DHPL_boot,fP_DHPL_boot,fE_DHPL_boot);
     xlabel('Theta phase lag: width @ half-max (rad.)'); ylabel('probability')
-    title('dHPC-mPFCPL')
+    title('dHPC-PrL')
 saveas(H24c,[fd 'ThetaPhaseLagBoot_DHPL_Estrous.fig'])
     legend('off')
     saveas(H24c,[fd 'ThetaPhaseLagBoot_DHPL_Estrous.png'])
@@ -919,7 +919,7 @@ saveas(H24c,[fd 'ThetaPhaseLagBoot_DHPL_Estrous.fig'])
 H24d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %VHPL
     PlotHistBoot_Estrous(gca,fD_VHPL_boot,fP_VHPL_boot,fE_VHPL_boot);
     xlabel('Theta phase lag: width @ half-max (rad.)'); ylabel('probability')
-    title('vHPC-mPFCPL')
+    title('vHPC-PrL')
 saveas(H24d,[fd 'ThetaPhaseLagBoot_VHPL_Estrous.fig'])
     legend('off')
     saveas(H24d,[fd 'ThetaPhaseLagBoot_VHPL_Estrous.png'])
@@ -981,7 +981,7 @@ clear fn T_* *_pjm
 H26a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILDH
     PlotHistBoot_MvHorms(gca,M_ILDH_boot,fD_ILDH_boot,fP_ILDH_boot,fE_ILDH_boot);
     xlabel('Theta phase lag: width @ half-max (rad.)'); ylabel('probability')
-    title('dHPC-mPFCIL')
+    title('dHPC-IL')
 saveas(H26a,[fd 'ThetaPhaseLagBoot_ILDH_MvHorms.fig'])
     legend('off')
 saveas(H26a,[fd 'ThetaPhaseLagBoot_ILDH_MvHorms.png'])
@@ -990,7 +990,7 @@ saveas(H26a,[fd 'ThetaPhaseLagBoot_ILDH_MvHorms.png'])
 H26b = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILVH
     PlotHistBoot_MvHorms(gca,M_ILVH_boot,fD_ILVH_boot,fP_ILVH_boot,fE_ILVH_boot);
     xlabel('Theta phase lag: width @ half-max (rad.)'); ylabel('probability')
-    title('vHPC-mPFCIL')
+    title('vHPC-IL')
 saveas(H26b,[fd 'ThetaPhaseLagBoot_ILVH_MvHorms.fig'])
     legend('off')
 saveas(H26b,[fd 'ThetaPhaseLagBoot_ILVH_MvHorms.png'])
@@ -999,7 +999,7 @@ saveas(H26b,[fd 'ThetaPhaseLagBoot_ILVH_MvHorms.png'])
 H26c = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %DHPL
     PlotHistBoot_MvHorms(gca,M_DHPL_boot,fD_DHPL_boot,fP_DHPL_boot,fE_DHPL_boot);
     xlabel('Theta phase lag: width @ half-max (rad.)'); ylabel('probability')
-    title('dHPC-mPFCPL')
+    title('dHPC-PrL')
 saveas(H26c,[fd 'ThetaPhaseLagBoot_DHPL_MvHorms.fig'])
     legend('off')
 saveas(H26c,[fd 'ThetaPhaseLagBoot_DHPL_MvHorms.png'])
@@ -1008,7 +1008,7 @@ saveas(H26c,[fd 'ThetaPhaseLagBoot_DHPL_MvHorms.png'])
 H26d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %VHPL
     PlotHistBoot_MvHorms(gca,M_VHPL_boot,fD_VHPL_boot,fP_VHPL_boot,fE_VHPL_boot);
     xlabel('Theta phase lag: width @ half-max (rad.)'); ylabel('probability')
-    title('vHPC-mPFCPL')
+    title('vHPC-PrL')
 saveas(H26d,[fd 'ThetaPhaseLagBoot_VHPL_MvHorms.fig'])
     legend('off')
 saveas(H26d,[fd 'ThetaPhaseLagBoot_VHPL_MvHorms.png'])
@@ -1090,7 +1090,7 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
     H32a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILDH
         PlotHistBoot_MF(gca,M_ILDH_boot,F_ILDH_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); ylabel('probability')
-        title('dHPC-mPFCIL')
+        title('dHPC-IL')
     saveas(H32a,[fd Bands{bi} 'RSqBoot_ILDH_MvF.fig'])
         legend('off')
     saveas(H32a,[fd Bands{bi} 'RSqBoot_ILDH_MvF.png'])
@@ -1099,7 +1099,7 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
     H32b = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILVH
         PlotHistBoot_MF(gca,M_ILVH_boot,F_ILVH_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); ylabel('probability')
-        title('vHPC-mPFCIL')
+        title('vHPC-IL')
     saveas(H32b,[fd Bands{bi} 'RSqBoot_ILVH_MvF.fig'])
         legend('off')
     saveas(H32b,[fd Bands{bi} 'RSqBoot_ILVH_MvF.png'])
@@ -1108,7 +1108,7 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
     H32c = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %DHPL
         PlotHistBoot_MF(gca,M_DHPL_boot,F_DHPL_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); ylabel('probability')
-        title('dHPC-mPFCPL')
+        title('dHPC-PrL')
     saveas(H32c,[fd Bands{bi} 'RSqBoot_DHPL_MvF.fig'])
         legend('off')
     saveas(H32c,[fd Bands{bi} 'RSqBoot_DHPL_MvF.png'])
@@ -1117,7 +1117,7 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
     H32d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %VHPL
         PlotHistBoot_MF(gca,M_VHPL_boot,F_VHPL_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); ylabel('probability')
-        title('vHPC-mPFCPL')
+        title('vHPC-PrL')
     saveas(H32d,[fd Bands{bi} 'RSqBoot_VHPL_MvF.fig'])
         legend('off')
     saveas(H32d,[fd Bands{bi} 'RSqBoot_VHPL_MvF.png'])
@@ -1191,7 +1191,7 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
     H34a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILDH
         PlotHistBoot_Estrous(gca,fD_ILDH_boot,fP_ILDH_boot,fE_ILDH_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); ylabel('probability')
-        title('dHPC-mPFCIL')
+        title('dHPC-IL')
     saveas(H34a,[fd Bands{bi} 'RSqBoot_ILDH_Estrous.fig'])
         legend('off')
     saveas(H34a,[fd Bands{bi} 'RSqBoot_ILDH_Estrous.png'])
@@ -1200,7 +1200,7 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
     H34b = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILVH
         PlotHistBoot_Estrous(gca,fD_ILVH_boot,fP_ILVH_boot,fE_ILVH_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); ylabel('probability')
-        title('vHPC-mPFCIL')
+        title('vHPC-IL')
     saveas(H34b,[fd Bands{bi} 'RSqBoot_ILVH_Estrous.fig'])
         legend('off')
     saveas(H34b,[fd Bands{bi} 'RSqBoot_ILVH_Estrous.png'])
@@ -1209,7 +1209,7 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
     H34c = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %DHPL
         PlotHistBoot_Estrous(gca,fD_DHPL_boot,fP_DHPL_boot,fE_DHPL_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); ylabel('probability')
-        title('dHPC-mPFCPL')
+        title('dHPC-PrL')
     saveas(H34c,[fd Bands{bi} 'RSqBoot_DHPL_Estrous.fig'])
         legend('off')
     saveas(H34c,[fd Bands{bi} 'RSqBoot_DHPL_Estrous.png'])
@@ -1218,7 +1218,7 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
     H34d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %VHPL
         PlotHistBoot_Estrous(gca,fD_VHPL_boot,fP_VHPL_boot,fE_VHPL_boot);
        xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); ylabel('probability')
-        title('vHPC-mPFCPL')
+        title('vHPC-PrL')
     saveas(H34d,[fd Bands{bi} 'RSqBoot_VHPL_Estrous.fig'])
         legend('off')
     saveas(H34d,[fd Bands{bi} 'RSqBoot_VHPL_Estrous.png'])
@@ -1278,7 +1278,7 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
     H36a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILDH
         PlotHistBoot_MvHorms(gca,M_ILDH_boot,fD_ILDH_boot,fP_ILDH_boot,fE_ILDH_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); ylabel('probability')
-        title('dHPC-mPFCIL')
+        title('dHPC-IL')
     saveas(H36a,[fd Bands{bi} 'RSqBoot_ILDH_MvHorms.fig'])
         legend('off')
     saveas(H36a,[fd Bands{bi} 'RSqBoot_ILDH_MvHorms.png'])
@@ -1287,7 +1287,7 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
     H36b = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILVH
         PlotHistBoot_MvHorms(gca,M_ILVH_boot,fD_ILVH_boot,fP_ILVH_boot,fE_ILVH_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); ylabel('probability')
-        title('vHPC-mPFCIL')
+        title('vHPC-IL')
     saveas(H36b,[fd Bands{bi} 'RSqBoot_ILVH_MvHorms.fig'])
         legend('off')
     saveas(H36b,[fd Bands{bi} 'RSqBoot_ILVH_MvHorms.png'])
@@ -1296,7 +1296,7 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
     H36c = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %DHPL
         PlotHistBoot_MvHorms(gca,M_DHPL_boot,fD_DHPL_boot,fP_DHPL_boot,fE_DHPL_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); ylabel('probability')
-        title('dHPC-mPFCPL')
+        title('dHPC-PrL')
     saveas(H36c,[fd Bands{bi} 'RSqBoot_DHPL_MvHorms.fig'])
         legend('off')
     saveas(H36c,[fd Bands{bi} 'RSqBoot_DHPL_MvHorms.png'])
@@ -1305,7 +1305,7 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
     H36d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %VHPL
         PlotHistBoot_MvHorms(gca,M_VHPL_boot,fD_VHPL_boot,fP_VHPL_boot,fE_VHPL_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); ylabel('probability')
-        title('vHPC-mPFCPL')
+        title('vHPC-PrL')
     saveas(H36d,[fd Bands{bi} 'RSqBoot_VHPL_MvHorms.fig'])
         legend('off')
     saveas(H36d,[fd Bands{bi} 'RSqBoot_VHPL_MvHorms.png'])

@@ -13,7 +13,6 @@
 %       Fx      Female mscohere data for one pairwise connection
 % 
 % Calls on scripts:
-%   - colorcet.m  (https://peterkovesi.com/projects/colourmaps/)
 %   - shadedErrorBar.m  (https://www.mathworks.com/matlabcentral/fileexchange/26311-raacampbell-shadederrorbar)
 %   - twosampF.m 
 % 
@@ -34,11 +33,8 @@ method = 1;
 parflag = 1;
 
 % Color maps
-maleblue = colorcet('L6'); %linear blue 192 
-    maleblue = maleblue(192,:); % MALES
-fempurp = colorcet('L8'); %linear blue magenta yellow
-    propurp = fempurp(65,:); %purple - FEMALES
-clear fempurp
+maleblue = [0.1719    0.7441    0.9883]; % MALES
+propurp = [0.4901    0.0657    0.5684]; %FEMALES
 
 %% Designate frequency bands
 if size(f,1)<size(f,2)
@@ -96,12 +92,12 @@ hold on
 %% Theta
 subplot(222)
     % Male
-    p2 = shadedErrorBar(theta,Mx(:,t1:t2),{@mean,@(f) std(Mx(:,t1:t2))/sqrt(size(Mx,1))},'lineprops',{'color',maleblue});
+    p2 = shadedErrorBar(theta,Mx(:,t1:t2),{@mean,@(x) std(Mx(:,t1:t2))/sqrt(size(Mx,1))},'lineprops',{'color',maleblue});
     p2.mainLine.LineWidth = 3;
     p2.mainLine.DisplayName = 'Males';
 hold on
     % Female
-    p3 = shadedErrorBar(theta,Fx(:,t1:t2),{@mean,@(f) std(Fx(:,t1:t2))/sqrt(size(Fx,1))},'lineprops',{'color',propurp});
+    p3 = shadedErrorBar(theta,Fx(:,t1:t2),{@mean,@(x) std(Fx(:,t1:t2))/sqrt(size(Fx,1))},'lineprops',{'color',propurp});
     p3.mainLine.LineWidth = 3;
     p3.mainLine.DisplayName = 'Females - All stages';
     
@@ -112,7 +108,7 @@ hold on
     xlabel('Frequency (Hz)')
     ylabel(sprintf('Magnitude^2 coherence'))
     title('Theta band')
-%     legend([p2.mainLine, p3.mainLine],{'Males','Females'})
+%     legend([p2.mainLine, p3.mainLine],{'Male','Female'})
 %     legend('location','southwest')
     box off
     set(gca,'TitleFontSizeMultiplier',1.5)
@@ -123,12 +119,12 @@ hold on
 %% Beta
 subplot(223)
     % Male
-    p2 = shadedErrorBar(beta,Mx(:,b1:b2),{@mean,@(f) std(Mx(:,b1:b2))/sqrt(size(Mx,1))},'lineprops',{'color',maleblue});
+    p2 = shadedErrorBar(beta,Mx(:,b1:b2),{@mean,@(x) std(Mx(:,b1:b2))/sqrt(size(Mx,1))},'lineprops',{'color',maleblue});
     p2.mainLine.LineWidth = 3;
     p2.mainLine.DisplayName = 'Males';
 hold on
     % Female
-    p3 = shadedErrorBar(beta,Fx(:,b1:b2),{@mean,@(f) std(Fx(:,b1:b2))/sqrt(size(Fx,1))},'lineprops',{'color',propurp});
+    p3 = shadedErrorBar(beta,Fx(:,b1:b2),{@mean,@(x) std(Fx(:,b1:b2))/sqrt(size(Fx,1))},'lineprops',{'color',propurp});
     p3.mainLine.LineWidth = 3;
     p3.mainLine.DisplayName = 'Females - All stages';
     
@@ -149,12 +145,12 @@ hold on
 %% Gamma (broadband) 
 subplot(224)
     % Male
-    p2 = shadedErrorBar(gamma,Mx(:,g1:g2),{@mean,@(f) std(Mx(:,g1:g2))/sqrt(size(Mx,1))},'lineprops',{'color',maleblue});
+    p2 = shadedErrorBar(gamma,Mx(:,g1:g2),{@mean,@(x) std(Mx(:,g1:g2))/sqrt(size(Mx,1))},'lineprops',{'color',maleblue});
     p2.mainLine.LineWidth = 3;
     p2.mainLine.DisplayName = 'Males';
 hold on
     % Female
-    p3 = shadedErrorBar(gamma,Fx(:,g1:g2),{@mean,@(f) std(Fx(:,g1:g2))/sqrt(size(Fx,1))},'lineprops',{'color',propurp});
+    p3 = shadedErrorBar(gamma,Fx(:,g1:g2),{@mean,@(x) std(Fx(:,g1:g2))/sqrt(size(Fx,1))},'lineprops',{'color',propurp});
     p3.mainLine.LineWidth = 3;
     p3.mainLine.DisplayName = 'Females - All stages';
     

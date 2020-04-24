@@ -175,16 +175,16 @@ end
     % Save figures
     fd = [figdrOut 'PowSpec_ReducedChannels\BL\FunctionalAnova\']; %output directory
     if ~exist(fd,'dir'); mkdir(fd); end    
-    saveas(H1,[fd 'mPFCIL-MvF-SubjSEM-5to15BL.tif'])
+    saveas(H1,[fd 'mPFCIL-MvF-SubjSEM-5to15BL.png'])
     saveas(H1,[fd 'mPFCIL-MvF-SubjSEM-5to15BL.fig'])
         close(H1); clear H1
-    saveas(H2,[fd 'mPFCPL-MvF-SubjSEM-5to15BL.tif'])
+    saveas(H2,[fd 'mPFCPL-MvF-SubjSEM-5to15BL.png'])
     saveas(H2,[fd 'mPFCPL-MvF-SubjSEM-5to15BL.fig'])
         close(H2); clear H2
-    saveas(H3,[fd 'dHPC-MvF-SubjSEM-5to15BL.tif'])
+    saveas(H3,[fd 'dHPC-MvF-SubjSEM-5to15BL.png'])
     saveas(H3,[fd 'dHPC-MvF-SubjSEM-5to15BL.fig'])
         close(H3); clear H3
-    saveas(H4,[fd 'vHPC-MvF-SubjSEM-5to15BL.tif'])
+    saveas(H4,[fd 'vHPC-MvF-SubjSEM-5to15BL.png'])
     saveas(H4,[fd 'vHPC-MvF-SubjSEM-5to15BL.fig'])
         close(H4); clear H4
         
@@ -203,16 +203,16 @@ end
     clear Mvh Fvh
          
     % Save figures
-    saveas(h1,[fd 'mPFCILbands-MvF-SubjSEM-5to15BL.tif'])
+    saveas(h1,[fd 'mPFCILbands-MvF-SubjSEM-5to15BL.png'])
     saveas(h1,[fd 'mPFCILbands-MvF-SubjSEM-5to15BL.fig'])
         close(h1); clear h1
-    saveas(h2,[fd 'mPFCPLbands-MvF-SubjSEM-5to15BL.tif'])
+    saveas(h2,[fd 'mPFCPLbands-MvF-SubjSEM-5to15BL.png'])
     saveas(h2,[fd 'mPFCPLbands-MvF-SubjSEM-5to15BL.fig'])
         close(h2); clear h2
-    saveas(h3,[fd 'dHPCbands-MvF-SubjSEM-5to15BL.tif'])
+    saveas(h3,[fd 'dHPCbands-MvF-SubjSEM-5to15BL.png'])
     saveas(h3,[fd 'dHPCbands-MvF-SubjSEM-5to15BL.fig'])
         close(h3); clear h3
-    saveas(h4,[fd 'vHPCbands-MvF-SubjSEM-5to15BL.tif'])
+    saveas(h4,[fd 'vHPCbands-MvF-SubjSEM-5to15BL.png'])
     saveas(h4,[fd 'vHPCbands-MvF-SubjSEM-5to15BL.fig'])
         close(h4); clear h4
         
@@ -288,24 +288,24 @@ end
 
     % Save figures
     fd = [figdrOut 'PowSpec_ReducedChannels\BL\FunctionalAnova\']; %output directory
-    saveas(H1,[fd 'mPFCIL-Hormones-SubjSEM-5to15BL.tif'])
+    saveas(H1,[fd 'mPFCIL-Hormones-SubjSEM-5to15BL.png'])
     saveas(H1,[fd 'mPFCIL-Hormones-SubjSEM-5to15BL.fig'])
         close(H1); clear H1
-    saveas(H2,[fd 'mPFCPL-Hormones-SubjSEM-5to15BL.tif'])
+    saveas(H2,[fd 'mPFCPL-Hormones-SubjSEM-5to15BL.png'])
     saveas(H2,[fd 'mPFCPL-Hormones-SubjSEM-5to15BL.fig'])
         close(H2); clear H2
-    saveas(H3,[fd 'dHPC-Hormones-SubjSEM-5to15BL.tif'])
+    saveas(H3,[fd 'dHPC-Hormones-SubjSEM-5to15BL.png'])
     saveas(H3,[fd 'dHPC-Hormones-SubjSEM-5to15BL.fig'])
         close(H3); clear H3
-    saveas(H4,[fd 'vHPC-Hormones-SubjSEM-5to15BL.tif'])
+    saveas(H4,[fd 'vHPC-Hormones-SubjSEM-5to15BL.png'])
     saveas(H4,[fd 'vHPC-Hormones-SubjSEM-5to15BL.fig'])
         close(H4); clear H4
     
 % Plot Power spectra: Effect of estrous stage, Frequency bands of interest
-% mPFC-IL
+% IL
     [h1,ILstat] = PlotBoot_PowSpecHormonesBands(f,Dil,Pil,Eil,Mil,ILstat,A);
     clear Mil
-% mPFC-PL
+% PrL
     [h2,PLstat] = PlotBoot_PowSpecHormonesBands(f,Dpl,Ppl,Epl,Mpl,PLstat,A);
     clear Mpl
 % dHPC
@@ -316,16 +316,16 @@ end
     clear Mvh
          
     % Save figures
-    saveas(h1,[fd 'mPFCILbands-Hormones-SubjSEM-5to15BL.tif'])
+    saveas(h1,[fd 'mPFCILbands-Hormones-SubjSEM-5to15BL.png'])
     saveas(h1,[fd 'mPFCILbands-Hormones-SubjSEM-5to15BL.fig'])
         close(h1); clear h1
-    saveas(h2,[fd 'mPFCPLbands-Hormones-SubjSEM-5to15BL.tif'])
+    saveas(h2,[fd 'mPFCPLbands-Hormones-SubjSEM-5to15BL.png'])
     saveas(h2,[fd 'mPFCPLbands-Hormones-SubjSEM-5to15BL.fig'])
         close(h2); clear h2
-    saveas(h3,[fd 'dHPCbands-Hormones-SubjSEM-5to15BL.tif'])
+    saveas(h3,[fd 'dHPCbands-Hormones-SubjSEM-5to15BL.png'])
     saveas(h3,[fd 'dHPCbands-Hormones-SubjSEM-5to15BL.fig'])
         close(h3); clear h3
-    saveas(h4,[fd 'vHPCbands-Hormones-SubjSEM-5to15BL.tif'])
+    saveas(h4,[fd 'vHPCbands-Hormones-SubjSEM-5to15BL.png'])
     saveas(h4,[fd 'vHPCbands-Hormones-SubjSEM-5to15BL.fig'])
         close(h4); clear h4 fd
     
@@ -359,7 +359,7 @@ end
 % Append males onto 'A' for fANOVAs
 A = [A; 4; 4; 4; 4];
 
-% % Functional ANOVA: Male vs each stage  - did special on 4/19/20. Not totally compatible with the function
+% % Functional ANOVA: Male vs each stage  - did specially on 4/19/20. Not totally compatible with the function
 % [DvM_ILstat,DvM_PLstat,DvM_DHstat,DvM_VHstat] = PlotBoot_PowSpec(f,Mil,Dil,Mpl,Dpl,Mdh,Ddh,Mvh,Dvh); % Diest v Male
 % [PvM_ILstat,PvM_PLstat,PvM_DHstat,PvM_VHstat] = PlotBoot_PowSpec(f,Mil,Pil,Mpl,Ppl,Mdh,Pdh,Mvh,Pvh); % Proest v Male
 % [EvM_ILstat,EvM_PLstat,EvM_DHstat,EvM_VHstat] = PlotBoot_PowSpec(f,Mil,Eil,Mpl,Epl,Mdh,Edh,Mvh,Evh); % Est v Male
@@ -458,7 +458,7 @@ clear *_Pxx
 disp('Saving band power data..')
 fn = 'FreqBandPow-BL-5to15_boot.mat';
 save([root_drIn '5to15' filesep fn],'F_*','M_*','subjs','-v7.3') % Done on 2020-02-26
-disp('Saved!')
+disp('Saved.')
 clear fn
 
 
@@ -476,8 +476,8 @@ if ~exist('M_IL','var') || ~exist('F_IL','var')
 end
 
 %  Calculate coherencyc: One curve per trial, BL arena, 5-15cm/s
-  % Concatenating by subject causes a memory ERROR using tapers=[30 59] or
-  % [45 89], not [3 5], but horrible results using so few tapers.. 
+  % Concatenating trials per subject causes a memory ERROR using tapers=[30 59]
+  % or [45 89], not [3 5], but yucky results using so few tapers.. 
     %   "Requested 33554432x59 (29.5GB) array exceeds maximum array size preference. Creation of
     %   arrays greater than this limit may take a long time and cause MATLAB to become unresponsive.
     %   See array size limit or preference panel for more information.
@@ -498,7 +498,7 @@ clear M_IL M_DH M_VH M_PL F_IL F_DH F_VH F_PL
 disp('Saving coherencyc data (large)...')
 fn = 'coherencyc-BL-5to15_boot.mat';
 save([root_drIn '5to15' filesep fn],'f','F_*','M_*','params','subjs','-v7.3') 
-disp('Coherencyc data saved!') %done on 2020-02-25
+disp('Coherencyc data saved.')
 clear fn params
 
 
@@ -528,7 +528,7 @@ clear M_IL M_DH M_VH M_PL F_IL F_DH F_VH F_PL
 disp('Saving mscohere data...')
 fn = 'mscohere-BL-5to15_boot.mat';
 save([root_drIn '5to15' filesep fn],'f','F_*','M_*','-v7.3') 
-disp('Saved!') %done on 2020-02-27
+disp('Saved.')
 clear fn 
 
 
@@ -547,7 +547,7 @@ clear Fsubjs
 disp('Saving female mscohere data...')
 fn = 'Female_mscohere-BL-5to15_boot.mat';
 save([root_drIn '5to15' filesep fn],'f','F_*','-v7.3')
-disp('Saved!')
+disp('Saved.')
 clear fn
 
 
@@ -596,14 +596,14 @@ end
 % Plot mscohere: Sex differences, 0.5-50 Hz
 %mPFCIL-dHPC
     [H1,ILDHstat.MvF] = PlotBoot_mscohere(f,Mildh,Fildh);
-    title('mPFCIL - dHPC')
+    title('IL - dHPC')
 %mPFCIL-vHPC
     [H2,ILVHstat.MvF] = PlotBoot_mscohere(f,Milvh,Filvh);
-    title('mPFCIL - vHPC')
+    title('IL - vHPC')
     legend off
 %mPFCIL-mPFCPL
     [H3,ILPLstat.MvF] = PlotBoot_mscohere(f,Milpl,Filpl);
-    title('mPFCIL - mPFCPL')
+    title('IL - PrL')
     legend off
 %dHPC-vHPC
     [H4,DHVHstat.MvF] = PlotBoot_mscohere(f,Mdhvh,Fdhvh);
@@ -611,11 +611,11 @@ end
     legend off
 %dHPC-mPFCPL
     [H5,DHPLstat.MvF] = PlotBoot_mscohere(f,Mdhpl,Fdhpl);
-    title('dHPC - mPFCPL')
+    title('dHPC - PrL')
     legend off
 %vHPC-mPFCPL
     [H6,VHPLstat.MvF] = PlotBoot_mscohere(f,Mvhpl,Fvhpl);
-    title('vHPC - mPFCPL')
+    title('vHPC - PrL')
     legend off
 
 % Save figures
@@ -642,7 +642,7 @@ saveas(H6,[fd 'VHPLmscohere-MvF-SubjSEM-5to15BL.fig'])
 
 % Plot mscohere: Sex differences, Frequency bands of interest
 % mPFC-IL - dHPC
-    [h1,ILDHstat] = PlotBoot_mscohereBands(f,Mildh,Fildh,ILDHstat); 
+    [h1,ILDHstat] = PlotBoot_mscohereBands(f,Mildh,Fildh,ILDHstat);
     clear Mildh Fildh
 %mPFCIL-vHPC
     [h2,ILVHstat] = PlotBoot_mscohereBands(f,Milvh,Filvh,ILVHstat); 
@@ -753,21 +753,21 @@ end
 
 % Plot mscohere: Effect of estrous stage, 0.5-50 Hz
 [H1,ILDHstat] = PlotBoot_mscohereHormones(f,A,Dildh,Pildh,Eildh,Mildh);
-    title('mPFCIL - dHPC')
+    title('IL - dHPC')
 [H2,ILVHstat] = PlotBoot_mscohereHormones(f,A,Dilvh,Pilvh,Eilvh,Milvh);
-    title('mPFCIL - vHPC')
+    title('IL - vHPC')
     legend off
 [H3,ILPLstat] = PlotBoot_mscohereHormones(f,A,Dilpl,Pilpl,Eilpl,Milpl);
-    title('mPFCIL - mPFCPL')
+    title('IL - PrL')
     legend off
 [H4,DHVHstat] = PlotBoot_mscohereHormones(f,A,Ddhvh,Pdhvh,Edhvh,Mdhvh);
     title('dHPC - vHPC')
     legend off
 [H5,DHPLstat] = PlotBoot_mscohereHormones(f,A,Ddhpl,Pdhpl,Edhpl,Mdhpl);
-    title('dHPC - mPFCPL')
+    title('dHPC - PrL')
     legend off
 [H6,VHPLstat] = PlotBoot_mscohereHormones(f,A,Dvhpl,Pvhpl,Evhpl,Mvhpl);
-    title('vHPC - mPFCPL')
+    title('vHPC - PrL')
     legend off
     
 % Save figures
@@ -854,15 +854,15 @@ A = [A; 4; 4; 4; 4];
 
 % Plot mscohere: Males vs Estrous stages, 0.5-100 Hz
 [H1,ILDHstat] = PlotBoot_mscohereMvHorms(f,A,Dildh,Pildh,Eildh,Mildh);
-    title('mPFCIL - dHPC')
+    title('IL - dHPC')
     legend off
     ILDHstat = renameStructField(ILDHstat,'Stage','MvHorms');
 [H2,ILVHstat] = PlotBoot_mscohereMvHorms(f,A,Dilvh,Pilvh,Eilvh,Milvh);
-    title('mPFCIL - vHPC')
+    title('IL - vHPC')
     legend off
     ILVHstat = renameStructField(ILVHstat,'Stage','MvHorms');
 [H3,ILPLstat] = PlotBoot_mscohereMvHorms(f,A,Dilpl,Pilpl,Eilpl,Milpl);
-    title('mPFCIL - mPFCPL')
+    title('IL - PrL')
     legend off
     ILPLstat = renameStructField(ILPLstat,'Stage','MvHorms');
 [H4,DHVHstat] = PlotBoot_mscohereMvHorms(f,A,Ddhvh,Pdhvh,Edhvh,Mdhvh);
@@ -870,11 +870,11 @@ A = [A; 4; 4; 4; 4];
     legend off
     DHVHstat = renameStructField(DHVHstat,'Stage','MvHorms');
 [H5,DHPLstat] = PlotBoot_mscohereMvHorms(f,A,Ddhpl,Pdhpl,Edhpl,Mdhpl);
-    title('dHPC - mPFCPL')
+    title('dHPC - PrL')
     legend off
     DHPLstat = renameStructField(DHPLstat,'Stage','MvHorms');
 [H6,VHPLstat] = PlotBoot_mscohereMvHorms(f,A,Dvhpl,Pvhpl,Evhpl,Mvhpl);
-    title('vHPC - mPFCPL')
+    title('vHPC - PrL')
     legend off
     VHPLstat = renameStructField(VHPLstat,'Stage','MvHorms');
 

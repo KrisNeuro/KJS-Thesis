@@ -6,7 +6,6 @@
 % Subplots indicate frequency bands of interest: Theta, delta, gamma, beta
 % 
 % Calls on scripts:
-%   - colorcet.m  (https://peterkovesi.com/projects/colourmaps/)
 %   - shadedErrorBar.m  (https://www.mathworks.com/matlabcentral/fileexchange/26311-raacampbell-shadederrorbar)
 %   - ksampL2.m 
 % 
@@ -28,13 +27,10 @@ method = 1;
 biasflag = 1;
 
 % Color maps
-fempurp = colorcet('L8'); %linear blue magenta yellow
-    propurp = fempurp(65,:); %purple - PROESTRUS FEMALES
-    estyel = fempurp(192,:); %yellow - ESTROUS FEMALES
-    metred = fempurp(128,:); %magenta? - METESTRUS FEMALES
-digreen = colorcet('L9'); %linear blue green yellow white
-    digreen = digreen(128,:); %deep green - DIESTRUS FEMALES
-clear fempurp
+propurp = [0.490079,0.06569,0.568432]; %purple - PROESTRUS FEMALES
+estyel = [0.982021,0.630867,0.240179]; %yellow - ESTRUS FEMALES
+metred = [0.906173,0.1939,0.445214]; %magenta? - METESTRUS FEMALES
+digreen = [0.295855,0.606869,0.258899]; %deep green - DIESTRUS FEMALES
 
 %% Designate frequency bands
 

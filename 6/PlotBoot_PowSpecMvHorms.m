@@ -27,11 +27,10 @@ method = 1;
 biasflag = 1;
 
 % Color maps
-maleblue = [0 0 0]/255; %MALES  (black)
-digreen = [214 156 78]/255; %DIESTRUS FEMALES
-propurp = [4 108 154]/255; %PROESTRUS FEMALES 
-estyel = [171 221 222]/255; % ESTROUS FEMALES
-
+maleblue = [0 0 0]; %MALES  (black)
+digreen = [0.8392 0.6118 0.3059]; %DIESTRUS FEMALES
+propurp = [0.0157 0.4235 0.6039]; %PROESTRUS FEMALES 
+estyel = [0.6706 0.8667 0.8706]; % ESTRUS FEMALES
 
 %% Plot mPFC-IL
 H1 = figure('units','normalized','outerposition',[0 0 1 1]);
@@ -58,8 +57,7 @@ xlim([0.5 100])
 xticks(10:10:100)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
-title('mPFC-IL')
-
+title('IL')
 % legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'})
 set(gca,'fontsize',26)
 box off
@@ -71,7 +69,7 @@ yy = [A, y1];
 [ILstat.MvHorms]=ksampL2(yy,method,biasflag);
 clear y1 yy
 
-%% Plot mPFC-PL
+%% Plot PrL (mPFC-PL)
 H2 = figure('units','normalized','outerposition',[0 0 1 1]);
 
 p3 = shadedErrorBar(f,pow2db(Epl),{@mean,@(x) std(pow2db(Epl))/sqrt(size(Epl,1))},'lineprops',{'color',estyel}); 
@@ -96,8 +94,7 @@ xlim([0.5 100])
 xticks(10:10:100)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
-title('mPFC-PL')
-
+title('PrL')
 % legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'})
 set(gca,'fontsize',26)
 box off
@@ -136,7 +133,6 @@ xticks(10:10:100)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('dHPC')
-
 % legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'})
 set(gca,'fontsize',26)
 box off
@@ -174,7 +170,6 @@ xticks(10:10:100)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('vHPC')
-
 % legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'})
 set(gca,'fontsize',26)
 box off

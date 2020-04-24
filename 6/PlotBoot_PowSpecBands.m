@@ -13,7 +13,6 @@
 %       Fx      Female Pxx data for one brain region
 % 
 % Calls on scripts:
-%   - colorcet.m  (https://peterkovesi.com/projects/colourmaps/)
 %   - shadedErrorBar.m  (https://www.mathworks.com/matlabcentral/fileexchange/26311-raacampbell-shadederrorbar)
 %   - twosampF.m 
 % 
@@ -34,11 +33,8 @@ method = 1;
 parflag = 1;
 
 % Color maps
-maleblue = colorcet('L6'); %linear blue 192 
-    maleblue = maleblue(192,:); % MALES
-fempurp = colorcet('L8'); %linear blue magenta yellow
-    propurp = fempurp(65,:); %purple - FEMALES
-clear fempurp
+maleblue = [0.171931,0.744122,0.988253]; % MALES
+propurp = [0.490079,0.06569,0.568432]; %FEMALES
 
 %% Designate frequency bands
 if size(f,1)<size(f,2)

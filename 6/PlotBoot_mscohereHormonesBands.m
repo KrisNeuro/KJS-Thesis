@@ -1,3 +1,19 @@
+%PlotBoot_mscohereHormonesBands
+%   [h,stat] = PlotBoot_mscohereHormonesBands(f,Dx,Px,Ex,Mx,stat,A)
+% 
+% Plots mscohere: Females only, effects of hormone state, with shading 
+% representing SEM, calculated within-subject for each hormone category (D,E,P)
+% 
+% Calls on scripts:
+%   - shadedErrorBar.m  (https://www.mathworks.com/matlabcentral/fileexchange/26311-raacampbell-shadederrorbar)
+%   - ksampL2.m 
+% 
+% Calls data produced by:
+%   - Format4Bootstrap_mscohereHormones.m: 'Female_mscohere-BL-5to15_boot.mat' (called w/in Thesis6_Format4Bootstrap_5to15.m)
+% 
+% Called by:
+%   - Thesis6_Format4Bootstrap_5to15.m
+
 function [h,stat] = PlotBoot_mscohereHormonesBands(f,Dx,Px,Ex,Mx,stat,A)
 %% Setup
 
@@ -6,13 +22,10 @@ method = 1;
 biasflag = 1;
 
 % Color maps
-fempurp = colorcet('L8'); %linear blue magenta yellow
-    propurp = fempurp(65,:); %purple - PROESTRUS FEMALES
-    estyel = fempurp(192,:); %yellow - ESTROUS FEMALES
-    metred = fempurp(128,:); %magenta? - METESTRUS FEMALES
-digreen = colorcet('L9'); %linear blue green yellow white
-    digreen = digreen(128,:); %deep green - DIESTRUS FEMALES
-clear fempurp
+propurp = [0.490079,0.06569,0.568432]; %purple - PROESTRUS FEMALES
+estyel = [0.982021,0.630867,0.240179]; %yellow - ESTRUS FEMALES
+metred = [0.906173,0.1939,0.445214]; %magenta? - METESTRUS FEMALES
+digreen = [0.295855,0.606869,0.258899]; %deep green - DIESTRUS FEMALES
 
 %% Designate frequency bands
 if size(f,1)<size(f,2)
@@ -184,6 +197,4 @@ yy = [A, y1];
 [stat.gamma]=ksampL2(yy,method,biasflag);
 clear y1 yy
 
-
 end
-

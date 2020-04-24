@@ -16,7 +16,6 @@
 % Called by:
 %   - Thesis6_Format4Bootstrap_5to15.m
 % 
-% 
 % KJS init: 2020-04-06
 
 function [h,stat] = PlotBoot_PowSpecMvHormsBands(f,Dx,Px,Ex,Mx,stat,A)
@@ -27,10 +26,10 @@ method = 1;
 biasflag = 1;
 
 % Color maps
-maleblue = [0 0 0]/255; %MALES  (black)
-digreen = [214 156 78]/255; %DIESTRUS FEMALES
-propurp = [4 108 154]/255; %PROESTRUS FEMALES 
-estyel = [171 221 222]/255; % ESTROUS FEMALES
+maleblue = [0 0 0]; %MALES  (black)
+digreen = [0.8392 0.6118 0.3059]; %DIESTRUS FEMALES
+propurp = [0.0157 0.4235 0.6039]; %PROESTRUS FEMALES 
+estyel = [0.6706 0.8667 0.8706]; % ESTRUS FEMALES
 
 %% Designate frequency bands
 
@@ -82,7 +81,6 @@ xticks(1:4)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('Delta band')
-
 % legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'})
 set(gca,'fontsize',14)
 box off
@@ -120,7 +118,6 @@ xticks(4:12)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('Theta band')
-
 % legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'})
 % legend('location','southwest')
 set(gca,'fontsize',14)
@@ -158,7 +155,6 @@ xticks(15:5:30)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('Beta band')
-
 % legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'})
 set(gca,'fontsize',14)
 box off
