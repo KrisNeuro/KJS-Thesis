@@ -27,10 +27,16 @@ method = 1;
 biasflag = 1;
 
 % Color maps
-maleblue = [0 0 0]; %MALES  (black)
-digreen = [0.8392 0.6118 0.3059]; %DIESTRUS FEMALES
-propurp = [0.0157 0.4235 0.6039]; %PROESTRUS FEMALES 
-estyel = [0.6706 0.8667 0.8706]; % ESTRUS FEMALES
+Mcol = [0         0.2980    0.2980]; %male
+Dcol = [0.6980    0.5137         0]; %diestrus female
+Pcol = [0.3490    0.0392         0]; %proestrus female
+Ecol = [1.0000    0.8863    0.2118]; %estrus female
+
+% Transparency of histogram bars, specified as a scalar value between 0 and 1 inclusive
+Mfa = 0.72; %male
+Dfa = 0.38; %diestrus
+Pfa = 1; %proestrus
+Efa = 0.58; %estrus
 
 %% Plot mPFC-IL
 H1 = figure('units','normalized','outerposition',[0 0 1 1]);

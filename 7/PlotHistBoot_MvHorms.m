@@ -11,23 +11,29 @@ function [Ax] = PlotHistBoot_MvHorms(ax,Mx_boot,Dx_boot,Px_boot,Ex_boot)
 % KJS init: 2020-04-19
 
 numbins = 100; %number of bins for histogram
-facealpha = 0.6; %Transparency of histogram bars, specified as a scalar value between 0 and 1 inclusive (default = 0.6)
 
 %color maps
-Mcol = [0 0 0]; %male
-Dcol = [0.9255    0.7961    0.6824]; %diestrus female
-Pcol = [0.0157    0.4235    0.6039]; %proestrus female
-Ecol = [0.8392    0.6118    0.3059]; %estrus female
+Mcol = [0         0.2980    0.2980]; %male
+Dcol = [0.6980    0.5137         0]; %diestrus female
+Pcol = [0.3490    0.0392         0]; %proestrus female
+Ecol = [1.0000    0.8863    0.2118]; %estrus female
 
-histogram(ax,Mx_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha,'FaceColor',Mcol)
+% Transparency of histogram bars, specified as a scalar value between 0 and 1 inclusive
+Mfa = 0.72; %male
+Dfa = 0.38; %diestrus
+Pfa = 1; %proestrus
+Efa = 0.58; %estrus
+
+a3 = histogram(ax,Px_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',Pfa,'FaceColor',Pcol);
 hold on
-histogram(ax,Dx_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha,'FaceColor',Dcol)
-histogram(ax,Px_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha,'FaceColor',Pcol)
-histogram(ax,Ex_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha,'FaceColor',Ecol)
+a1 = histogram(ax,Mx_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',Mfa,'FaceColor',Mcol);
+a4 = histogram(ax,Ex_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',Efa,'FaceColor',Ecol);
+a2 = histogram(ax,Dx_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',Dfa,'FaceColor',Dcol);
+
 box off
 axis square
-legend Male Diestrus Proestrus Estrus
-set(gca,'fontsize',18,'titlefontsizemultiplier',1.5)
+legend([a1 a3 a2 a4],{'Male' 'Proestrus' 'Diestrus' 'Estrus'})
+set(gca,'fontsize',20,'titlefontsizemultiplier',2)
 Ax=gca;
 end 
 

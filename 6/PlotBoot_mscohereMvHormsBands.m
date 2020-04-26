@@ -6,10 +6,16 @@ method = 1;
 biasflag = 1;
 
 % Color maps
-maleblue = [0 0 0]/255; %MALES  (black)
-digreen = [214 156 78]/255; %DIESTRUS FEMALES
-propurp = [4 108 154]/255; %PROESTRUS FEMALES 
-estyel = [171 221 222]/255; % ESTROUS FEMALES
+Mcol = [0         0.2980    0.2980]; %male
+Dcol = [0.6980    0.5137         0]; %diestrus female
+Pcol = [0.3490    0.0392         0]; %proestrus female
+Ecol = [1.0000    0.8863    0.2118]; %estrus female
+
+% Transparency of histogram bars, specified as a scalar value between 0 and 1 inclusive
+Mfa = 0.72; %male
+Dfa = 0.38; %diestrus
+Pfa = 1; %proestrus
+Efa = 0.58; %estrus
 
 %% Designate frequency bands
 if size(f,1)<size(f,2)

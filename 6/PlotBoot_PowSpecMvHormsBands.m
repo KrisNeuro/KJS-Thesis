@@ -26,10 +26,16 @@ method = 1;
 biasflag = 1;
 
 % Color maps
-maleblue = [0 0 0]; %MALES  (black)
-digreen = [0.8392 0.6118 0.3059]; %DIESTRUS FEMALES
-propurp = [0.0157 0.4235 0.6039]; %PROESTRUS FEMALES 
-estyel = [0.6706 0.8667 0.8706]; % ESTRUS FEMALES
+Mcol = [0         0.2980    0.2980]; %male
+Dcol = [0.6980    0.5137         0]; %diestrus female
+Pcol = [0.3490    0.0392         0]; %proestrus female
+Ecol = [1.0000    0.8863    0.2118]; %estrus female
+
+% Transparency of histogram bars, specified as a scalar value between 0 and 1 inclusive
+Mfa = 0.72; %male
+Dfa = 0.38; %diestrus
+Pfa = 1; %proestrus
+Efa = 0.58; %estrus
 
 %% Designate frequency bands
 
@@ -58,20 +64,21 @@ beta = f(b1:b2);
 
 %% Delta
 subplot(221)
-p3 = shadedErrorBar(delta,pow2db(Ex(:,d1:d2)),{@mean,@(x) std(pow2db(Ex(:,d1:d2)))/sqrt(size(Ex,1))},'lineprops',{'color',estyel});
-p3.mainLine.LineWidth = 3;
-p3.mainLine.DisplayName = 'Estrus';
-hold on
 
-p2 = shadedErrorBar(delta,pow2db(Px(:,d1:d2)),{@mean,@(x) std(pow2db(Px(:,d1:d2)))/sqrt(size(Px,1))},'lineprops',{'color',propurp}); 
+p2 = shadedErrorBar(delta,pow2db(Px(:,d1:d2)),{@mean,@(x) std(pow2db(Px(:,d1:d2)))/sqrt(size(Px,1))},'lineprops',{'color',Pcol}); 
 p2.mainLine.LineWidth = 3;
 p2.mainLine.DisplayName = 'Proestrus';
+hold on
 
-p1 = shadedErrorBar(delta,pow2db(Dx(:,d1:d2)),{@mean,@(x) std(pow2db(Dx(:,d1:d2)))/sqrt(size(Dx,1))},'lineprops',{'color',digreen}); 
+p3 = shadedErrorBar(delta,pow2db(Ex(:,d1:d2)),{@mean,@(x) std(pow2db(Ex(:,d1:d2)))/sqrt(size(Ex,1))},'lineprops',{'color',Ecol});
+p3.mainLine.LineWidth = 3;
+p3.mainLine.DisplayName = 'Estrus';
+
+p1 = shadedErrorBar(delta,pow2db(Dx(:,d1:d2)),{@mean,@(x) std(pow2db(Dx(:,d1:d2)))/sqrt(size(Dx,1))},'lineprops',{'color',Dcol}); 
 p1.mainLine.LineWidth = 3;
 p1.mainLine.DisplayName = 'Diestrus';
 
-p4 = shadedErrorBar(delta,pow2db(Mx(:,d1:d2)),{@mean,@(x) std(pow2db(Mx(:,d1:d2)))/sqrt(size(Mx,1))},'lineprops',{'color',maleblue});
+p4 = shadedErrorBar(delta,pow2db(Mx(:,d1:d2)),{@mean,@(x) std(pow2db(Mx(:,d1:d2)))/sqrt(size(Mx,1))},'lineprops',{'color',Mcol});
 p4.mainLine.LineWidth = 3;
 p4.mainLine.DisplayName = 'Male';
 
@@ -81,7 +88,7 @@ xticks(1:4)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('Delta band')
-% legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'})
+legend([p4.mainLine, p2.mainLine, p1.mainLine, p3.mainLine],{'Male','Proestrus','Diestrus','Estrus'})
 set(gca,'fontsize',14)
 box off
 set(gca,'TitleFontSizeMultiplier',1.5)

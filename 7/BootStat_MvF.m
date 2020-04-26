@@ -1,5 +1,5 @@
-function [Mx_boot,Fx_boot,MF_p_test,MF_pjm] = BootStat_MvF(Mx,Fx)
 %BootStat_MvF
+function [Mx_boot,Fx_boot,MF_p_test,MF_p2_test,MF_pjm] = BootStat_MvF(Mx,Fx)
 % [Mx_boot,Fx_boot,MF_p_test,MF_pjm] = BootStat_MvF(Mx,Fx)
 % 
 % Calculates bootstrap resampling of unidimensional data in a
@@ -35,6 +35,6 @@ Mx_boot = get_bootstrapped_sample(Mx, nboot, f_n);
 Fx_boot = get_bootstrapped_sample(Fx, nboot, f_n); 
 
 % Ptest: Males vs Females 
-[MF_p_test,MF_pjm] = get_direct_prob(Mx_boot,Fx_boot);
+[MF_p_test,MF_p2_test,MF_pjm] = get_direct_prob(Mx_boot,Fx_boot);
 
 end %fxn

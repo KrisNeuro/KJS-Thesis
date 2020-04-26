@@ -687,21 +687,13 @@ disp('Male vs Hormones: Delta Band Power')
     disp(T_MvHorm_delta)
     
 disp('2-tailed p-values:')
-disp('Male vs Hormones: Theta Band Power')
-    disp(T2_MvHorm_theta)
-disp('  ');     disp('  ');
-disp('Male vs Hormones: Gamma Band Power')
-    disp(T2_MvHorm_gamma)
-disp('  ');     disp('  ');
-disp('Male vs Hormones: Delta Band Power')
-    disp(T2_MvHorm_delta)
 
 % Save the data
 disp('Saving band power bootstrap statistics..')
 fn = 'BandPowBootStats-BL-5to15-MvHorms.mat';
-save([root_drIn '5to15' filesep fn],'T_*','T2_*','*_pjm','*_boot','-v7.3')
+save([root_drIn '5to15' filesep fn],'T_*','DM_*','PM_*','EM_*','*_boot','-v7.3')
 disp('Saved!')
-clear fn *_pjm brain_area T_* T2_*
+clear fn *_pjm brain_area T_*
 
 %% 1.6 Plot band power bootstrap sample distributions: Male vs Hormones
 
@@ -822,9 +814,9 @@ saveas(H163d,[fd 'BandPowBoot_Delta_PL_MvHorms.fig'])
     legend('off')
 saveas(H163d,[fd 'BandPowBoot_Delta_PL_MvHorms.png'])
     close(H163d); clear H163d
-disp('Delta band power figures saved: MvHorms')
 
-clear *_delta_boot ans fd Bands % clear workspace for next segment
+disp('Delta band power figures saved: MvHorms')
+clear *_delta_boot ans fd Bands % Clear workspace for next segment
 
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

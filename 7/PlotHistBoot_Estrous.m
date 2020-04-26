@@ -10,22 +10,25 @@ function [Ax] = PlotHistBoot_Estrous(ax,Dx_boot,Px_boot,Ex_boot)
 % KJS init: 2020-04-19
 
 numbins = 100; %number of bins for histogram
-facealpha = 0.6; %Transparency of histogram bars, specified as a scalar value between 0 and 1 inclusive (default = 0.6)
 
 %color maps
-Dcol = [0.4471    0.5804    0.8314]; %diestrus
-Pcol = [0.9020    0.6275    0.7686]; %proestrus
-Ecol = [0.7765    0.8039    0.9686]; %estrus
+Dcol = [0.6980    0.5137         0]; %diestrus female
+Pcol = [0.3490    0.0392         0]; %proestrus female
+Ecol = [1.0000    0.8863    0.2118]; %estrus female
 
+% Transparency of histogram bars, specified as a scalar value between 0 and 1 inclusive
+Dfa = 0.38; %diestrus
+Pfa = 1; %proestrus
+Efa = 0.58; %estrus
 
-histogram(ax,Dx_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha,'FaceColor',Dcol)
+a1= histogram(ax,Px_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',Pfa,'FaceColor',Pcol);
 hold on
-histogram(ax,Px_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha,'FaceColor',Pcol)
-histogram(ax,Ex_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha,'FaceColor',Ecol)
+a2 = histogram(ax,Ex_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',Efa,'FaceColor',Ecol);
+a3 = histogram(ax,Dx_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',Dfa,'FaceColor',Dcol);
 box off
 axis square
-legend Diestrus Proestrus Estrus
-set(gca,'fontsize',18,'titlefontsizemultiplier',1.5)
+legend([a3 a1 a2],{'Diestrus' 'Proestrus' 'Estrus'})
+set(gca,'fontsize',20,'titlefontsizemultiplier',2)
 Ax=gca;
 end 
 

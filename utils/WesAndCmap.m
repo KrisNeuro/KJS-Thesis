@@ -53,8 +53,24 @@ Moonrise1 =  	   	[243 223 108;  206 171 7;  213 213 211; 36 40 26]/255;
 % *****************************************************************************
 
 %% L.Schoepfer color palettes
-    
 
+% Color codes
+  % RGB
+    % Mcol = [0 76 76]/255; %male
+    % Dcol = [178 131 0]/255; %diestrus female
+    % Pcol = [89 10 0]/255; %proestrus female
+    % Ecol = [255 226 54]/255; %estrus female
+ % MATLAB
+Mcol = [0         0.2980    0.2980];
+Dcol = [0.6980    0.5137         0];
+Pcol = [0.3490    0.0392         0];
+Ecol = [1.0000    0.8863    0.2118];
+
+% Transparency ('FaceAlpha') of histogram bars, specified as a scalar value between 0 and 1 inclusive
+Mfa = 0.72; %male
+Dfa = 0.38; %diestrus
+Pfa = 1; %proestrus
+Efa = 0.58; %estrus
 
 % *****************************************************************************
 
