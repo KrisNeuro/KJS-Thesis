@@ -30,43 +30,4 @@ axis square
 legend([a3 a1 a2],{'Diestrus' 'Proestrus' 'Estrus'})
 set(gca,'fontsize',20,'titlefontsizemultiplier',2)
 Ax=gca;
-end 
-
-% 
-% % OLD SCRIPT BELOW
-% 
-% a1 = subplot(311); %Diestrus
-% 	histogram(fD_PL_theta_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha)
-% 	hold on
-% 	histogram(fD_VH_theta_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha)
-% 	histogram(fD_IL_theta_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha)
-% 	histogram(fD_DH_theta_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha)
-% 	box off
-% 	title('Diestrus')
-% 	legend mPFC-PL vHPC mPFC-IL dHPC 
-% 	legend('location','best')
-% 	set(a1,'fontsize',20,'titlefontsizemultiplier',1.5)
-% 
-% a2 = subplot(312); %Proestrus
-% 	histogram(fP_PL_theta_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha)
-% 	hold on
-% 	histogram(fP_VH_theta_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha)
-% 	histogram(fP_IL_theta_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha)
-% 	histogram(fP_DH_theta_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha)
-% 	box off
-% 	title('Proestrus')
-% 	ylabel('Probability')
-% 	set(a2,'fontsize',20,'titlefontsizemultiplier',1.5)
-% 
-% a3 = subplot(313); %Estrus
-% 	histogram(fE_PL_theta_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha)
-% 	hold on
-% 	histogram(fE_VH_theta_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha)
-% 	histogram(fE_IL_theta_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha)
-% 	histogram(fE_DH_theta_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',facealpha)
-% 	box off
-% 	title('Estrus')
-% 	xlabel('Theta band power')
-% 	set(a3,'fontsize',20,'titlefontsizemultiplier',1.5)
-% 
-% linkaxes([a1 a2 a3],'x')
+end

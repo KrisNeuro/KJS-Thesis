@@ -824,7 +824,7 @@ saveas(H163d,[fd 'BandPowBoot_Delta_PL_MvHorms.png'])
     close(H163d); clear H163d
 disp('Delta band power figures saved: MvHorms')
 
-clear *_delta_boot ans fd Bands % clear workspace for next segment
+clear *_delta_boot ans fd % clear workspace for next segment
 
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -861,36 +861,38 @@ F_DHPL_boot = get_bootstrapped_sample(F_DHPL, nboot, f_n);
 F_VHPL_boot = get_bootstrapped_sample(F_VHPL, nboot, f_n);
 
 % Perform direct probability tests: pboot is support of the hypothesis that Female>Male
-[MF_ILDH_p_test,MF_ILDH_pjm] = get_direct_prob(M_ILDH_boot,F_ILDH_boot);
-[MF_ILVH_p_test,MF_ILVH_pjm] = get_direct_prob(M_ILVH_boot,F_ILVH_boot);
-[MF_ILPL_p_test,MF_ILPL_pjm] = get_direct_prob(M_ILPL_boot,F_ILPL_boot);
-[MF_DHVH_p_test,MF_DHVH_pjm] = get_direct_prob(M_DHVH_boot,F_DHVH_boot);
-[MF_DHPL_p_test,MF_DHPL_pjm] = get_direct_prob(M_DHPL_boot,F_DHPL_boot);
-[MF_VHPL_p_test,MF_VHPL_pjm] = get_direct_prob(M_VHPL_boot,F_VHPL_boot);
+[MF_ILDH_p_test,MF_ILDH_p2_test,MF_ILDH_pjm] = get_direct_prob(M_ILDH_boot,F_ILDH_boot);
+[MF_ILVH_p_test,MF_ILVH_p2_test,MF_ILVH_pjm] = get_direct_prob(M_ILVH_boot,F_ILVH_boot);
+[MF_ILPL_p_test,MF_ILPL_p2_test,MF_ILPL_pjm] = get_direct_prob(M_ILPL_boot,F_ILPL_boot);
+[MF_DHVH_p_test,MF_DHVH_p2_test,MF_DHVH_pjm] = get_direct_prob(M_DHVH_boot,F_DHVH_boot);
+[MF_DHPL_p_test,MF_DHPL_p2_test,MF_DHPL_pjm] = get_direct_prob(M_DHPL_boot,F_DHPL_boot);
+[MF_VHPL_p_test,MF_VHPL_p2_test,MF_VHPL_pjm] = get_direct_prob(M_VHPL_boot,F_VHPL_boot);
 toc(tstart)
 clear tstart M_ILDH M_ILVH M_ILPL M_DHVH M_DHPL M_VHPL F_ILDH F_ILVH F_ILPL F_DHVH F_DHPL F_VHPL
 
-% Get 2-sided p-values from pboot
-p_new = 2*min(p, 1-p),
-    
-    
+% Put pboot values into table
+T_MF = table(Connection, [MF_ILDH_p_test MF_ILVH_p_test MF_ILPL_p_test MF_DHVH_p_test MF_DHPL_p_test MF_VHPL_p_test]');
+    T_MF.Properties.VariableNames{2} = 'MvF';
+clear *_p_test
 
+% Put p-values into table
+T2_MF = table(Connection, [MF_ILDH_p2_test MF_ILVH_p2_test MF_ILPL_p2_test MF_DHVH_p2_test MF_DHPL_p2_test MF_VHPL_p2_test]');
+T2_MF.Properties.VariableNames{2} = 'MvF';
+clear *_p2_test
 
-% Put p-value data into table
-T_MF = table(Connection, [MF_ILDH_p_test(1) MF_ILVH_p_test(1) MF_ILPL_p_test(1) MF_DHVH_p_test(1) MF_DHPL_p_test(1) MF_VHPL_p_test(1)]');
-T_MF.Properties.VariableNames{2} = 'MvF';
-
-% Display table output
-disp('Male vs. Female: Theta Phase Lag')
+% Display table outputs
+disp('Male vs. Female: Theta Phase Lag (pboot)')
 disp(T_MF)
+
+disp('Male vs. Female: Theta Phase Lag (p-value)')
+disp(T2_MF)
     
 % Save the data
 disp('Saving Theta Phase Lag bootstrap statistics: Sex differences..')
 fn = 'ThetaPhaseLagBootStats-dHthresh-BL-MF.mat';
-% save([root_drIn fn],'T_*','MF_*','-v7.3') 
-save([root_drIn fn],'T_MF','MF_*','*_boot','-v7.3') 
+save([root_drIn fn],'T_MF','T2_MF','MF_*','*_boot','*_pjm','-v7.3') 
 disp('Saved!')
-clear fn
+clear fn T_MF T2_MF
 
 %% 2.2 Plot theta phase lag bootstrap sample distributions: Male vs Female
 fd = [figdrOut 'ThetaPhaseLag' filesep]; % figure output directory
@@ -938,7 +940,7 @@ saveas(H22d,[fd 'ThetaPhaseLagBoot_VHPL_MvF.fig'])
 disp('Phase lag M/F histograms saved!')
 
 % Clean workspace for next segment
-clear T_MF MF_* M_* *_M *_pjm *_boot
+clear MF_* M_* *_M *_pjm *_boot
 
 
 %% 2.3 Females/Estrous: Theta phase lags    
@@ -965,28 +967,28 @@ fE_DHPL_boot = get_bootstrapped_sample(F_DHPL_E, nboot, f_n);
 
 % Perform direct probability tests
   % pboot value indicates support of the hypotheses: P>D, E>D, E>P
-[fDP_ILDH_theta_p_test,fDP_ILDH_pjm] = get_direct_prob(fD_ILDH_boot,fP_ILDH_boot); %ILDH
-[fDE_ILDH_theta_p_test,fDE_ILDH_pjm] = get_direct_prob(fD_ILDH_boot,fE_ILDH_boot);
-[fPE_ILDH_theta_p_test,fPE_ILDH_pjm] = get_direct_prob(fP_ILDH_boot,fE_ILDH_boot);
- [fDP_ILVH_theta_p_test,fDP_ILVH_pjm] = get_direct_prob(fD_ILVH_boot,fP_ILVH_boot); %ILVH
- [fDE_ILVH_theta_p_test,fDE_ILVH_pjm] = get_direct_prob(fD_ILVH_boot,fE_ILVH_boot);
- [fPE_ILVH_theta_p_test,fPE_ILVH_pjm] = get_direct_prob(fP_ILVH_boot,fE_ILVH_boot);
-[fDP_ILPL_theta_p_test,fDP_ILPL_pjm] = get_direct_prob(fD_ILPL_boot,fP_ILPL_boot); %ILPL
-[fDE_ILPL_theta_p_test,fDE_ILPL_pjm] = get_direct_prob(fD_ILPL_boot,fE_ILPL_boot);
-[fPE_ILPL_theta_p_test,fPE_ILPL_pjm] = get_direct_prob(fP_ILPL_boot,fE_ILPL_boot);
- [fDP_DHVH_theta_p_test,fDP_DHVH_pjm] = get_direct_prob(fD_DHVH_boot,fP_DHVH_boot); %DHVH
- [fDE_DHVH_theta_p_test,fDE_DHVH_pjm] = get_direct_prob(fD_DHVH_boot,fE_DHVH_boot);
- [fPE_DHVH_theta_p_test,fPE_DHVH_pjm] = get_direct_prob(fP_DHVH_boot,fE_DHVH_boot);
-[fDP_DHPL_theta_p_test,fDP_DHPL_pjm] = get_direct_prob(fD_DHPL_boot,fP_DHPL_boot); %DHPL
-[fDE_DHPL_theta_p_test,fDE_DHPL_pjm] = get_direct_prob(fD_DHPL_boot,fE_DHPL_boot);
-[fPE_DHPL_theta_p_test,fPE_DHPL_pjm] = get_direct_prob(fP_DHPL_boot,fE_DHPL_boot);
- [fDP_VHPL_theta_p_test,fDP_VHPL_pjm] = get_direct_prob(fD_VHPL_boot,fP_VHPL_boot); %VHPL
- [fDE_VHPL_theta_p_test,fDE_VHPL_pjm] = get_direct_prob(fD_VHPL_boot,fE_VHPL_boot);
- [fPE_VHPL_theta_p_test,fPE_VHPL_pjm] = get_direct_prob(fP_VHPL_boot,fE_VHPL_boot);
+[fDP_ILDH_theta_p_test,fDP_ILDH_theta_p2_test,fDP_ILDH_pjm] = get_direct_prob(fD_ILDH_boot,fP_ILDH_boot); %ILDH
+[fDE_ILDH_theta_p_test,fDE_ILDH_theta_p2_test,fDE_ILDH_pjm] = get_direct_prob(fD_ILDH_boot,fE_ILDH_boot);
+[fPE_ILDH_theta_p_test,fPE_ILDH_theta_p2_test,fPE_ILDH_pjm] = get_direct_prob(fP_ILDH_boot,fE_ILDH_boot);
+ [fDP_ILVH_theta_p_test,fDP_ILVH_theta_p2_test,fDP_ILVH_pjm] = get_direct_prob(fD_ILVH_boot,fP_ILVH_boot); %ILVH
+ [fDE_ILVH_theta_p_test,fDE_ILVH_theta_p2_test,fDE_ILVH_pjm] = get_direct_prob(fD_ILVH_boot,fE_ILVH_boot);
+ [fPE_ILVH_theta_p_test,fPE_ILVH_theta_p2_test,fPE_ILVH_pjm] = get_direct_prob(fP_ILVH_boot,fE_ILVH_boot);
+[fDP_ILPL_theta_p_test,fDP_ILPL_theta_p2_test,fDP_ILPL_pjm] = get_direct_prob(fD_ILPL_boot,fP_ILPL_boot); %ILPL
+[fDE_ILPL_theta_p_test,fDE_ILPL_theta_p2_test,fDE_ILPL_pjm] = get_direct_prob(fD_ILPL_boot,fE_ILPL_boot);
+[fPE_ILPL_theta_p_test,fPE_ILPL_theta_p2_test,fPE_ILPL_pjm] = get_direct_prob(fP_ILPL_boot,fE_ILPL_boot);
+ [fDP_DHVH_theta_p_test,fDP_DHVH_theta_p2_test,fDP_DHVH_pjm] = get_direct_prob(fD_DHVH_boot,fP_DHVH_boot); %DHVH
+ [fDE_DHVH_theta_p_test,fDE_DHVH_theta_p2_test,fDE_DHVH_pjm] = get_direct_prob(fD_DHVH_boot,fE_DHVH_boot);
+ [fPE_DHVH_theta_p_test,fPE_DHVH_theta_p2_test,fPE_DHVH_pjm] = get_direct_prob(fP_DHVH_boot,fE_DHVH_boot);
+[fDP_DHPL_theta_p_test,fDP_DHPL_theta_p2_test,fDP_DHPL_pjm] = get_direct_prob(fD_DHPL_boot,fP_DHPL_boot); %DHPL
+[fDE_DHPL_theta_p_test,fDE_DHPL_theta_p2_test,fDE_DHPL_pjm] = get_direct_prob(fD_DHPL_boot,fE_DHPL_boot);
+[fPE_DHPL_theta_p_test,fPE_DHPL_theta_p2_test,fPE_DHPL_pjm] = get_direct_prob(fP_DHPL_boot,fE_DHPL_boot);
+ [fDP_VHPL_theta_p_test,fDP_VHPL_theta_p2_test,fDP_VHPL_pjm] = get_direct_prob(fD_VHPL_boot,fP_VHPL_boot); %VHPL
+ [fDE_VHPL_theta_p_test,fDE_VHPL_theta_p2_test,fDE_VHPL_pjm] = get_direct_prob(fD_VHPL_boot,fE_VHPL_boot);
+ [fPE_VHPL_theta_p_test,fPE_VHPL_theta_p2_test,fPE_VHPL_pjm] = get_direct_prob(fP_VHPL_boot,fE_VHPL_boot);
 toc(tstart)
 clear tstart F_*
 
-% Put p-values into table
+% Put pboot-values into table
 fDP_theta_p_test = [fDP_ILDH_theta_p_test fDP_ILVH_theta_p_test fDP_ILPL_theta_p_test fDP_DHVH_theta_p_test fDP_DHPL_theta_p_test fDP_VHPL_theta_p_test]';
 fDE_theta_p_test = [fDE_ILDH_theta_p_test fDE_ILVH_theta_p_test fDE_ILPL_theta_p_test fDE_DHVH_theta_p_test fDE_DHPL_theta_p_test fDE_VHPL_theta_p_test]';
 fPE_theta_p_test = [fPE_ILDH_theta_p_test fPE_ILVH_theta_p_test fPE_ILPL_theta_p_test fPE_DHVH_theta_p_test fPE_DHPL_theta_p_test fPE_VHPL_theta_p_test]';
@@ -996,14 +998,27 @@ T_f_thetalag = table(Connection, fDP_theta_p_test, fDE_theta_p_test, fPE_theta_p
     T_f_thetalag.Properties.VariableNames{4} = 'PvE';
 clear *_p_test
 
-% Display table output
-disp('Female/Estrous: Theta Phase Lag')
+% Put p-values into table
+fDP_theta_p2_test = [fDP_ILDH_theta_p2_test fDP_ILVH_theta_p2_test fDP_ILPL_theta_p2_test fDP_DHVH_theta_p2_test fDP_DHPL_theta_p2_test fDP_VHPL_theta_p2_test]';
+fDE_theta_p2_test = [fDE_ILDH_theta_p2_test fDE_ILVH_theta_p2_test fDE_ILPL_theta_p2_test fDE_DHVH_theta_p2_test fDE_DHPL_theta_p2_test fDE_VHPL_theta_p2_test]';
+fPE_theta_p2_test = [fPE_ILDH_theta_p2_test fPE_ILVH_theta_p2_test fPE_ILPL_theta_p2_test fPE_DHVH_theta_p2_test fPE_DHPL_theta_p2_test fPE_VHPL_theta_p2_test]';
+T_f2_thetalag = table(Connection, fDP_theta_p2_test, fDE_theta_p2_test, fPE_theta_p2_test);
+    T_f2_thetalag.Properties.VariableNames{2} = 'DvP';
+    T_f2_thetalag.Properties.VariableNames{3} = 'DvE';
+    T_f2_thetalag.Properties.VariableNames{4} = 'PvE';
+clear *_p2_test
+
+% Display table outputs
+disp('Female/Estrous: Theta Phase Lag (pboot)')
 disp(T_f_thetalag)
+
+disp('Female/Estrous: Theta Phase Lag (p-value)')
+disp(T_f2_thetalag)
     
 % Save the data
 disp('Saving Theta Phase Lag bootstrap statistics: Estrous..')
 fn = 'ThetaPhaseLagBootStats-dHthresh-BL-Estrous.mat';
-save([root_drIn fn],'T_f_thetalag','*_pjm','*_boot','-v7.3') 
+save([root_drIn fn],'T_*','*_pjm','*_boot','-v7.3') 
 disp('Female/Estrous theta phase lag data saved!')
 clear fn nboot f_n T_* *_pjm
 
@@ -1044,7 +1059,6 @@ saveas(H24d,[fd 'ThetaPhaseLagBoot_VHPL_Estrous.fig'])
     legend('off')
     saveas(H24d,[fd 'ThetaPhaseLagBoot_VHPL_Estrous.png'])
     close(H24d); clear H24d ans
-    
 disp('Theta phase lag/Estrous boot histogram figures saved!')
 
 
@@ -1056,26 +1070,26 @@ clear fn
 
 % Ptest: Males vs Hormones
  %assesses the probability of the hypotheses: D>M, P>M, E>M
-[DM_ILDH_p_test,DM_ILDH_pjm] = get_direct_prob(M_ILDH_boot, fD_ILDH_boot); %ILDH: male vs diestrus
-[PM_ILDH_p_test,PM_ILDH_pjm] = get_direct_prob(M_ILDH_boot, fP_ILDH_boot); % male vs proestrus
-[EM_ILDH_p_test,EM_ILDH_pjm] = get_direct_prob(M_ILDH_boot, fE_ILDH_boot); % male vs estrus
- [DM_ILVH_p_test,DM_ILVH_pjm] = get_direct_prob(M_ILVH_boot, fD_ILVH_boot); %ILVH
- [PM_ILVH_p_test,PM_ILVH_pjm] = get_direct_prob(M_ILVH_boot, fP_ILVH_boot);
- [EM_ILVH_p_test,EM_ILVH_pjm] = get_direct_prob(M_ILVH_boot, fE_ILVH_boot);
-[DM_ILPL_p_test,DM_ILPL_pjm] = get_direct_prob(M_ILPL_boot, fD_ILPL_boot); %ILPL
-[PM_ILPL_p_test,PM_ILPL_pjm] = get_direct_prob(M_ILPL_boot, fP_ILPL_boot);
-[EM_ILPL_p_test,EM_ILPL_pjm] = get_direct_prob(M_ILPL_boot, fE_ILPL_boot);
- [DM_DHVH_p_test,DM_DHVH_pjm] = get_direct_prob(M_DHVH_boot, fD_DHVH_boot); %DHVH
- [PM_DHVH_p_test,PM_DHVH_pjm] = get_direct_prob(M_DHVH_boot, fP_DHVH_boot);
- [EM_DHVH_p_test,EM_DHVH_pjm] = get_direct_prob(M_DHVH_boot, fE_DHVH_boot);
-[DM_DHPL_p_test,DM_DHPL_pjm] = get_direct_prob(M_DHPL_boot, fD_DHPL_boot); %DHPL
-[PM_DHPL_p_test,PM_DHPL_pjm] = get_direct_prob(M_DHPL_boot, fP_DHPL_boot);
-[EM_DHPL_p_test,EM_DHPL_pjm] = get_direct_prob(M_DHPL_boot, fE_DHPL_boot);
- [DM_VHPL_p_test,DM_VHPL_pjm] = get_direct_prob(M_VHPL_boot, fD_VHPL_boot); %VHPL
- [PM_VHPL_p_test,PM_VHPL_pjm] = get_direct_prob(M_VHPL_boot, fP_VHPL_boot);
- [EM_VHPL_p_test,EM_VHPL_pjm] = get_direct_prob(M_VHPL_boot, fE_VHPL_boot);
+[DM_ILDH_p_test,DM_ILDH_p2_test,DM_ILDH_pjm] = get_direct_prob(M_ILDH_boot, fD_ILDH_boot); %ILDH: male vs diestrus
+[PM_ILDH_p_test,PM_ILDH_p2_test,PM_ILDH_pjm] = get_direct_prob(M_ILDH_boot, fP_ILDH_boot); % male vs proestrus
+[EM_ILDH_p_test,EM_ILDH_p2_test,EM_ILDH_pjm] = get_direct_prob(M_ILDH_boot, fE_ILDH_boot); % male vs estrus
+ [DM_ILVH_p_test,DM_ILVH_p2_test,DM_ILVH_pjm] = get_direct_prob(M_ILVH_boot, fD_ILVH_boot); %ILVH
+ [PM_ILVH_p_test,PM_ILVH_p2_test,PM_ILVH_pjm] = get_direct_prob(M_ILVH_boot, fP_ILVH_boot);
+ [EM_ILVH_p_test,EM_ILVH_p2_test,EM_ILVH_pjm] = get_direct_prob(M_ILVH_boot, fE_ILVH_boot);
+[DM_ILPL_p_test,DM_ILPL_p2_test,DM_ILPL_pjm] = get_direct_prob(M_ILPL_boot, fD_ILPL_boot); %ILPL
+[PM_ILPL_p_test,PM_ILPL_p2_test,PM_ILPL_pjm] = get_direct_prob(M_ILPL_boot, fP_ILPL_boot);
+[EM_ILPL_p_test,EM_ILPL_p2_test,EM_ILPL_pjm] = get_direct_prob(M_ILPL_boot, fE_ILPL_boot);
+ [DM_DHVH_p_test,DM_DHVH_p2_test,DM_DHVH_pjm] = get_direct_prob(M_DHVH_boot, fD_DHVH_boot); %DHVH
+ [PM_DHVH_p_test,PM_DHVH_p2_test,PM_DHVH_pjm] = get_direct_prob(M_DHVH_boot, fP_DHVH_boot);
+ [EM_DHVH_p_test,EM_DHVH_p2_test,EM_DHVH_pjm] = get_direct_prob(M_DHVH_boot, fE_DHVH_boot);
+[DM_DHPL_p_test,DM_DHPL_p2_test,DM_DHPL_pjm] = get_direct_prob(M_DHPL_boot, fD_DHPL_boot); %DHPL
+[PM_DHPL_p_test,PM_DHPL_p2_test,PM_DHPL_pjm] = get_direct_prob(M_DHPL_boot, fP_DHPL_boot);
+[EM_DHPL_p_test,EM_DHPL_p2_test,EM_DHPL_pjm] = get_direct_prob(M_DHPL_boot, fE_DHPL_boot);
+ [DM_VHPL_p_test,DM_VHPL_p2_test,DM_VHPL_pjm] = get_direct_prob(M_VHPL_boot, fD_VHPL_boot); %VHPL
+ [PM_VHPL_p_test,PM_VHPL_p2_test,PM_VHPL_pjm] = get_direct_prob(M_VHPL_boot, fP_VHPL_boot);
+ [EM_VHPL_p_test,EM_VHPL_p2_test,EM_VHPL_pjm] = get_direct_prob(M_VHPL_boot, fE_VHPL_boot);
 
-% Put data into table
+% Put pboot values into table
 DM_p_test = [DM_ILDH_p_test DM_ILVH_p_test DM_ILPL_p_test DM_DHVH_p_test DM_DHPL_p_test DM_VHPL_p_test]';
 PM_p_test = [PM_ILDH_p_test PM_ILVH_p_test PM_ILPL_p_test PM_DHVH_p_test PM_DHPL_p_test PM_VHPL_p_test]';
 EM_p_test = [EM_ILDH_p_test EM_ILVH_p_test EM_ILPL_p_test EM_DHVH_p_test EM_DHPL_p_test EM_VHPL_p_test]';
@@ -1084,17 +1098,30 @@ T_MvHorm_thetaphase = table(Connection, DM_p_test, PM_p_test, EM_p_test);
     T_MvHorm_thetaphase.Properties.VariableNames{3} = 'PvMale';
     T_MvHorm_thetaphase.Properties.VariableNames{4} = 'EvMale';
 clear *_p_test
+
+% Put p-values into table
+DM_p2_test = [DM_ILDH_p2_test DM_ILVH_p2_test DM_ILPL_p2_test DM_DHVH_p2_test DM_DHPL_p2_test DM_VHPL_p2_test]';
+PM_p2_test = [PM_ILDH_p2_test PM_ILVH_p2_test PM_ILPL_p2_test PM_DHVH_p2_test PM_DHPL_p2_test PM_VHPL_p2_test]';
+EM_p2_test = [EM_ILDH_p2_test EM_ILVH_p2_test EM_ILPL_p2_test EM_DHVH_p2_test EM_DHPL_p2_test EM_VHPL_p2_test]';
+T2_MvHorm_thetaphase = table(Connection, DM_p2_test, PM_p2_test, EM_p2_test);
+    T2_MvHorm_thetaphase.Properties.VariableNames{2} = 'DvMale';
+    T2_MvHorm_thetaphase.Properties.VariableNames{3} = 'PvMale';
+    T2_MvHorm_thetaphase.Properties.VariableNames{4} = 'EvMale';
+clear *_p2_test
         
 % Display table outputs
-disp('Male vs Hormones: Theta Phase lag width @ half-max')
+disp('Male vs Hormones: Theta Phase lag width @ half-max (pboot)')
 disp(T_MvHorm_thetaphase)
+
+disp('Male vs Hormones: Theta Phase lag width @ half-max (p-value)')
+disp(T2_MvHorm_thetaphase)
 
 % Save the data
 disp('Saving theta phase lag bootstrap statistics..')
 fn = 'ThetaPhaseLagBootStats-dHthresh-BL-MvHorms.mat';
-save([root_drIn fn],'T_*','*_pjm','*_boot','-v7.3') 
+save([root_drIn fn],'T_*','T2_*','*_pjm','*_boot','-v7.3') 
 disp('Theta phase lag data saved: Male vs hormones')
-clear fn T_* *_pjm
+clear fn T_* T2_* *_pjm
 
 
 %% 2.6 Plot theta phase lag bootstrap sample distributions: Male vs Hormones
@@ -1134,7 +1161,7 @@ saveas(H26d,[fd 'ThetaPhaseLagBoot_VHPL_MvHorms.fig'])
 saveas(H26d,[fd 'ThetaPhaseLagBoot_VHPL_MvHorms.png'])
     close(H26d); clear H26d ans
 disp('Theta phase lag figures saved: Male vs Horms')
-
+clear *_boot fd
 
 % %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 3.0 Hierarchical bootstrap: Theta, Gamma, Delta R^2
@@ -1174,29 +1201,39 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
      F_VHPL_boot = get_bootstrapped_sample(F_VHPL, nboot, f_n);
      
     % Get direct probability: Testing hypothesis F>M
-    [MF_ILDH_p_test,MF_ILDH_pjm] = get_direct_prob(M_ILDH_boot,F_ILDH_boot);
-    [MF_ILVH_p_test,MF_ILVH_pjm] = get_direct_prob(M_ILVH_boot,F_ILVH_boot);
-    [MF_ILPL_p_test,MF_ILPL_pjm] = get_direct_prob(M_ILPL_boot,F_ILPL_boot);
-    [MF_DHVH_p_test,MF_DHVH_pjm] = get_direct_prob(M_DHVH_boot,F_DHVH_boot);
-    [MF_DHPL_p_test,MF_DHPL_pjm] = get_direct_prob(M_DHPL_boot,F_DHPL_boot);
-    [MF_VHPL_p_test,MF_VHPL_pjm] = get_direct_prob(M_VHPL_boot,F_VHPL_boot);
+    [MF_ILDH_p_test,MF_ILDH_p2_test,MF_ILDH_pjm] = get_direct_prob(M_ILDH_boot,F_ILDH_boot);
+    [MF_ILVH_p_test,MF_ILVH_p2_test,MF_ILVH_pjm] = get_direct_prob(M_ILVH_boot,F_ILVH_boot);
+    [MF_ILPL_p_test,MF_ILPL_p2_test,MF_ILPL_pjm] = get_direct_prob(M_ILPL_boot,F_ILPL_boot);
+    [MF_DHVH_p_test,MF_DHVH_p2_test,MF_DHVH_pjm] = get_direct_prob(M_DHVH_boot,F_DHVH_boot);
+    [MF_DHPL_p_test,MF_DHPL_p2_test,MF_DHPL_pjm] = get_direct_prob(M_DHPL_boot,F_DHPL_boot);
+    [MF_VHPL_p_test,MF_VHPL_p2_test,MF_VHPL_pjm] = get_direct_prob(M_VHPL_boot,F_VHPL_boot);
     toc(tstart)
     clear tstart 
 
-    % Put p-value data into tables
+    % Put pboot values into table
     T_MF = table(Connection, [MF_ILDH_p_test MF_ILVH_p_test MF_ILPL_p_test MF_DHVH_p_test MF_DHPL_p_test MF_VHPL_p_test]');
     T_MF.Properties.VariableNames{2} = 'MvF';
+    clear *_p_test
+    
+    % Put p-values into table
+    T2_MF = table(Connection, [MF_ILDH_p2_test MF_ILVH_p2_test MF_ILPL_p2_test MF_DHVH_p2_test MF_DHPL_p2_test MF_VHPL_p2_test]');
+    T2_MF.Properties.VariableNames{2} = 'MvF';
+    clear *_p2_test
+
     % Display table outputs
-    fprintf('Male vs. Female: %s Band Power correlation (R^2)\n',Bands{bi})
+    fprintf('Male vs. Female: %s Band Power correlation (R^2) (pboot)\n',Bands{bi})
     disp(T_MF)
-    clear M_ILDH M_ILVH M_ILPL M_DHVH M_DHPL M_VHPL F_ILDH F_ILVH F_ILPL F_DHVH F_DHPL F_VHPL *_p_test *_M
+    
+    fprintf('Male vs. Female: %s Band Power correlation (R^2) (p-values)\n',Bands{bi})
+    disp(T2_MF)
+    clear M_ILDH M_ILVH M_ILPL M_DHVH M_DHPL M_VHPL F_ILDH F_ILVH F_ILPL F_DHVH F_DHPL F_VHPL *_M
  
     % Save the data
     fprintf('Saving %s Band Power correlation bootstrap statistics: Sex differences..\n',Bands{bi})
     fn = [Bands{bi} 'RsqBootStats-BL-MF.mat'];
-    save([root_drIn fn],'T_*','*_boot','*_pjm','-v7.3') 
+    save([root_drIn fn],'T_MF','T2_MF','*_boot','*_pjm','-v7.3') 
     disp('Saved!')
-    clear fn T_* *_pjm 
+    clear fn T_MF T2_MF *_pjm 
     
     %% 3.2 Plot R^2 bootstrap sample distributions: Male vs Female
     H32a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILDH
@@ -1235,6 +1272,8 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
     saveas(H32d,[fd Bands{bi} 'RSqBoot_VHPL_MvF.png'])
         close(H32d); clear H32d ans
     fprintf('%s R^2 bootstrap sample distributions figures saved: MvF\n',Bands{bi})
+    
+    clear F_*
 
     %% 3.3 Females/Estrous: R^2
     tstart=tic;
@@ -1259,46 +1298,58 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
      fE_VHPL_boot = get_bootstrapped_sample(F_VHPL_E, nboot, f_n);
 
     % Calculate direct probability estimates testing hypotheses: P>D, E>D, E>P
-    [fDP_ILDH_theta_p_test,fDP_ILDH_pjm] = get_direct_prob(fD_ILDH_boot,fP_ILDH_boot); %ILDH
-    [fDE_ILDH_theta_p_test,fDE_ILDH_pjm] = get_direct_prob(fD_ILDH_boot,fE_ILDH_boot);
-    [fPE_ILDH_theta_p_test,fPE_ILDH_pjm] = get_direct_prob(fP_ILDH_boot,fE_ILDH_boot);
-     [fDP_ILVH_theta_p_test,fDP_ILVH_pjm] = get_direct_prob(fD_ILVH_boot,fP_ILVH_boot); %ILVH
-     [fDE_ILVH_theta_p_test,fDE_ILVH_pjm] = get_direct_prob(fD_ILVH_boot,fE_ILVH_boot);
-     [fPE_ILVH_theta_p_test,fPE_ILVH_pjm] = get_direct_prob(fP_ILVH_boot,fE_ILVH_boot);
-    [fDP_ILPL_theta_p_test,fDP_ILPL_pjm] = get_direct_prob(fD_ILPL_boot,fP_ILPL_boot); %ILPL
-    [fDE_ILPL_theta_p_test,fDE_ILPL_pjm] = get_direct_prob(fD_ILPL_boot,fE_ILPL_boot);
-    [fPE_ILPL_theta_p_test,fPE_ILPL_pjm] = get_direct_prob(fP_ILPL_boot,fE_ILPL_boot);
-     [fDP_DHVH_theta_p_test,fDP_DHVH_pjm] = get_direct_prob(fD_DHVH_boot,fP_DHVH_boot); %DHVH
-     [fDE_DHVH_theta_p_test,fDE_DHVH_pjm] = get_direct_prob(fD_DHVH_boot,fE_DHVH_boot);
-     [fPE_DHVH_theta_p_test,fPE_DHVH_pjm] = get_direct_prob(fP_DHVH_boot,fE_DHVH_boot);
-    [fDP_DHPL_theta_p_test,fDP_DHPL_pjm] = get_direct_prob(fD_DHPL_boot,fP_DHPL_boot); %DHPL
-    [fDE_DHPL_theta_p_test,fDE_DHPL_pjm] = get_direct_prob(fD_DHPL_boot,fE_DHPL_boot);
-    [fPE_DHPL_theta_p_test,fPE_DHPL_pjm] = get_direct_prob(fP_DHPL_boot,fE_DHPL_boot);
-     [fDP_VHPL_theta_p_test,fDP_VHPL_pjm] = get_direct_prob(fD_VHPL_boot,fP_VHPL_boot); %VHPL
-     [fDE_VHPL_theta_p_test,fDE_VHPL_pjm] = get_direct_prob(fD_VHPL_boot,fE_VHPL_boot);
-     [fPE_VHPL_theta_p_test,fPE_VHPL_pjm] = get_direct_prob(fP_VHPL_boot,fE_VHPL_boot);
+    [fDP_ILDH_p_test,fDP_ILDH_p2_test,fDP_ILDH_pjm] = get_direct_prob(fD_ILDH_boot,fP_ILDH_boot); %ILDH
+    [fDE_ILDH_p_test,fDE_ILDH_p2_test,fDE_ILDH_pjm] = get_direct_prob(fD_ILDH_boot,fE_ILDH_boot);
+    [fPE_ILDH_p_test,fPE_ILDH_p2_test,fPE_ILDH_pjm] = get_direct_prob(fP_ILDH_boot,fE_ILDH_boot);
+     [fDP_ILVH_p_test,fDP_ILVH_p2_test,fDP_ILVH_pjm] = get_direct_prob(fD_ILVH_boot,fP_ILVH_boot); %ILVH
+     [fDE_ILVH_p_test,fDE_ILVH_p2_test,fDE_ILVH_pjm] = get_direct_prob(fD_ILVH_boot,fE_ILVH_boot);
+     [fPE_ILVH_p_test,fPE_ILVH_p2_test,fPE_ILVH_pjm] = get_direct_prob(fP_ILVH_boot,fE_ILVH_boot);
+    [fDP_ILPL_p_test,fDP_ILPL_p2_test,fDP_ILPL_pjm] = get_direct_prob(fD_ILPL_boot,fP_ILPL_boot); %ILPL
+    [fDE_ILPL_p_test,fDE_ILPL_p2_test,fDE_ILPL_pjm] = get_direct_prob(fD_ILPL_boot,fE_ILPL_boot);
+    [fPE_ILPL_p_test,fPE_ILPL_p2_test,fPE_ILPL_pjm] = get_direct_prob(fP_ILPL_boot,fE_ILPL_boot);
+     [fDP_DHVH_p_test,fDP_DHVH_p2_test,fDP_DHVH_pjm] = get_direct_prob(fD_DHVH_boot,fP_DHVH_boot); %DHVH
+     [fDE_DHVH_p_test,fDE_DHVH_p2_test,fDE_DHVH_pjm] = get_direct_prob(fD_DHVH_boot,fE_DHVH_boot);
+     [fPE_DHVH_p_test,fPE_DHVH_p2_test,fPE_DHVH_pjm] = get_direct_prob(fP_DHVH_boot,fE_DHVH_boot);
+    [fDP_DHPL_p_test,fDP_DHPL_p2_test,fDP_DHPL_pjm] = get_direct_prob(fD_DHPL_boot,fP_DHPL_boot); %DHPL
+    [fDE_DHPL_p_test,fDE_DHPL_p2_test,fDE_DHPL_pjm] = get_direct_prob(fD_DHPL_boot,fE_DHPL_boot);
+    [fPE_DHPL_p_test,fPE_DHPL_p2_test,fPE_DHPL_pjm] = get_direct_prob(fP_DHPL_boot,fE_DHPL_boot);
+     [fDP_VHPL_p_test,fDP_VHPL_p2_test,fDP_VHPL_pjm] = get_direct_prob(fD_VHPL_boot,fP_VHPL_boot); %VHPL
+     [fDE_VHPL_p_test,fDE_VHPL_p2_test,fDE_VHPL_pjm] = get_direct_prob(fD_VHPL_boot,fE_VHPL_boot);
+     [fPE_VHPL_p_test,fPE_VHPL_p2_test,fPE_VHPL_pjm] = get_direct_prob(fP_VHPL_boot,fE_VHPL_boot);
    toc(tstart); clear tstart  
    
-    % Put pboot-value data into tables
-    fDP_theta_p_test = [fDP_ILDH_theta_p_test fDP_ILVH_theta_p_test fDP_ILPL_theta_p_test fDP_DHVH_theta_p_test fDP_DHPL_theta_p_test fDP_VHPL_theta_p_test]';
-    fDE_theta_p_test = [fDE_ILDH_theta_p_test fDE_ILVH_theta_p_test fDE_ILPL_theta_p_test fDE_DHVH_theta_p_test fDE_DHPL_theta_p_test fDE_VHPL_theta_p_test]';
-    fPE_theta_p_test = [fPE_ILDH_theta_p_test fPE_ILVH_theta_p_test fPE_ILPL_theta_p_test fPE_DHVH_theta_p_test fPE_DHPL_theta_p_test fPE_VHPL_theta_p_test]';
-    T_f = table(Connection, fDP_theta_p_test, fDE_theta_p_test, fPE_theta_p_test);
-    T_f.Properties.VariableNames{2} = 'DvP';
-    T_f.Properties.VariableNames{3} = 'DvE';
-    T_f.Properties.VariableNames{4} = 'PvE';
-
-        % Display table output: pboot
-        fprintf('Female/Estrous: %s band power correlations (R^2)\n',Bands{bi})
-        disp(T_f)
+    % Put pboot-values into table
+    fDP_p_test = [fDP_ILDH_p_test fDP_ILVH_p_test fDP_ILPL_p_test fDP_DHVH_p_test fDP_DHPL_p_test fDP_VHPL_p_test]';
+    fDE_p_test = [fDE_ILDH_p_test fDE_ILVH_p_test fDE_ILPL_p_test fDE_DHVH_p_test fDE_DHPL_p_test fDE_VHPL_p_test]';
+    fPE_p_test = [fPE_ILDH_p_test fPE_ILVH_p_test fPE_ILPL_p_test fPE_DHVH_p_test fPE_DHPL_p_test fPE_VHPL_p_test]';
+    T_f = table(Connection, fDP_p_test, fDE_p_test, fPE_p_test);
+        T_f.Properties.VariableNames{2} = 'DvP';
+        T_f.Properties.VariableNames{3} = 'DvE';
+        T_f.Properties.VariableNames{4} = 'PvE';
+    clear *_p_test
     
-    clear *_p_test F_*
+    % Put p-values into table
+    fDP_p2_test = [fDP_ILDH_p2_test fDP_ILVH_p2_test fDP_ILPL_p2_test fDP_DHVH_p2_test fDP_DHPL_p2_test fDP_VHPL_p2_test]';
+    fDE_p2_test = [fDE_ILDH_p2_test fDE_ILVH_p2_test fDE_ILPL_p2_test fDE_DHVH_p2_test fDE_DHPL_p2_test fDE_VHPL_p2_test]';
+    fPE_p2_test = [fPE_ILDH_p2_test fPE_ILVH_p2_test fPE_ILPL_p2_test fPE_DHVH_p2_test fPE_DHPL_p2_test fPE_VHPL_p2_test]';
+    T2_f = table(Connection, fDP_p2_test, fDE_p2_test, fPE_p2_test);
+        T2_f.Properties.VariableNames{2} = 'DvP';
+        T2_f.Properties.VariableNames{3} = 'DvE';
+        T2_f.Properties.VariableNames{4} = 'PvE';
+    clear *_p2_test
+
+    % Display table outputs
+    fprintf('Female/Estrous: %s band power correlations (R^2) (pboot)\n',Bands{bi})
+    disp(T_f)
+ 
+    fprintf('Female/Estrous: %s band power correlations (R^2) (p-value)\n',Bands{bi})
+    disp(T2_f)
     
     % Save the data
     fn = [Bands{bi} 'RsqBootStats-BL-Estrous.mat'];
-    save([root_drIn fn],'T_*','*_boot','*_pjm','-v7.3') 
+    save([root_drIn fn],'T_f','T2_f','*_boot','*_pjm','-v7.3') 
     disp('Saved!')
-    clear fn T_* *_pjm 
+    clear fn T_* T2_* *_pjm 
     
     %% 3.4 Plot R^2 bootstrap sample distributions: Females/Estrous
     H34a = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILDH
@@ -1347,26 +1398,26 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
     
     % Ptest: Males vs Hormones
      %assesses the probability of the hypotheses: D>M, P>M, E>M
-    [DM_ILDH_p_test,DM_ILDH_pjm] = get_direct_prob(M_ILDH_boot, fD_ILDH_boot); %ILDH: male vs diestrus
-    [PM_ILDH_p_test,PM_ILDH_pjm] = get_direct_prob(M_ILDH_boot, fP_ILDH_boot); % male vs proestrus
-    [EM_ILDH_p_test,EM_ILDH_pjm] = get_direct_prob(M_ILDH_boot, fE_ILDH_boot); % male vs estrus
-     [DM_ILVH_p_test,DM_ILVH_pjm] = get_direct_prob(M_ILVH_boot, fD_ILVH_boot); %ILVH
-     [PM_ILVH_p_test,PM_ILVH_pjm] = get_direct_prob(M_ILVH_boot, fP_ILVH_boot);
-     [EM_ILVH_p_test,EM_ILVH_pjm] = get_direct_prob(M_ILVH_boot, fE_ILVH_boot);
-    [DM_ILPL_p_test,DM_ILPL_pjm] = get_direct_prob(M_ILPL_boot, fD_ILPL_boot); %ILPL
-    [PM_ILPL_p_test,PM_ILPL_pjm] = get_direct_prob(M_ILPL_boot, fP_ILPL_boot);
-    [EM_ILPL_p_test,EM_ILPL_pjm] = get_direct_prob(M_ILPL_boot, fE_ILPL_boot);
-     [DM_DHVH_p_test,DM_DHVH_pjm] = get_direct_prob(M_DHVH_boot, fD_DHVH_boot); %DHVH
-     [PM_DHVH_p_test,PM_DHVH_pjm] = get_direct_prob(M_DHVH_boot, fP_DHVH_boot);
-     [EM_DHVH_p_test,EM_DHVH_pjm] = get_direct_prob(M_DHVH_boot, fE_DHVH_boot);
-    [DM_DHPL_p_test,DM_DHPL_pjm] = get_direct_prob(M_DHPL_boot, fD_DHPL_boot); %DHPL
-    [PM_DHPL_p_test,PM_DHPL_pjm] = get_direct_prob(M_DHPL_boot, fP_DHPL_boot);
-    [EM_DHPL_p_test,EM_DHPL_pjm] = get_direct_prob(M_DHPL_boot, fE_DHPL_boot);
-     [DM_VHPL_p_test,DM_VHPL_pjm] = get_direct_prob(M_VHPL_boot, fD_VHPL_boot); %VHPL
-     [PM_VHPL_p_test,PM_VHPL_pjm] = get_direct_prob(M_VHPL_boot, fP_VHPL_boot);
-     [EM_VHPL_p_test,EM_VHPL_pjm] = get_direct_prob(M_VHPL_boot, fE_VHPL_boot);
+    [DM_ILDH_p_test,DM_ILDH_p2_test,DM_ILDH_pjm] = get_direct_prob(M_ILDH_boot, fD_ILDH_boot); %ILDH: male vs diestrus
+    [PM_ILDH_p_test,PM_ILDH_p2_test,PM_ILDH_pjm] = get_direct_prob(M_ILDH_boot, fP_ILDH_boot); % male vs proestrus
+    [EM_ILDH_p_test,EM_ILDH_p2_test,EM_ILDH_pjm] = get_direct_prob(M_ILDH_boot, fE_ILDH_boot); % male vs estrus
+     [DM_ILVH_p_test,DM_ILVH_p2_test,DM_ILVH_pjm] = get_direct_prob(M_ILVH_boot, fD_ILVH_boot); %ILVH
+     [PM_ILVH_p_test,PM_ILVH_p2_test,PM_ILVH_pjm] = get_direct_prob(M_ILVH_boot, fP_ILVH_boot);
+     [EM_ILVH_p_test,EM_ILVH_p2_test,EM_ILVH_pjm] = get_direct_prob(M_ILVH_boot, fE_ILVH_boot);
+    [DM_ILPL_p_test,DM_ILPL_p2_test,DM_ILPL_pjm] = get_direct_prob(M_ILPL_boot, fD_ILPL_boot); %ILPL
+    [PM_ILPL_p_test,PM_ILPL_p2_test,PM_ILPL_pjm] = get_direct_prob(M_ILPL_boot, fP_ILPL_boot);
+    [EM_ILPL_p_test,EM_ILPL_p2_test,EM_ILPL_pjm] = get_direct_prob(M_ILPL_boot, fE_ILPL_boot);
+     [DM_DHVH_p_test,DM_DHVH_p2_test,DM_DHVH_pjm] = get_direct_prob(M_DHVH_boot, fD_DHVH_boot); %DHVH
+     [PM_DHVH_p_test,PM_DHVH_p2_test,PM_DHVH_pjm] = get_direct_prob(M_DHVH_boot, fP_DHVH_boot);
+     [EM_DHVH_p_test,EM_DHVH_p2_test,EM_DHVH_pjm] = get_direct_prob(M_DHVH_boot, fE_DHVH_boot);
+    [DM_DHPL_p_test,DM_DHPL_p2_test,DM_DHPL_pjm] = get_direct_prob(M_DHPL_boot, fD_DHPL_boot); %DHPL
+    [PM_DHPL_p_test,PM_DHPL_p2_test,PM_DHPL_pjm] = get_direct_prob(M_DHPL_boot, fP_DHPL_boot);
+    [EM_DHPL_p_test,EM_DHPL_p2_test,EM_DHPL_pjm] = get_direct_prob(M_DHPL_boot, fE_DHPL_boot);
+     [DM_VHPL_p_test,DM_VHPL_p2_test,DM_VHPL_pjm] = get_direct_prob(M_VHPL_boot, fD_VHPL_boot); %VHPL
+     [PM_VHPL_p_test,PM_VHPL_p2_test,PM_VHPL_pjm] = get_direct_prob(M_VHPL_boot, fP_VHPL_boot);
+     [EM_VHPL_p_test,EM_VHPL_p2_test,EM_VHPL_pjm] = get_direct_prob(M_VHPL_boot, fE_VHPL_boot);
     
-    % Put data into table
+    % Put pboot values into table
     DM_p_test = [DM_ILDH_p_test DM_ILVH_p_test DM_ILPL_p_test DM_DHVH_p_test DM_DHPL_p_test DM_VHPL_p_test]';
     PM_p_test = [PM_ILDH_p_test PM_ILVH_p_test PM_ILPL_p_test PM_DHVH_p_test PM_DHPL_p_test PM_VHPL_p_test]';
     EM_p_test = [EM_ILDH_p_test EM_ILVH_p_test EM_ILPL_p_test EM_DHVH_p_test EM_DHPL_p_test EM_VHPL_p_test]';
@@ -1375,16 +1426,29 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
         T_MvHorm.Properties.VariableNames{3} = 'PvMale';
         T_MvHorm.Properties.VariableNames{4} = 'EvMale';
     clear *_p_test
-            
+
+    % Put p-values into table
+    DM_p2_test = [DM_ILDH_p2_test DM_ILVH_p2_test DM_ILPL_p2_test DM_DHVH_p2_test DM_DHPL_p2_test DM_VHPL_p2_test]';
+    PM_p2_test = [PM_ILDH_p2_test PM_ILVH_p2_test PM_ILPL_p2_test PM_DHVH_p2_test PM_DHPL_p2_test PM_VHPL_p2_test]';
+    EM_p2_test = [EM_ILDH_p2_test EM_ILVH_p2_test EM_ILPL_p2_test EM_DHVH_p2_test EM_DHPL_p2_test EM_VHPL_p2_test]';
+    T2_MvHorm = table(Connection, DM_p2_test, PM_p2_test, EM_p2_test);
+        T2_MvHorm.Properties.VariableNames{2} = 'DvMale';
+        T2_MvHorm.Properties.VariableNames{3} = 'PvMale';
+        T2_MvHorm.Properties.VariableNames{4} = 'EvMale';
+    clear *_p2_test
+    
     % Display table outputs
-    fprintf('FMale vs Hormones: %s band power correlations (R^2)\n',Bands{bi})
+    fprintf('FMale vs Hormones: %s band power correlations (R^2) (pboot)\n',Bands{bi})
     disp(T_MvHorm)
+    
+    fprintf('FMale vs Hormones: %s band power correlations (R^2) (p-value)\n',Bands{bi})
+    disp(T2_MvHorm)
     
     % Save the data
     fn = [Bands{bi} 'RsqBootStats-BL-MvHorms.mat'];
-    save([root_drIn fn],'T_*','*_boot','*_pjm','-v7.3') 
+    save([root_drIn fn],'T_*','T2_*','*_boot','*_pjm','-v7.3') 
     disp('Saved!')
-    clear fn T_* *_pjm
+    clear fn T_* T2_* *_pjm
     fprintf('%s R^2 bootstrap sample distributions data saved: MvHorms\n',Bands{bi})
 
 	%% 3.6 Plot R^2 joint-probability matrices: Males vs Hormone stages
@@ -1425,7 +1489,7 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
         close(H36d); clear H36d ans
         
     fprintf('%s R^2 bootstrap sample distributions figures saved: MvHorms\n',Bands{bi})
-    clear T_* *_boot *_pjm
+    clear *_boot
 end %frequency band
 
 clear bi fd f_n Connection Bands nboot % Clean up workspace

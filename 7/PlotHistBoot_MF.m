@@ -10,7 +10,7 @@ function [Ax] = PlotHistBoot_MF(ax,Mx_boot,Fx_boot)
 % KJS init: 2020-04-16
 
 numbins = 100; %number of bins for histogram
-facealpha = 0.5; %Transparency of histogram bars, specified as a scalar value between 0 and 1 inclusive (default = 0.6)
+facealpha = 0.6; %Transparency of histogram bars, specified as a scalar value between 0 and 1 inclusive (default = 0.6)
 
 %color maps
 Mcol = [0.0431    0.4667    0.3686]; %male
