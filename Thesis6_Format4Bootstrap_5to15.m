@@ -31,6 +31,7 @@
 % 	- Format4Bootstrap_LFP.m
 % 	- get_bootstrapped_sample.m
 % 	- get_direct_prob.m
+%   - ksampL2.m
 % 	- PlotBoot_mscohere.m
 % 	- PlotBoot_mscohereBands.m
 % 	- PlotBoot_mscohereHormones.m
@@ -175,18 +176,18 @@ end
     % Save figures
     fd = [figdrOut 'PowSpec_ReducedChannels\BL\FunctionalAnova\']; %output directory
     if ~exist(fd,'dir'); mkdir(fd); end    
-    saveas(H1,[fd 'mPFCIL-MvF-SubjSEM-5to15BL.png'])
-    saveas(H1,[fd 'mPFCIL-MvF-SubjSEM-5to15BL.fig'])
-        close(H1); clear H1
-    saveas(H2,[fd 'mPFCPL-MvF-SubjSEM-5to15BL.png'])
-    saveas(H2,[fd 'mPFCPL-MvF-SubjSEM-5to15BL.fig'])
-        close(H2); clear H2
-    saveas(H3,[fd 'dHPC-MvF-SubjSEM-5to15BL.png'])
-    saveas(H3,[fd 'dHPC-MvF-SubjSEM-5to15BL.fig'])
-        close(H3); clear H3
-    saveas(H4,[fd 'vHPC-MvF-SubjSEM-5to15BL.png'])
-    saveas(H4,[fd 'vHPC-MvF-SubjSEM-5to15BL.fig'])
-        close(H4); clear H4
+    saveas(H1,[fd 'mPFCIL-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(H1,[fd 'mPFCIL-MvF-SubjSEM-5to15BL.png']); close(H1); clear H1
+    
+    saveas(H2,[fd 'mPFCPL-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(H2,[fd 'mPFCPL-MvF-SubjSEM-5to15BL.png']); close(H2); clear H2
+    
+    saveas(H3,[fd 'dHPC-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(H3,[fd 'dHPC-MvF-SubjSEM-5to15BL.png']); close(H3); clear H3
+        
+    saveas(H4,[fd 'vHPC-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(H4,[fd 'vHPC-MvF-SubjSEM-5to15BL.png']); close(H4); clear H4
+        
         
 % Plot Power spectra: Sex differences, Frequency bands of interest
 % mPFC-IL
@@ -203,18 +204,18 @@ end
     clear Mvh Fvh
          
     % Save figures
-    saveas(h1,[fd 'mPFCILbands-MvF-SubjSEM-5to15BL.png'])
-    saveas(h1,[fd 'mPFCILbands-MvF-SubjSEM-5to15BL.fig'])
-        close(h1); clear h1
-    saveas(h2,[fd 'mPFCPLbands-MvF-SubjSEM-5to15BL.png'])
-    saveas(h2,[fd 'mPFCPLbands-MvF-SubjSEM-5to15BL.fig'])
-        close(h2); clear h2
-    saveas(h3,[fd 'dHPCbands-MvF-SubjSEM-5to15BL.png'])
-    saveas(h3,[fd 'dHPCbands-MvF-SubjSEM-5to15BL.fig'])
-        close(h3); clear h3
-    saveas(h4,[fd 'vHPCbands-MvF-SubjSEM-5to15BL.png'])
-    saveas(h4,[fd 'vHPCbands-MvF-SubjSEM-5to15BL.fig'])
-        close(h4); clear h4
+    saveas(h1,[fd 'mPFCILbands-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(h1,[fd 'mPFCILbands-MvF-SubjSEM-5to15BL.png']); close(h1); clear h1
+
+    saveas(h2,[fd 'mPFCPLbands-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(h2,[fd 'mPFCPLbands-MvF-SubjSEM-5to15BL.png']); close(h2); clear h2
+
+    saveas(h3,[fd 'dHPCbands-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(h3,[fd 'dHPCbands-MvF-SubjSEM-5to15BL.png']); close(h3); clear h3
+     
+    saveas(h4,[fd 'vHPCbands-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(h4,[fd 'vHPCbands-MvF-SubjSEM-5to15BL.png']); close(h4); clear h4
+    
         
 % Save data: Functional f-tests
 fn = 'FunctionalTestStatistics-powspec_5to15_BL_SexDiffs.mat';
@@ -288,18 +289,18 @@ end
 
     % Save figures
     fd = [figdrOut 'PowSpec_ReducedChannels\BL\FunctionalAnova\']; %output directory
-    saveas(H1,[fd 'mPFCIL-Hormones-SubjSEM-5to15BL.png'])
-    saveas(H1,[fd 'mPFCIL-Hormones-SubjSEM-5to15BL.fig'])
-        close(H1); clear H1
-    saveas(H2,[fd 'mPFCPL-Hormones-SubjSEM-5to15BL.png'])
-    saveas(H2,[fd 'mPFCPL-Hormones-SubjSEM-5to15BL.fig'])
-        close(H2); clear H2
-    saveas(H3,[fd 'dHPC-Hormones-SubjSEM-5to15BL.png'])
-    saveas(H3,[fd 'dHPC-Hormones-SubjSEM-5to15BL.fig'])
-        close(H3); clear H3
-    saveas(H4,[fd 'vHPC-Hormones-SubjSEM-5to15BL.png'])
-    saveas(H4,[fd 'vHPC-Hormones-SubjSEM-5to15BL.fig'])
-        close(H4); clear H4
+    saveas(H1,[fd 'mPFCIL-Hormones-SubjSEM-5to15BL.fig']); legend off
+    saveas(H1,[fd 'mPFCIL-Hormones-SubjSEM-5to15BL.png']); close(H1); clear H1       
+    
+    saveas(H2,[fd 'mPFCPL-Hormones-SubjSEM-5to15BL.fig']); legend off
+    saveas(H2,[fd 'mPFCPL-Hormones-SubjSEM-5to15BL.png']); close(H2); clear H2
+        
+    saveas(H3,[fd 'dHPC-Hormones-SubjSEM-5to15BL.fig']); legend off
+    saveas(H3,[fd 'dHPC-Hormones-SubjSEM-5to15BL.png']); close(H3); clear H3
+
+    saveas(H4,[fd 'vHPC-Hormones-SubjSEM-5to15BL.fig']); legend off
+    saveas(H4,[fd 'vHPC-Hormones-SubjSEM-5to15BL.png']); close(H4); clear H4
+    
     
 % Plot Power spectra: Effect of estrous stage, Frequency bands of interest
 % IL
@@ -316,24 +317,23 @@ end
     clear Mvh
          
     % Save figures
-    saveas(h1,[fd 'mPFCILbands-Hormones-SubjSEM-5to15BL.png'])
-    saveas(h1,[fd 'mPFCILbands-Hormones-SubjSEM-5to15BL.fig'])
-        close(h1); clear h1
-    saveas(h2,[fd 'mPFCPLbands-Hormones-SubjSEM-5to15BL.png'])
-    saveas(h2,[fd 'mPFCPLbands-Hormones-SubjSEM-5to15BL.fig'])
-        close(h2); clear h2
-    saveas(h3,[fd 'dHPCbands-Hormones-SubjSEM-5to15BL.png'])
-    saveas(h3,[fd 'dHPCbands-Hormones-SubjSEM-5to15BL.fig'])
-        close(h3); clear h3
-    saveas(h4,[fd 'vHPCbands-Hormones-SubjSEM-5to15BL.png'])
-    saveas(h4,[fd 'vHPCbands-Hormones-SubjSEM-5to15BL.fig'])
-        close(h4); clear h4 fd
+    saveas(h1,[fd 'mPFCILbands-Hormones-SubjSEM-5to15BL.fig']); legend off
+    saveas(h1,[fd 'mPFCILbands-Hormones-SubjSEM-5to15BL.png']); close(h1); clear h1
+
+    saveas(h2,[fd 'mPFCPLbands-Hormones-SubjSEM-5to15BL.fig']); legend off
+    saveas(h2,[fd 'mPFCPLbands-Hormones-SubjSEM-5to15BL.png']); close(h2); clear h2
+
+    saveas(h3,[fd 'dHPCbands-Hormones-SubjSEM-5to15BL.fig']); legend off       
+    saveas(h3,[fd 'dHPCbands-Hormones-SubjSEM-5to15BL.png']); close(h3); clear h3
+
+    saveas(h4,[fd 'vHPCbands-Hormones-SubjSEM-5to15BL.fig']); legend off      
+    saveas(h4,[fd 'vHPCbands-Hormones-SubjSEM-5to15BL.png']); close(h4); clear h4
     
 % Save data: One-way functional ANOVAs
 fn = 'FunctionalTestStatistics-powspec_5to15_BL_Hormones.mat';
 save([root_drIn '5to15' filesep fn],'subjs','A','DHstat','ILstat','PLstat','VHstat','-v7.3')
 disp('Functional test outputs saved!')%done 2020-02-20
-clear fn *stat 
+clear fn *stat fd
 
 %% 2.5 Plot Power Spectra & Functional statistical tests: Male vs Estrous stages
 % See: PlotBoot_PowSpecMvHorms.m & PlotBoot_PowSpecMvHormsBands.m
@@ -359,32 +359,29 @@ end
 % Append males onto 'A' for fANOVAs
 A = [A; 4; 4; 4; 4];
 
-% % Functional ANOVA: Male vs each stage  - did specially on 4/19/20. Not totally compatible with the function
-% [DvM_ILstat,DvM_PLstat,DvM_DHstat,DvM_VHstat] = PlotBoot_PowSpec(f,Mil,Dil,Mpl,Dpl,Mdh,Ddh,Mvh,Dvh); % Diest v Male
-% [PvM_ILstat,PvM_PLstat,PvM_DHstat,PvM_VHstat] = PlotBoot_PowSpec(f,Mil,Pil,Mpl,Ppl,Mdh,Pdh,Mvh,Pvh); % Proest v Male
-% [EvM_ILstat,EvM_PLstat,EvM_DHstat,EvM_VHstat] = PlotBoot_PowSpec(f,Mil,Eil,Mpl,Epl,Mdh,Edh,Mvh,Evh); % Est v Male
-%     % Save data
-%     fn = 'FunctionalTestStatistics-powspec_5to15_BL_MvHorms-posthoc.mat';
-%     save([root_drIn '5to15' filesep fn],'-v7.3')
-%     clear fn
-
-% Plot Power spectra: Males vs Estrous stages, 0.5-100 Hz
+% Functional ANOVA: Male vs each estrous stage
+ % Plot Power spectra & Get test statistics: Males vs Estrous stages, 0.5-100 Hz
 [H1,H2,H3,H4,ILstat,PLstat,DHstat,VHstat] = PlotBoot_PowSpecMvHorms(f,A,Dil,Pil,Eil,Mil,Ddh,Pdh,Edh,Mdh,Dvh,Pvh,Evh,Mvh,Dpl,Ppl,Epl,Mpl);
 
-    % Save figures
-    fd = [figdrOut 'PowSpec_ReducedChannels\BL\FunctionalAnova\']; %output directory
-    saveas(H1,[fd 'mPFCIL-MvHorms-SubjSEM-5to15BL.png'])
-    saveas(H1,[fd 'mPFCIL-MvHorms-SubjSEM-5to15BL.fig'])
-        close(H1); clear H1
-    saveas(H2,[fd 'mPFCPL-MvHorms-SubjSEM-5to15BL.png'])
-    saveas(H2,[fd 'mPFCPL-MvHorms-SubjSEM-5to15BL.fig'])
-        close(H2); clear H2
-    saveas(H3,[fd 'dHPC-MvHorms-SubjSEM-5to15BL.png'])
-    saveas(H3,[fd 'dHPC-MvHorms-SubjSEM-5to15BL.fig'])
-        close(H3); clear H3
-    saveas(H4,[fd 'vHPC-MvHorms-SubjSEM-5to15BL.png'])
-    saveas(H4,[fd 'vHPC-MvHorms-SubjSEM-5to15BL.fig'])
-        close(H4); clear H4
+% Save data
+fn = 'FunctionalTestStatistics-powspec_5to15_BL_MvHorms-posthoc.mat';
+save([root_drIn '5to15' filesep fn],'*stat','-v7.3')
+clear fn
+    
+% Save figures
+fd = [figdrOut 'PowSpec_ReducedChannels\BL\FunctionalAnova\']; %output directory
+    saveas(H1,[fd 'mPFCIL-MvHorms-SubjSEM-5to15BL.fig']); legend off
+    saveas(H1,[fd 'mPFCIL-MvHorms-SubjSEM-5to15BL.png']); close(H1); clear H1
+    
+    saveas(H2,[fd 'mPFCPL-MvHorms-SubjSEM-5to15BL.fig']); legend off        
+    saveas(H2,[fd 'mPFCPL-MvHorms-SubjSEM-5to15BL.png']); close(H2); clear H2
+
+    saveas(H3,[fd 'dHPC-MvHorms-SubjSEM-5to15BL.fig']); legend off        
+    saveas(H3,[fd 'dHPC-MvHorms-SubjSEM-5to15BL.png']); close(H3); clear H3
+
+    saveas(H4,[fd 'vHPC-MvHorms-SubjSEM-5to15BL.fig']); legend off        
+    saveas(H4,[fd 'vHPC-MvHorms-SubjSEM-5to15BL.png']); close(H4); clear H4
+    
 
 % Plot Power spectra: Males vs Estrous stages, Frequency bands of interest
 % mPFC-IL
@@ -401,24 +398,23 @@ A = [A; 4; 4; 4; 4];
     clear Dvh Pvh Evh Mvh
          
     % Save figures
-    saveas(h1,[fd 'mPFCILbands-MvHorms-SubjSEM-5to15BL.png'])
-    saveas(h1,[fd 'mPFCILbands-MvHorms-SubjSEM-5to15BL.fig'])
-        close(h1); clear h1
-    saveas(h2,[fd 'mPFCPLbands-MvHorms-SubjSEM-5to15BL.png'])
-    saveas(h2,[fd 'mPFCPLbands-MvHorms-SubjSEM-5to15BL.fig'])
-        close(h2); clear h2
-    saveas(h3,[fd 'dHPCbands-MvHorms-SubjSEM-5to15BL.png'])
-    saveas(h3,[fd 'dHPCbands-MvHorms-SubjSEM-5to15BL.fig'])
-        close(h3); clear h3
-    saveas(h4,[fd 'vHPCbands-MvHorms-SubjSEM-5to15BL.png'])
-    saveas(h4,[fd 'vHPCbands-MvHorms-SubjSEM-5to15BL.fig'])
-        close(h4); clear h4 fd
+    saveas(h1,[fd 'mPFCILbands-MvHorms-SubjSEM-5to15BL.fig']); legend off
+    saveas(h1,[fd 'mPFCILbands-MvHorms-SubjSEM-5to15BL.png']); close(h1); clear h1
+    
+    saveas(h2,[fd 'mPFCPLbands-MvHorms-SubjSEM-5to15BL.fig']); legend off        
+    saveas(h2,[fd 'mPFCPLbands-MvHorms-SubjSEM-5to15BL.png']); close(h2); clear h2
+
+    saveas(h3,[fd 'dHPCbands-MvHorms-SubjSEM-5to15BL.fig']); legend off        
+    saveas(h3,[fd 'dHPCbands-MvHorms-SubjSEM-5to15BL.png']); close(h3); clear h3
+
+    saveas(h4,[fd 'vHPCbands-MvHorms-SubjSEM-5to15BL.fig']); legend off    
+    saveas(h4,[fd 'vHPCbands-MvHorms-SubjSEM-5to15BL.png']); close(h4); clear h4
         
 % Save data: One-way functional ANOVAs
 fn = 'FunctionalTestStatistics-powspec_5to15_BL_MvHorms.mat';
 save([root_drIn '5to15' filesep fn],'subjs','DHstat','ILstat','PLstat','VHstat','-v7.3')
 disp('Functional test outputs saved!')
-clear fn *stat f
+clear fn *stat f fd A
 
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -600,45 +596,44 @@ end
 %mPFCIL-vHPC
     [H2,ILVHstat.MvF] = PlotBoot_mscohere(f,Milvh,Filvh);
     title('IL - vHPC')
-    legend off
+    legend('location','northeast')
 %mPFCIL-mPFCPL
     [H3,ILPLstat.MvF] = PlotBoot_mscohere(f,Milpl,Filpl);
     title('IL - PrL')
-    legend off
+    legend('location','northeast')
 %dHPC-vHPC
     [H4,DHVHstat.MvF] = PlotBoot_mscohere(f,Mdhvh,Fdhvh);
     title('dHPC - vHPC')
-    legend off
+    legend('location','northeast')
 %dHPC-mPFCPL
     [H5,DHPLstat.MvF] = PlotBoot_mscohere(f,Mdhpl,Fdhpl);
     title('dHPC - PrL')
-    legend off
+    legend('location','northeast')
 %vHPC-mPFCPL
     [H6,VHPLstat.MvF] = PlotBoot_mscohere(f,Mvhpl,Fvhpl);
     title('vHPC - PrL')
-    legend off
 
 % Save figures
 fd = [figdrOut 'Cohereograms\FunctionalAnova\']; %output directory
 	if ~exist(fd,'dir'); mkdir(fd); end    
-saveas(H1,[fd 'ILDHmscohere-MvF-SubjSEM-5to15BL.png'])
-saveas(H1,[fd 'ILDHmscohere-MvF-SubjSEM-5to15BL.fig'])
-	close(H1); clear H1
-saveas(H2,[fd 'ILVHmscohere-MvF-SubjSEM-5to15BL.png'])
-saveas(H2,[fd 'ILVHmscohere-MvF-SubjSEM-5to15BL.fig'])
-	close(H2); clear H2
-saveas(H3,[fd 'ILPLmscohere-MvF-SubjSEM-5to15BL.png'])
-saveas(H3,[fd 'ILPLmscohere-MvF-SubjSEM-5to15BL.fig'])
-	close(H3); clear H3
-saveas(H4,[fd 'DHVHmscohere-MvF-SubjSEM-5to15BL.png'])
-saveas(H4,[fd 'DHVHmscohere-MvF-SubjSEM-5to15BL.fig'])
-	close(H4); clear H4
-saveas(H5,[fd 'DHPLmscohere-MvF-SubjSEM-5to15BL.png'])
-saveas(H5,[fd 'DHPLmscohere-MvF-SubjSEM-5to15BL.fig'])
-	close(H5); clear H5
-saveas(H6,[fd 'VHPLmscohere-MvF-SubjSEM-5to15BL.png'])
-saveas(H6,[fd 'VHPLmscohere-MvF-SubjSEM-5to15BL.fig'])
-	close(H6); clear H6
+saveas(H1,[fd 'ILDHmscohere-MvF-SubjSEM-5to15BL.fig']); legend off
+saveas(H1,[fd 'ILDHmscohere-MvF-SubjSEM-5to15BL.png']); close(H1); clear H1
+
+saveas(H2,[fd 'ILVHmscohere-MvF-SubjSEM-5to15BL.fig']); legend off
+saveas(H2,[fd 'ILVHmscohere-MvF-SubjSEM-5to15BL.png']); close(H2); clear H2
+
+saveas(H3,[fd 'ILPLmscohere-MvF-SubjSEM-5to15BL.fig']); legend off	
+saveas(H3,[fd 'ILPLmscohere-MvF-SubjSEM-5to15BL.png']); close(H3); clear H3
+
+saveas(H4,[fd 'DHVHmscohere-MvF-SubjSEM-5to15BL.fig']); legend off	
+saveas(H4,[fd 'DHVHmscohere-MvF-SubjSEM-5to15BL.png']); close(H4); clear H4
+
+saveas(H5,[fd 'DHPLmscohere-MvF-SubjSEM-5to15BL.fig']); legend off	
+saveas(H5,[fd 'DHPLmscohere-MvF-SubjSEM-5to15BL.png']); close(H5); clear H5
+
+saveas(H6,[fd 'VHPLmscohere-MvF-SubjSEM-5to15BL.fig']); legend off	
+saveas(H6,[fd 'VHPLmscohere-MvF-SubjSEM-5to15BL.png']); close(H6); clear H6
+
 
 % Plot mscohere: Sex differences, Frequency bands of interest
 % mPFC-IL - dHPC
@@ -661,27 +656,27 @@ saveas(H6,[fd 'VHPLmscohere-MvF-SubjSEM-5to15BL.fig'])
     clear Mvhpl Fvhpl
 
 % Save figures
-saveas(h1,[fd 'ILDHmscohere-MvFbands-SubjSEM-5to15BL.png'])
-saveas(h1,[fd 'ILDHmscohere-MvFbands-SubjSEM-5to15BL.fig'])
-	close(h1); clear h1
-saveas(h2,[fd 'ILVHmscohere-MvFbands-SubjSEM-5to15BL.png'])
-saveas(h2,[fd 'ILVHmscohere-MvFbands-SubjSEM-5to15BL.fig'])
-	close(h2); clear h2
-saveas(h3,[fd 'ILPLmscohere-MvFbands-SubjSEM-5to15BL.png'])
-saveas(h3,[fd 'ILPLmscohere-MvFbands-SubjSEM-5to15BL.fig'])
-	close(h3); clear h3
-saveas(h4,[fd 'DHVHmscohere-MvFbands-SubjSEM-5to15BL.png'])
-saveas(h4,[fd 'DHVHmscohere-MvFbands-SubjSEM-5to15BL.fig'])
-	close(h4); clear h4
-saveas(h5,[fd 'DHPLmscohere-MvFbands-SubjSEM-5to15BL.png'])
-saveas(h5,[fd 'DHPLmscohere-MvFbands-SubjSEM-5to15BL.fig'])
-	close(h5); clear h5
-saveas(h6,[fd 'VHPLmscohere-MvFbands-SubjSEM-5to15BL.png'])
-saveas(h6,[fd 'VHPLmscohere-MvFbands-SubjSEM-5to15BL.fig'])
-	close(h6); clear h6
+saveas(h1,[fd 'ILDHmscohere-MvFbands-SubjSEM-5to15BL.fig']); legend off
+saveas(h1,[fd 'ILDHmscohere-MvFbands-SubjSEM-5to15BL.png']); close(h1); clear h1
+
+saveas(h2,[fd 'ILVHmscohere-MvFbands-SubjSEM-5to15BL.fig']); legend off	
+saveas(h2,[fd 'ILVHmscohere-MvFbands-SubjSEM-5to15BL.png']); close(h2); clear h2
+
+saveas(h3,[fd 'ILPLmscohere-MvFbands-SubjSEM-5to15BL.fig']); legend off	
+saveas(h3,[fd 'ILPLmscohere-MvFbands-SubjSEM-5to15BL.png']); close(h3); clear h3
+
+saveas(h4,[fd 'DHVHmscohere-MvFbands-SubjSEM-5to15BL.fig']); legend off
+saveas(h4,[fd 'DHVHmscohere-MvFbands-SubjSEM-5to15BL.png']); close(h4); clear h4
+
+saveas(h5,[fd 'DHPLmscohere-MvFbands-SubjSEM-5to15BL.fig']); legend off
+saveas(h5,[fd 'DHPLmscohere-MvFbands-SubjSEM-5to15BL.png']); close(h5); clear h5
+
+saveas(h6,[fd 'VHPLmscohere-MvFbands-SubjSEM-5to15BL.fig']); legend off	
+saveas(h6,[fd 'VHPLmscohere-MvFbands-SubjSEM-5to15BL.png']); close(h6); clear h6
+	
 
 % Save data: Functional f-tests
-fn = 'FunctionalTestStatistics-mscohere_5to15_BL_SexDiffs.mat';
+fn = 'FunctionalTestStatistics-mscohere_5to15_BL_MvF.mat';
 save([root_drIn '5to15' filesep fn],'subjs','*stat','-v7.3')
 disp('Functional test outputs saved!')
 clear fn *stat f
@@ -756,40 +751,36 @@ end
     title('IL - dHPC')
 [H2,ILVHstat] = PlotBoot_mscohereHormones(f,A,Dilvh,Pilvh,Eilvh,Milvh);
     title('IL - vHPC')
-    legend off
 [H3,ILPLstat] = PlotBoot_mscohereHormones(f,A,Dilpl,Pilpl,Eilpl,Milpl);
     title('IL - PrL')
-    legend off
 [H4,DHVHstat] = PlotBoot_mscohereHormones(f,A,Ddhvh,Pdhvh,Edhvh,Mdhvh);
     title('dHPC - vHPC')
-    legend off
 [H5,DHPLstat] = PlotBoot_mscohereHormones(f,A,Ddhpl,Pdhpl,Edhpl,Mdhpl);
     title('dHPC - PrL')
-    legend off
 [H6,VHPLstat] = PlotBoot_mscohereHormones(f,A,Dvhpl,Pvhpl,Evhpl,Mvhpl);
     title('vHPC - PrL')
-    legend off
+    legend('location','southwest')
     
 % Save figures
 % fd = [figdrOut 'Cohereograms\FunctionalAnova\']; %output directory (same as above)
-saveas(H1,[fd 'ILDHmscohere-Estrous-SubjSEM-5to15BL.png'])
-saveas(H1,[fd 'ILDHmscohere-Estrous-SubjSEM-5to15BL.fig'])
-	close(H1); clear H1
-saveas(H2,[fd 'ILVHmscohere-Estrous-SubjSEM-5to15BL.png'])
-saveas(H2,[fd 'ILVHmscohere-Estrous-SubjSEM-5to15BL.fig'])
-	close(H2); clear H2
-saveas(H3,[fd 'ILPLmscohere-Estrous-SubjSEM-5to15BL.png'])
-saveas(H3,[fd 'ILPLmscohere-Estrous-SubjSEM-5to15BL.fig'])
-	close(H3); clear H3
-saveas(H4,[fd 'DHVHmscohere-Estrous-SubjSEM-5to15BL.png'])
-saveas(H4,[fd 'DHVHmscohere-Estrous-SubjSEM-5to15BL.fig'])
-	close(H4); clear H4
-saveas(H5,[fd 'DHPLmscohere-Estrous-SubjSEM-5to15BL.png'])
-saveas(H5,[fd 'DHPLmscohere-Estrous-SubjSEM-5to15BL.fig'])
-	close(H5); clear H5
-saveas(H6,[fd 'VHPLmscohere-Estrous-SubjSEM-5to15BL.png'])
-saveas(H6,[fd 'VHPLmscohere-Estrous-SubjSEM-5to15BL.fig'])
-	close(H6); clear H6
+saveas(H1,[fd 'ILDHmscohere-Estrous-SubjSEM-5to15BL.fig']); legend off
+saveas(H1,[fd 'ILDHmscohere-Estrous-SubjSEM-5to15BL.png']); close(H1); clear H1
+
+saveas(H2,[fd 'ILVHmscohere-Estrous-SubjSEM-5to15BL.fig']); legend off
+saveas(H2,[fd 'ILVHmscohere-Estrous-SubjSEM-5to15BL.png']); close(H2); clear H2
+
+saveas(H3,[fd 'ILPLmscohere-Estrous-SubjSEM-5to15BL.fig']); legend off
+saveas(H3,[fd 'ILPLmscohere-Estrous-SubjSEM-5to15BL.png']); close(H3); clear H3
+
+saveas(H4,[fd 'DHVHmscohere-Estrous-SubjSEM-5to15BL.fig']); legend off
+saveas(H4,[fd 'DHVHmscohere-Estrous-SubjSEM-5to15BL.png']); close(H4); clear H4
+
+saveas(H5,[fd 'DHPLmscohere-Estrous-SubjSEM-5to15BL.fig']); legend off
+saveas(H5,[fd 'DHPLmscohere-Estrous-SubjSEM-5to15BL.png']); close(H5); clear H5
+
+saveas(H6,[fd 'VHPLmscohere-Estrous-SubjSEM-5to15BL.fig']); legend off
+saveas(H6,[fd 'VHPLmscohere-Estrous-SubjSEM-5to15BL.png']); close(H6); clear H6
+
 
 % Plot mscohere/Estrous: Frequency bands of interest
 [h1,ILDHstat] = PlotBoot_mscohereHormonesBands(f,Dildh,Pildh,Eildh,Mildh,ILDHstat,A);
@@ -801,24 +792,23 @@ saveas(H6,[fd 'VHPLmscohere-Estrous-SubjSEM-5to15BL.fig'])
 clear M* 
 
 % Save figures
-saveas(h1,[fd 'ILDHmscohere-EstrousBands-SubjSEM-5to15BL.png'])
-saveas(h1,[fd 'ILDHmscohere-EstrousBands-SubjSEM-5to15BL.fig'])
-	close(h1); clear h1
-saveas(h2,[fd 'ILVHmscohere-EstrousBands-SubjSEM-5to15BL.png'])
-saveas(h2,[fd 'ILVHmscohere-EstrousBands-SubjSEM-5to15BL.fig'])
-	close(h2); clear h2
-saveas(h3,[fd 'ILPLmscohere-EstrousBands-SubjSEM-5to15BL.png'])
-saveas(h3,[fd 'ILPLmscohere-EstrousBands-SubjSEM-5to15BL.fig'])
-	close(h3); clear h3
-saveas(h4,[fd 'DHVHmscohere-EstrousBands-SubjSEM-5to15BL.png'])
-saveas(h4,[fd 'DHVHmscohere-EstrousBands-SubjSEM-5to15BL.fig'])
-	close(h4); clear h4
-saveas(h5,[fd 'DHPLmscohere-EstrousBands-SubjSEM-5to15BL.png'])
-saveas(h5,[fd 'DHPLmscohere-EstrousBands-SubjSEM-5to15BL.fig'])
-	close(h5); clear h5
-saveas(h6,[fd 'VHPLmscohere-EstrousBands-SubjSEM-5to15BL.png'])
-saveas(h6,[fd 'VHPLmscohere-EstrousBands-SubjSEM-5to15BL.fig'])
-	close(h6); clear h6
+saveas(h1,[fd 'ILDHmscohere-EstrousBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h1,[fd 'ILDHmscohere-EstrousBands-SubjSEM-5to15BL.png']); close(h1); clear h1
+
+saveas(h2,[fd 'ILVHmscohere-EstrousBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h2,[fd 'ILVHmscohere-EstrousBands-SubjSEM-5to15BL.png']); close(h2); clear h2
+
+saveas(h3,[fd 'ILPLmscohere-EstrousBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h3,[fd 'ILPLmscohere-EstrousBands-SubjSEM-5to15BL.png']); close(h3); clear h3
+
+saveas(h4,[fd 'DHVHmscohere-EstrousBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h4,[fd 'DHVHmscohere-EstrousBands-SubjSEM-5to15BL.png']); close(h4); clear h4
+
+saveas(h5,[fd 'DHPLmscohere-EstrousBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h5,[fd 'DHPLmscohere-EstrousBands-SubjSEM-5to15BL.png']); close(h5); clear h5
+
+saveas(h6,[fd 'VHPLmscohere-EstrousBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h6,[fd 'VHPLmscohere-EstrousBands-SubjSEM-5to15BL.png']); close(h6); clear h6
 
 % Save data: Functional f-tests
 fn = 'FunctionalTestStatistics-mscohere_5to15_BL_Estrous.mat';
@@ -855,49 +845,43 @@ A = [A; 4; 4; 4; 4];
 % Plot mscohere: Males vs Estrous stages, 0.5-100 Hz
 [H1,ILDHstat] = PlotBoot_mscohereMvHorms(f,A,Dildh,Pildh,Eildh,Mildh);
     title('IL - dHPC')
-    legend off
-    ILDHstat = renameStructField(ILDHstat,'Stage','MvHorms');
+    legend('location','northeast')
 [H2,ILVHstat] = PlotBoot_mscohereMvHorms(f,A,Dilvh,Pilvh,Eilvh,Milvh);
     title('IL - vHPC')
-    legend off
-    ILVHstat = renameStructField(ILVHstat,'Stage','MvHorms');
+    legend('location','northeast')
 [H3,ILPLstat] = PlotBoot_mscohereMvHorms(f,A,Dilpl,Pilpl,Eilpl,Milpl);
     title('IL - PrL')
-    legend off
-    ILPLstat = renameStructField(ILPLstat,'Stage','MvHorms');
+    legend('location','northeast')
 [H4,DHVHstat] = PlotBoot_mscohereMvHorms(f,A,Ddhvh,Pdhvh,Edhvh,Mdhvh);
     title('dHPC - vHPC')
-    legend off
-    DHVHstat = renameStructField(DHVHstat,'Stage','MvHorms');
+    legend('location','northeast')
 [H5,DHPLstat] = PlotBoot_mscohereMvHorms(f,A,Ddhpl,Pdhpl,Edhpl,Mdhpl);
     title('dHPC - PrL')
-    legend off
-    DHPLstat = renameStructField(DHPLstat,'Stage','MvHorms');
+    legend('location','northeast')
 [H6,VHPLstat] = PlotBoot_mscohereMvHorms(f,A,Dvhpl,Pvhpl,Evhpl,Mvhpl);
     title('vHPC - PrL')
-    legend off
-    VHPLstat = renameStructField(VHPLstat,'Stage','MvHorms');
+    legend('location','southwest')
 
 % Save figures
 % fd = [figdrOut 'Cohereograms\FunctionalAnova\']; %output directory (same as above)
-saveas(H1,[fd 'ILDHmscohere-MvHorms-SubjSEM-5to15BL.png'])
-saveas(H1,[fd 'ILDHmscohere-MvHorms-SubjSEM-5to15BL.fig'])
-	close(H1); clear H1
-saveas(H2,[fd 'ILVHmscohere-MvHorms-SubjSEM-5to15BL.png'])
-saveas(H2,[fd 'ILVHmscohere-MvHorms-SubjSEM-5to15BL.fig'])
-	close(H2); clear H2
-saveas(H3,[fd 'ILPLmscohere-MvHorms-SubjSEM-5to15BL.png'])
-saveas(H3,[fd 'ILPLmscohere-MvHorms-SubjSEM-5to15BL.fig'])
-	close(H3); clear H3
-saveas(H4,[fd 'DHVHmscohere-MvHorms-SubjSEM-5to15BL.png'])
-saveas(H4,[fd 'DHVHmscohere-MvHorms-SubjSEM-5to15BL.fig'])
-	close(H4); clear H4
-saveas(H5,[fd 'DHPLmscohere-MvHorms-SubjSEM-5to15BL.png'])
-saveas(H5,[fd 'DHPLmscohere-MvHorms-SubjSEM-5to15BL.fig'])
-	close(H5); clear H5
-saveas(H6,[fd 'VHPLmscohere-MvHorms-SubjSEM-5to15BL.png'])
-saveas(H6,[fd 'VHPLmscohere-MvHorms-SubjSEM-5to15BL.fig'])
-	close(H6); clear H6
+saveas(H1,[fd 'ILDHmscohere-MvHorms-SubjSEM-5to15BL.fig']); legend off
+saveas(H1,[fd 'ILDHmscohere-MvHorms-SubjSEM-5to15BL.png']); close(H1); clear H1
+
+saveas(H2,[fd 'ILVHmscohere-MvHorms-SubjSEM-5to15BL.fig']); legend off
+saveas(H2,[fd 'ILVHmscohere-MvHorms-SubjSEM-5to15BL.png']); close(H2); clear H2
+
+saveas(H3,[fd 'ILPLmscohere-MvHorms-SubjSEM-5to15BL.fig']); legend off
+saveas(H3,[fd 'ILPLmscohere-MvHorms-SubjSEM-5to15BL.png']); close(H3); clear H3
+
+saveas(H4,[fd 'DHVHmscohere-MvHorms-SubjSEM-5to15BL.fig']); legend off
+saveas(H4,[fd 'DHVHmscohere-MvHorms-SubjSEM-5to15BL.png']); close(H4); clear H4
+
+saveas(H5,[fd 'DHPLmscohere-MvHorms-SubjSEM-5to15BL.fig']); legend off
+saveas(H5,[fd 'DHPLmscohere-MvHorms-SubjSEM-5to15BL.png']); close(H5); clear H5
+
+saveas(H6,[fd 'VHPLmscohere-MvHorms-SubjSEM-5to15BL.fig']); legend off
+saveas(H6,[fd 'VHPLmscohere-MvHorms-SubjSEM-5to15BL.png']); close(H6); clear H6
+
 
 % Plot mscohere Males vs Hormones: Frequency bands of interest
 [h1,ILDHstat] = PlotBoot_mscohereMvHormsBands(f,Dildh,Pildh,Eildh,Mildh,ILDHstat,A);
@@ -908,25 +892,25 @@ saveas(H6,[fd 'VHPLmscohere-MvHorms-SubjSEM-5to15BL.fig'])
 [h6,VHPLstat] = PlotBoot_mscohereMvHormsBands(f,Dvhpl,Pvhpl,Evhpl,Mvhpl,VHPLstat,A);
 clear Di* Dd* Dv* E* M* P* A f
 
-    % Save figures
-    saveas(h1,[fd 'ILDHmscohere-MvHormsBands-SubjSEM-5to15BL.png'])
-    saveas(h1,[fd 'ILDHmscohere-MvHormsBands-SubjSEM-5to15BL.fig'])
-        close(h1); clear h1
-    saveas(h2,[fd 'ILVHmscohere-MvHormsBands-SubjSEM-5to15BL.png'])
-    saveas(h2,[fd 'ILVHmscohere-MvHormsBands-SubjSEM-5to15BL.fig'])
-        close(h2); clear h2
-    saveas(h3,[fd 'ILPLmscohere-MvHormsBands-SubjSEM-5to15BL.png'])
-    saveas(h3,[fd 'ILPLmscohere-MvHormsBands-SubjSEM-5to15BL.fig'])
-        close(h3); clear h3
-    saveas(h4,[fd 'DHVHmscohere-MvHormsBands-SubjSEM-5to15BL.png'])
-    saveas(h4,[fd 'DHVHmscohere-MvHormsBands-SubjSEM-5to15BL.fig'])
-        close(h4); clear h4
-    saveas(h5,[fd 'DHPLmscohere-MvHormsBands-SubjSEM-5to15BL.png'])
-    saveas(h5,[fd 'DHPLmscohere-MvHormsBands-SubjSEM-5to15BL.fig'])
-        close(h5); clear h5
-    saveas(h6,[fd 'VHPLmscohere-MvHormsBands-SubjSEM-5to15BL.png'])
-    saveas(h6,[fd 'VHPLmscohere-MvHormsBands-SubjSEM-5to15BL.fig'])
-        close(h6); clear h6
+% Save figures
+saveas(h1,[fd 'ILDHmscohere-MvHormsBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h1,[fd 'ILDHmscohere-MvHormsBands-SubjSEM-5to15BL.png']); close(h1); clear h1
+
+saveas(h2,[fd 'ILVHmscohere-MvHormsBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h2,[fd 'ILVHmscohere-MvHormsBands-SubjSEM-5to15BL.png']); close(h2); clear h2
+
+saveas(h3,[fd 'ILPLmscohere-MvHormsBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h3,[fd 'ILPLmscohere-MvHormsBands-SubjSEM-5to15BL.png']); close(h3); clear h3
+
+saveas(h4,[fd 'DHVHmscohere-MvHormsBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h4,[fd 'DHVHmscohere-MvHormsBands-SubjSEM-5to15BL.png']); close(h4); clear h4
+
+saveas(h5,[fd 'DHPLmscohere-MvHormsBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h5,[fd 'DHPLmscohere-MvHormsBands-SubjSEM-5to15BL.png']); close(h5); clear h5
+
+saveas(h6,[fd 'VHPLmscohere-MvHormsBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h6,[fd 'VHPLmscohere-MvHormsBands-SubjSEM-5to15BL.png']); close(h6); clear h6
+
 
 % Save data: Functional f-tests
 fn = 'FunctionalTestStatistics-mscohere_5to15_BL_MvHorms.mat';

@@ -21,21 +21,16 @@
 function [h,stat] = PlotBoot_PowSpecMvHormsBands(f,Dx,Px,Ex,Mx,stat,A)
 %% Setup
 
-% Params for ksampL2.m
+% Params for ksampL2.m & twosampF.m
 method = 1;
 biasflag = 1;
+parflag = 1;
 
 % Color maps
 Mcol = [0         0.2980    0.2980]; %male
 Dcol = [0.6980    0.5137         0]; %diestrus female
 Pcol = [0.3490    0.0392         0]; %proestrus female
 Ecol = [1.0000    0.8863    0.2118]; %estrus female
-
-% Transparency of histogram bars, specified as a scalar value between 0 and 1 inclusive
-Mfa = 0.72; %male
-Dfa = 0.38; %diestrus
-Pfa = 1; %proestrus
-Efa = 0.58; %estrus
 
 %% Designate frequency bands
 
@@ -60,6 +55,8 @@ b2 = knnsearch(f,30);
 beta = f(b1:b2);
 
 %% Plot frequency bands of interest: Delta, Theta, Gamma, Beta
+    %Plot order: Pro,Male,Est,Diest
+    
 [h] = figure('units','normalized','position',[0.2,0,0.597222222222222,1]);
 
 %% Delta
@@ -70,6 +67,10 @@ p2.mainLine.LineWidth = 3;
 p2.mainLine.DisplayName = 'Proestrus';
 hold on
 
+p4 = shadedErrorBar(delta,pow2db(Mx(:,d1:d2)),{@mean,@(x) std(pow2db(Mx(:,d1:d2)))/sqrt(size(Mx,1))},'lineprops',{'color',Mcol});
+p4.mainLine.LineWidth = 3;
+p4.mainLine.DisplayName = 'Male';
+
 p3 = shadedErrorBar(delta,pow2db(Ex(:,d1:d2)),{@mean,@(x) std(pow2db(Ex(:,d1:d2)))/sqrt(size(Ex,1))},'lineprops',{'color',Ecol});
 p3.mainLine.LineWidth = 3;
 p3.mainLine.DisplayName = 'Estrus';
@@ -78,17 +79,13 @@ p1 = shadedErrorBar(delta,pow2db(Dx(:,d1:d2)),{@mean,@(x) std(pow2db(Dx(:,d1:d2)
 p1.mainLine.LineWidth = 3;
 p1.mainLine.DisplayName = 'Diestrus';
 
-p4 = shadedErrorBar(delta,pow2db(Mx(:,d1:d2)),{@mean,@(x) std(pow2db(Mx(:,d1:d2)))/sqrt(size(Mx,1))},'lineprops',{'color',Mcol});
-p4.mainLine.LineWidth = 3;
-p4.mainLine.DisplayName = 'Male';
-
 axis square
 xlim([0.5 4.5])
 xticks(1:4)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('Delta band')
-legend([p4.mainLine, p2.mainLine, p1.mainLine, p3.mainLine],{'Male','Proestrus','Diestrus','Estrus'})
+legend([p4.mainLine, p2.mainLine, p1.mainLine, p3.mainLine],{'Male','Proestrus','Diestrus','Estrus'},'edgecolor',[1 1 1])
 set(gca,'fontsize',14)
 box off
 set(gca,'TitleFontSizeMultiplier',1.5)
@@ -97,27 +94,31 @@ set(gca,'TitleFontSizeMultiplier',1.5)
 y1 = [Dx(:,d1:d2); Px(:,d1:d2); Ex(:,d1:d2); Mx(:,d1:d2)];
 yy = [A, y1];
 [stat.delta]=ksampL2(yy,method,biasflag);
+[stat.deltaMvD] = twosampF(Dx(:,d1:d2),Mx(:,d1:d2),method,parflag); %posthoc: Diest v Male
+[stat.deltaMvP] = twosampF(Px(:,d1:d2),Mx(:,d1:d2),method,parflag); %posthoc: Proest v Male
+[stat.deltaMvE] = twosampF(Ex(:,d1:d2),Mx(:,d1:d2),method,parflag); %posthoc: Est v Male
 clear y1 yy
 
 
 %% Theta
 subplot(222)
-p3 = shadedErrorBar(theta,pow2db(Ex(:,t1:t2)),{@mean,@(x) std(pow2db(Ex(:,t1:t2)))/sqrt(size(Ex,1))},'lineprops',{'color',estyel});
-p3.mainLine.LineWidth = 3;
-p3.mainLine.DisplayName = 'Estrus';
-hold on
 
-p2 = shadedErrorBar(theta,pow2db(Px(:,t1:t2)),{@mean,@(x) std(pow2db(Px(:,t1:t2)))/sqrt(size(Px,1))},'lineprops',{'color',propurp}); 
+p2 = shadedErrorBar(theta,pow2db(Px(:,t1:t2)),{@mean,@(x) std(pow2db(Px(:,t1:t2)))/sqrt(size(Px,1))},'lineprops',{'color',Pcol}); 
 p2.mainLine.LineWidth = 3;
 p2.mainLine.DisplayName = 'Proestrus';
+hold on
 
-p1 = shadedErrorBar(theta,pow2db(Dx(:,t1:t2)),{@mean,@(x) std(pow2db(Dx(:,t1:t2)))/sqrt(size(Dx,1))},'lineprops',{'color',digreen}); 
+p4 = shadedErrorBar(theta,pow2db(Mx(:,t1:t2)),{@mean,@(x) std(pow2db(Mx(:,t1:t2)))/sqrt(size(Mx,1))},'lineprops',{'color',Mcol}); 
+p4.mainLine.LineWidth = 3;
+p4.mainLine.DisplayName = 'Male';
+
+p3 = shadedErrorBar(theta,pow2db(Ex(:,t1:t2)),{@mean,@(x) std(pow2db(Ex(:,t1:t2)))/sqrt(size(Ex,1))},'lineprops',{'color',Ecol});
+p3.mainLine.LineWidth = 3;
+p3.mainLine.DisplayName = 'Estrus';
+
+p1 = shadedErrorBar(theta,pow2db(Dx(:,t1:t2)),{@mean,@(x) std(pow2db(Dx(:,t1:t2)))/sqrt(size(Dx,1))},'lineprops',{'color',Dcol}); 
 p1.mainLine.LineWidth = 3;
 p1.mainLine.DisplayName = 'Diestrus';
-
-p4 = shadedErrorBar(theta,pow2db(Mx(:,t1:t2)),{@mean,@(x) std(pow2db(Mx(:,t1:t2)))/sqrt(size(Mx,1))},'lineprops',{'color',maleblue}); 
-p4.mainLine.LineWidth = 3;
-p4.mainLine.DisplayName = 'Metestrus';
 
 axis square
 xlim([3.5 12.5])
@@ -135,26 +136,29 @@ set(gca,'TitleFontSizeMultiplier',1.5)
 y1 = [Dx(:,t1:t2); Px(:,t1:t2); Ex(:,t1:t2); Mx(:,t1:t2)];
 yy = [A, y1];
 [stat.theta]=ksampL2(yy,method,biasflag);
+[stat.thetaMvD] = twosampF(Dx(:,t1:t2),Mx(:,t1:t2),method,parflag); %posthoc: Diest v Male
+[stat.thetaMvP] = twosampF(Px(:,t1:t2),Mx(:,t1:t2),method,parflag); %posthoc: Proest v Male
+[stat.thetaMvE] = twosampF(Ex(:,t1:t2),Mx(:,t1:t2),method,parflag); %posthoc: Est v Male
 clear y1 yy
 
 %% Beta
 subplot(223)
-p3 = shadedErrorBar(beta,pow2db(Ex(:,b1:b2)),{@mean,@(x) std(pow2db(Ex(:,b1:b2)))/sqrt(size(Ex,1))},'lineprops',{'color',estyel});
-p3.mainLine.LineWidth = 3;
-p3.mainLine.DisplayName = 'Estrus';
-hold on
-
-p2 = shadedErrorBar(beta,pow2db(Px(:,b1:b2)),{@mean,@(x) std(pow2db(Px(:,b1:b2)))/sqrt(size(Px,1))},'lineprops',{'color',propurp}); 
+p2 = shadedErrorBar(beta,pow2db(Px(:,b1:b2)),{@mean,@(x) std(pow2db(Px(:,b1:b2)))/sqrt(size(Px,1))},'lineprops',{'color',Pcol}); 
 p2.mainLine.LineWidth = 3;
 p2.mainLine.DisplayName = 'Proestrus';
+hold on
 
-p1 = shadedErrorBar(beta,pow2db(Dx(:,b1:b2)),{@mean,@(x) std(pow2db(Dx(:,b1:b2)))/sqrt(size(Dx,1))},'lineprops',{'color',digreen}); 
-p1.mainLine.LineWidth = 3;
-p1.mainLine.DisplayName = 'Diestrus';
-
-p4 = shadedErrorBar(beta,pow2db(Mx(:,b1:b2)),{@mean,@(x) std(pow2db(Mx(:,b1:b2)))/sqrt(size(Mx,1))},'lineprops',{'color',maleblue});
+p4 = shadedErrorBar(beta,pow2db(Mx(:,b1:b2)),{@mean,@(x) std(pow2db(Mx(:,b1:b2)))/sqrt(size(Mx,1))},'lineprops',{'color',Mcol});
 p4.mainLine.LineWidth = 3;
 p4.mainLine.DisplayName = 'Male';
+
+p3 = shadedErrorBar(beta,pow2db(Ex(:,b1:b2)),{@mean,@(x) std(pow2db(Ex(:,b1:b2)))/sqrt(size(Ex,1))},'lineprops',{'color',Ecol});
+p3.mainLine.LineWidth = 3;
+p3.mainLine.DisplayName = 'Estrus';
+
+p1 = shadedErrorBar(beta,pow2db(Dx(:,b1:b2)),{@mean,@(x) std(pow2db(Dx(:,b1:b2)))/sqrt(size(Dx,1))},'lineprops',{'color',Dcol}); 
+p1.mainLine.LineWidth = 3;
+p1.mainLine.DisplayName = 'Diestrus';
 
 axis square
 xlim([14.5 30.5])
@@ -171,26 +175,29 @@ set(gca,'TitleFontSizeMultiplier',1.5)
 y1 = [Dx(:,b1:b2); Px(:,b1:b2); Ex(:,b1:b2); Mx(:,b1:b2)];
 yy = [A, y1];
 [stat.beta]=ksampL2(yy,method,biasflag);
+[stat.betaMvD] = twosampF(Dx(:,b1:b2),Mx(:,b1:b2),method,parflag); %posthoc: Diest v Male
+[stat.betaMvP] = twosampF(Px(:,b1:b2),Mx(:,b1:b2),method,parflag); %posthoc: Proest v Male
+[stat.betaMvE] = twosampF(Ex(:,b1:b2),Mx(:,b1:b2),method,parflag); %posthoc: Est v Male
 clear y1 yy
 
-%% Gamma (broadband) 
+%% Gamma
 subplot(224)
-p3 = shadedErrorBar(gamma,pow2db(Ex(:,g1:g2)),{@mean,@(x) std(pow2db(Ex(:,g1:g2)))/sqrt(size(Ex,1))},'lineprops',{'color',estyel});
-p3.mainLine.LineWidth = 3;
-p3.mainLine.DisplayName = 'Estrus';
-hold on
-
-p2 = shadedErrorBar(gamma,pow2db(Px(:,g1:g2)),{@mean,@(x) std(pow2db(Px(:,g1:g2)))/sqrt(size(Px,1))},'lineprops',{'color',propurp}); 
+p2 = shadedErrorBar(gamma,pow2db(Px(:,g1:g2)),{@mean,@(x) std(pow2db(Px(:,g1:g2)))/sqrt(size(Px,1))},'lineprops',{'color',Pcol}); 
 p2.mainLine.LineWidth = 3;
 p2.mainLine.DisplayName = 'Proestrus';
+hold on
 
-p1 = shadedErrorBar(gamma,pow2db(Dx(:,g1:g2)),{@mean,@(x) std(pow2db(Dx(:,g1:g2)))/sqrt(size(Dx,1))},'lineprops',{'color',digreen}); 
-p1.mainLine.LineWidth = 3;
-p1.mainLine.DisplayName = 'Diestrus';
-
-p4 = shadedErrorBar(gamma,pow2db(Mx(:,g1:g2)),{@mean,@(x) std(pow2db(Mx(:,g1:g2)))/sqrt(size(Mx,1))},'lineprops',{'color',maleblue});
+p4 = shadedErrorBar(gamma,pow2db(Mx(:,g1:g2)),{@mean,@(x) std(pow2db(Mx(:,g1:g2)))/sqrt(size(Mx,1))},'lineprops',{'color',Mcol});
 p4.mainLine.LineWidth = 3;
 p4.mainLine.DisplayName = 'Male';
+
+p3 = shadedErrorBar(gamma,pow2db(Ex(:,g1:g2)),{@mean,@(x) std(pow2db(Ex(:,g1:g2)))/sqrt(size(Ex,1))},'lineprops',{'color',Ecol});
+p3.mainLine.LineWidth = 3;
+p3.mainLine.DisplayName = 'Estrus';
+
+p1 = shadedErrorBar(gamma,pow2db(Dx(:,g1:g2)),{@mean,@(x) std(pow2db(Dx(:,g1:g2)))/sqrt(size(Dx,1))},'lineprops',{'color',Dcol}); 
+p1.mainLine.LineWidth = 3;
+p1.mainLine.DisplayName = 'Diestrus';
 
 axis square
 xlim([25 85])
@@ -207,8 +214,9 @@ set(gca,'TitleFontSizeMultiplier',1.5)
 y1 = [Dx(:,g1:g2); Px(:,g1:g2); Ex(:,g1:g2); Mx(:,g1:g2)];
 yy = [A, y1];
 [stat.gamma]=ksampL2(yy,method,biasflag);
+[stat.gammaMvD] = twosampF(Dx(:,g1:g2),Mx(:,g1:g2),method,parflag); %posthoc: Diest v Male
+[stat.gammaMvP] = twosampF(Px(:,g1:g2),Mx(:,g1:g2),method,parflag); %posthoc: Proest v Male
+[stat.gammaMvE] = twosampF(Ex(:,g1:g2),Mx(:,g1:g2),method,parflag); %posthoc: Est v Male
 clear y1 yy
 
-
 end %function
-

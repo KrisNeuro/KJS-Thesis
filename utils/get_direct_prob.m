@@ -1,4 +1,6 @@
-function [p_test, p_joint_matrix] = get_direct_prob(sample1, sample2)
+%get_direct_prob
+% [p_test, p2_test, p_joint_matrix] = get_direct_prob(sample1, sample2)
+%
 % get_direct_prob Returns the direct probability of items from sample2 being
 %   greater than or equal to those from sample1.
 %    Sample1 and Sample2 are two bootstrapped samples and this function
@@ -6,8 +8,9 @@ function [p_test, p_joint_matrix] = get_direct_prob(sample1, sample2)
 %    than or equal to those from sample1. Since the bootstrapped samples are
 %    themselves posterior distributions, this is a way of computing a
 %    Bayesian probability. The joint matrix can also be returned to compute
-%    directly upon.
-
+%    directly upon. p2_test is the 2-tailed pvalue derived from the
+%    unidirectional alternative hypothesis pboot value.
+function [p_test, p2_test, p_joint_matrix] = get_direct_prob(sample1, sample2)
 %First, we want to find the ranges over which we need to build the
 %probability distributions.
     joint_low_val = min([min(sample1),min(sample2)]);
@@ -34,11 +37,12 @@ function [p_test, p_joint_matrix] = get_direct_prob(sample1, sample2)
             
     %Normalize the joint probability matrix:
     p_joint_matrix = p_joint_matrix/sum(p_joint_matrix,'ALL');
-    % p_joint_matrix = p_joint_matrix/sum(p_joint_matrix(:));
     
-    %Get the volume of the joint probability matrix in the upper triangle:
+    %Get the volume of the joint probability matrix in the upper triangle (pboot)
+      %1-direction alternative hypothesis to test if Sample2 > Sample1 (support of Ha)
     p_test = sum(triu(p_joint_matrix),'ALL');
-    %temp =  triu(fliplr(p_joint_matrix));
-    %p_test = sum(temp(:));
+
+    %Get 2-tailed p-value to test if groups are different or not (support of H0)
+    p2_test = 2*min(p_test, 1-p_test);
 
 end %fxn

@@ -33,8 +33,8 @@ method = 1;
 parflag = 1;
 
 % Color maps
-maleblue = [0.171931,0.744122,0.988253]; % MALES
-propurp = [0.490079,0.06569,0.568432]; %FEMALES
+Mcol = [0         0.2980    0.2980]; %teal
+Fcol = [0.9529    0.9098    0.0824]; %yellow
 
 %% Designate frequency bands
 if size(f,1)<size(f,2)
@@ -66,24 +66,24 @@ beta = f(b1:b2);
 %% Delta
 subplot(221)
     % Male
-    p2 = shadedErrorBar(delta,pow2db(Mx(:,d1:d2)),{@mean,@(f) std(pow2db(Mx(:,d1:d2)))/sqrt(size(Mx,1))},'lineprops',{'color',maleblue});
+    p2 = shadedErrorBar(delta,pow2db(Mx(:,d1:d2)),{@mean,@(x) std(pow2db(Mx(:,d1:d2)))/sqrt(size(Mx,1))},'lineprops',{'color',Mcol});
     p2.mainLine.LineWidth = 3;
     p2.mainLine.DisplayName = 'Males';
 hold on
     % Female
-    p3 = shadedErrorBar(delta,pow2db(Fx(:,d1:d2)),{@mean,@(f) std(pow2db(Fx(:,d1:d2)))/sqrt(size(Fx,1))},'lineprops',{'color',propurp});
+    p3 = shadedErrorBar(delta,pow2db(Fx(:,d1:d2)),{@mean,@(x) std(pow2db(Fx(:,d1:d2)))/sqrt(size(Fx,1))},'lineprops',{'color',Fcol});
     p3.mainLine.LineWidth = 3;
     p3.mainLine.DisplayName = 'Females - All stages';
     
     axis square
     xlim([0.5 4.5])
     xticks(1:4)
-    set(gca,'fontsize',14)
+    set(gca,'fontsize',16)
     xlabel('Frequency (Hz)')
     ylabel('Power (dB)')
     title('Delta band')
     box off
-    set(gca,'TitleFontSizeMultiplier',1.5)
+    set(gca,'TitleFontSizeMultiplier',2)
     
     % twosampF: Delta
     [stat.delta] = twosampF(Fx(:,d1:d2),Mx(:,d1:d2),method,parflag);
@@ -92,26 +92,26 @@ hold on
 %% Theta
 subplot(222)
     % Male
-    p2 = shadedErrorBar(theta,pow2db(Mx(:,t1:t2)),{@mean,@(f) std(pow2db(Mx(:,t1:t2)))/sqrt(size(Mx,1))},'lineprops',{'color',maleblue});
+    p2 = shadedErrorBar(theta,pow2db(Mx(:,t1:t2)),{@mean,@(x) std(pow2db(Mx(:,t1:t2)))/sqrt(size(Mx,1))},'lineprops',{'color',Mcol});
     p2.mainLine.LineWidth = 3;
     p2.mainLine.DisplayName = 'Males';
 hold on
     % Female
-    p3 = shadedErrorBar(theta,pow2db(Fx(:,t1:t2)),{@mean,@(f) std(pow2db(Fx(:,t1:t2)))/sqrt(size(Fx,1))},'lineprops',{'color',propurp});
+    p3 = shadedErrorBar(theta,pow2db(Fx(:,t1:t2)),{@mean,@(x) std(pow2db(Fx(:,t1:t2)))/sqrt(size(Fx,1))},'lineprops',{'color',Fcol});
     p3.mainLine.LineWidth = 3;
     p3.mainLine.DisplayName = 'Females - All stages';
     
     axis square
     xlim([3.5 12.5])
     xticks(4:12)
-    set(gca,'fontsize',14)
+    set(gca,'fontsize',16)
     xlabel('Frequency (Hz)')
     ylabel('Power (dB)')
     title('Theta band')
     legend([p2.mainLine, p3.mainLine],{'Males','Females'})
     legend('location','southwest')
     box off
-    set(gca,'TitleFontSizeMultiplier',1.5)
+    set(gca,'TitleFontSizeMultiplier',2)
     
     % twosampF: Theta
     [stat.theta] = twosampF(Fx(:,t1:t2),Mx(:,t1:t2),method,parflag);
@@ -119,24 +119,24 @@ hold on
 %% Beta
 subplot(223)
     % Male
-    p2 = shadedErrorBar(beta,pow2db(Mx(:,b1:b2)),{@mean,@(f) std(pow2db(Mx(:,b1:b2)))/sqrt(size(Mx,1))},'lineprops',{'color',maleblue});
+    p2 = shadedErrorBar(beta,pow2db(Mx(:,b1:b2)),{@mean,@(x) std(pow2db(Mx(:,b1:b2)))/sqrt(size(Mx,1))},'lineprops',{'color',Mcol});
     p2.mainLine.LineWidth = 3;
     p2.mainLine.DisplayName = 'Males';
 hold on
     % Female
-    p3 = shadedErrorBar(beta,pow2db(Fx(:,b1:b2)),{@mean,@(f) std(pow2db(Fx(:,b1:b2)))/sqrt(size(Fx,1))},'lineprops',{'color',propurp});
+    p3 = shadedErrorBar(beta,pow2db(Fx(:,b1:b2)),{@mean,@(x) std(pow2db(Fx(:,b1:b2)))/sqrt(size(Fx,1))},'lineprops',{'color',Fcol});
     p3.mainLine.LineWidth = 3;
     p3.mainLine.DisplayName = 'Females - All stages';
     
     axis square
-    xlim([14.5 30.5])
+    xlim([16.5 30.5])
     xticks(15:5:30)
-    set(gca,'fontsize',14)
+    set(gca,'fontsize',16)
     xlabel('Frequency (Hz)')
     ylabel('Power (dB)')
     title('Beta band')
     box off
-    set(gca,'TitleFontSizeMultiplier',1.5)
+    set(gca,'TitleFontSizeMultiplier',2)
     
     % twosampF: Beta
     [stat.beta] = twosampF(Fx(:,b1:b2),Mx(:,b1:b2),method,parflag);
@@ -145,24 +145,24 @@ hold on
 %% Gamma (broadband) 
 subplot(224)
     % Male
-    p2 = shadedErrorBar(gamma,pow2db(Mx(:,g1:g2)),{@mean,@(f) std(pow2db(Mx(:,g1:g2)))/sqrt(size(Mx,1))},'lineprops',{'color',maleblue});
+    p2 = shadedErrorBar(gamma,pow2db(Mx(:,g1:g2)),{@mean,@(x) std(pow2db(Mx(:,g1:g2)))/sqrt(size(Mx,1))},'lineprops',{'color',Mcol});
     p2.mainLine.LineWidth = 3;
     p2.mainLine.DisplayName = 'Males';
 hold on
     % Female
-    p3 = shadedErrorBar(gamma,pow2db(Fx(:,g1:g2)),{@mean,@(f) std(pow2db(Fx(:,g1:g2)))/sqrt(size(Fx,1))},'lineprops',{'color',propurp});
+    p3 = shadedErrorBar(gamma,pow2db(Fx(:,g1:g2)),{@mean,@(x) std(pow2db(Fx(:,g1:g2)))/sqrt(size(Fx,1))},'lineprops',{'color',Fcol});
     p3.mainLine.LineWidth = 3;
     p3.mainLine.DisplayName = 'Females - All stages';
     
     axis square
     xlim([25 85])
     xticks(30:10:80)
-    set(gca,'fontsize',14)
+    set(gca,'fontsize',16)
     xlabel('Frequency (Hz)')
     ylabel('Power (dB)')
     title('Broadband gamma')
     box off
-    set(gca,'TitleFontSizeMultiplier',1.5)
+    set(gca,'TitleFontSizeMultiplier',2)
     
     % twosampF: Gamma
     [stat.gamma] = twosampF(Fx(:,g1:g2),Mx(:,g1:g2),method,parflag);

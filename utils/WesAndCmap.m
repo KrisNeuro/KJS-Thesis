@@ -74,6 +74,28 @@ Efa = 0.58; %estrus
 
 % *****************************************************************************
 
+% Male & Female color palettes
+ % RGB
+    % Mcol = [0 76 76]/255; %male
+    % Fcol = [243 232 21]/255; %female - yellow
+    % Fcol = [99 72 138]/255; %female - light purple
+ % MATLAB
+Mcol = [0         0.2980    0.2980]; %teal
+Fcol = [0.9529    0.9098    0.0824]; %yellow
+% Fcol = [0.3882    0.2824    0.5412]; %light purple
+
+% Transparency ('FaceAlpha') of histogram bars, specified as a scalar value between 0 and 1 inclusive
+Mfa = 0.72; %male - teal
+Ffa = 0.75;  %female - yellow
+% Ffa = 0.80; %female - light purple
+
+% Metestrus females - orange
+% Metcol = [220 161 14]/255; %RGB
+Metcol = [0.8627    0.6314    0.0549]; %metestrus female
+Metfa = 0.89; %transparency value
+
+% *****************************************************************************
+
 %% colorcet color palettes
   % used in draft figures
 %fempurp = colorcet('L8'); %linear blue magenta yellow

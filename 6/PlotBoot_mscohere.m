@@ -23,18 +23,18 @@ method = 1;
 parflag = 1;
 
 % Color maps
-maleblue = [0.1719    0.7441    0.9883]; % MALES
-propurp = [0.4901    0.0657    0.5684]; %FEMALES
+Mcol = [0         0.2980    0.2980]; %teal
+Fcol = [0.9529    0.9098    0.0824]; %yellow
 
 %% Plot mscohere
 H1 = figure('units','normalized','outerposition',[0 0 1 1]);
-% p2 = shadedErrorBar(f,Mildh,{@mean,@std},'lineprops',{'color',maleblue});
-p2 = shadedErrorBar(f,Mx,{@mean,@(x) std(Mx)/sqrt(size(Mx,1))},'lineprops',{'color',maleblue}); %subject-collapsed
+% p2 = shadedErrorBar(f,Mildh,{@mean,@std},'lineprops',{'color',Mcol});
+p2 = shadedErrorBar(f,Mx,{@mean,@(x) std(Mx)/sqrt(size(Mx,1))},'lineprops',{'color',Mcol}); %subject-collapsed
 p2.mainLine.LineWidth = 3;
 p2.mainLine.DisplayName = 'Male';
 hold on
-% p1 = shadedErrorBar(f,Fildh,{@mean,@std},'lineprops',{'color',propurp});
-p1 = shadedErrorBar(f,Fx,{@mean,@(x) std(Fx)/sqrt(size(Fx,1))},'lineprops',{'color',propurp}); 
+% p1 = shadedErrorBar(f,Fildh,{@mean,@std},'lineprops',{'color',Fcol});
+p1 = shadedErrorBar(f,Fx,{@mean,@(x) std(Fx)/sqrt(size(Fx,1))},'lineprops',{'color',Fcol}); 
 p1.mainLine.LineWidth = 3;
 p1.mainLine.DisplayName = 'Female';
 axis square
