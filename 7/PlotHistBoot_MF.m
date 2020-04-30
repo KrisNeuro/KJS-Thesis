@@ -1,6 +1,5 @@
 function [Ax] = PlotHistBoot_MF(ax,Mx_boot,Fx_boot)
 % [Ax] = PlotHistBoot_MF(ax,Mx_boot,Fx_boot)
-% [Ax] = PlotHistBoot_Estrous(ax,Dx_boot,Px_boot,Ex_boot)
 % 
 % INPUTS:
 %   - ax        gca
@@ -25,6 +24,8 @@ a2 = histogram(ax,Mx_boot,'normalization','probability','EdgeColor','none','NumB
 box off
 axis square
 legend Female Male
+legend('boxoff')
+ylabel('probability')
 set(gca,'fontsize',20,'titlefontsizemultiplier',2)
 Ax=gca;
 end %function

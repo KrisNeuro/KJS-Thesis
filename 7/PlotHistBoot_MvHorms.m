@@ -33,7 +33,8 @@ a2 = histogram(ax,Dx_boot,'normalization','probability','EdgeColor','none','NumB
 box off
 axis square
 legend([a1 a3 a2 a4],{'Male' 'Proestrus' 'Diestrus' 'Estrus'})
+legend('boxoff')
+ylabel('probability')
 set(gca,'fontsize',20,'titlefontsizemultiplier',2)
 Ax=gca;
 end 
-
