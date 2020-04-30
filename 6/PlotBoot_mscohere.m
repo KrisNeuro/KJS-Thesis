@@ -46,6 +46,7 @@ xlabel('Frequency (Hz)')
 ylabel('Magnitude-squared Coherence')
 legend([p1.mainLine, p2.mainLine],{'Female','Male'})
 legend('location','southwest')
+legend('boxoff')
 set(gca,'fontsize',26)
 box off
 set(gca,'TitleFontSizeMultiplier',1.5)
