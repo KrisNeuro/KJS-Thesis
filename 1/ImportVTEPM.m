@@ -1,4 +1,4 @@
-%% ImportVTEPM.m 
+%ImportVTEPM
 % imports EPM Video Tracker file in drIn
 
 % INPUTS:
@@ -21,24 +21,6 @@
 % KJS edit 2019-12-20: Re-organize, added upsampling to 2kHz portion like ImportVTBL
 %
 function [pos,ExpKeys] = ImportVTEPM(drInvid,sessID,subjID,eegtsec,Fs)
-if ~exist('LoadPos2.m','file')
-    addpath(uigetdir(pwd,'Select file path containing LoadPos2.m'))
-end
-if ~exist('getd.m','file')
-    addpath(uigetdir(pwd,'Select file path containing getd.m  (util)'))
-end
-if ~exist('MakeCoord.m','file')
-    addpath(uigetdir(pwd,'Select file path containing MakeCoord.m  (linearize)'))
-end
-if ~exist('EPMPosConKJS.m','file')
-    addpath(uigetdir(pwd,'Select file path containing EPMPosConKJS.m'))
-end
-if ~exist('LinearVelocity.m','file')
-    a = uigetdir(pwd,'Select file path containing LinearVelocity.m  (\Analyses)');
-    addpath(a)
-    addpath([a(1:end-8) 'General']) % contains Diff, used in LinearVelocity
-    clear a
-end
 
 tic; 	% start timer
 
@@ -68,10 +50,8 @@ toc;	%end VT import timer
 	% position data is accessed using the function getd()
 	% if you want the x data points, x = getd(pos,'x');
 figure;
-	plot(getd(pos,'x'),getd(pos,'y'),'.','Color',[0.7 0.7 0.7],...
-        'MarkerSize',4); 
-	xlabel('x data'); 
-	ylabel('y data');
+	plot(getd(pos,'x'),getd(pos,'y'),'.','Color',[0.7 0.7 0.7],'MarkerSize',4); 
+	xlabel('x data'); ylabel('y data');
     axis square;
 	title('X-Y data; press any key to continue');
 	pause;	close;

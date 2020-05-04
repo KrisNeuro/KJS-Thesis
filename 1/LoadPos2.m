@@ -1,5 +1,6 @@
+%LoadPos2
 function pos_tsd = LoadPos2(cfg_in)
-% pos_tsd = LoadPos(cfg)
+% pos_tsd = LoadPos2(cfg)
 %
 % Wrapper function for loading Neuralynx .nvt file
 %

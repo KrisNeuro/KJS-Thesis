@@ -45,9 +45,9 @@ function [eeg, sFreq, ts] = ReadCSC_TF_tsd(fname, start_ts, end_ts, output_sFreq
 
 
 if nargin >= 3
-    [ts,csc,sFreq] = ReadCSC_TF(fname,start_ts, end_ts);  %  timestamps ts are in 0.1 milliseconds units!!!!!
+    [ts,csc,~] = ReadCSC_TF(fname,start_ts, end_ts);  %  timestamps ts are in 0.1 milliseconds units!!!!!
 elseif nargin == 1
-    [ts,csc,sFreq] = ReadCSC_TF(fname);  %  timestamps ts are in 0.1 milliseconds units!!!!!
+    [ts,csc,~] = ReadCSC_TF(fname);  %  timestamps ts are in 0.1 milliseconds units!!!!!
 elseif nargin == 2
     error('Invalid number of inputs')
 end

@@ -2,14 +2,14 @@
 % Imports and pre-cleans CSC files from NLX format from drIn.
 % Also filters for theta band and does power analysis on the theta band.
 %
-% CALLS UPON:
+% CALLS FUNCTIONS:
+% - EndTime.m
 % - NLXNameCheck.m
-% - ReadCSC_TF_tsd.m
-% - Data.m
-% - Range.m
-% - removePLI.m     (source: https://github.com/mrezak/removePLI)
 % - PowerEnvelope.m
-% - StartTime.m, EndTime.m
+% - ReadCSC_TF_tsd.m
+% - removePLI.m     (source: https://github.com/mrezak/removePLI)
+% - StartTime.m
+% - tsd.m
 % 
 % OUTPUTS:
 %   - AllDat        Timeseries of pre-processed data for each (16) channel
@@ -22,6 +22,7 @@
 % 
 function [EEG,thetadata,AllDat,Fs]= ImportCSC(drIn)
 %% Setup
+AllDat = zeros(1200001,16); %preallocate output space
 
 % Ensure drIn ends with a file separator
 if ~strcmp(drIn(end),filesep)
@@ -51,9 +52,10 @@ for i=1:length(list)    %loop thru channels (1-16)
     ch = fileName(1:5);
     %read CSC into tsd object 'eeg'
         disp('Reading CSC data...');
-        [eeg, sFreq, ts] = ReadCSC_TF_tsd([drIn fileName]); 
-        s = Data(eeg);	%samples
-        t = Range(eeg);	%timestamps
+%         [eeg, sFreq, ts] = ReadCSC_TF_tsd([drIn fileName]); 
+        [eeg, sFreq, ~] = ReadCSC_TF_tsd([drIn fileName]); 
+        s = eeg.data;	%samples
+        t = eeg.t;	%timestamps
         
     %% Highpass filter (cheby1)
         lowlimit = 0.5;
@@ -91,13 +93,13 @@ for i=1:length(list)    %loop thru channels (1-16)
     Fs = sFreq/16; %reduced sampling rate
     clear sFreq
 
-%% Epoch to 10 mins (12*10^5 points)
-if length(t)>1200001
-    trim2 = 12*10^5; %desired length (in 2kHz Fs points)
-    t = t(end-trim2:end);
-    F = F(end-trim2:end);
-    clear trim2
-end
+%% Epoch to 10 mins (600 sec * 2kHz = 12*10^5 points)
+    if length(t)>1200001
+        trim2 = 12*10^5; %desired length (in 2kHz Fs points)
+        t = t(end-trim2:end);
+        F = F(end-trim2:end);
+        clear trim2
+    end
       
     %% Filter for theta
     binsize_sec = 0.4; %size of timebins in which to compute avg. theta power, in seconds
@@ -146,9 +148,9 @@ end
     disp('Power env and interp ok.');
 
 
-% Place data in final output locations
-EEG.(ch) = F;
-AllDat(:,i) = F;
+    % Place data in final output locations
+    EEG.(ch) = F;
+    AllDat(:,i) = F;
 
 end	% end for loop
 EEG.t = t; %time vector

@@ -1,4 +1,5 @@
-%% ImportVTBL.m 
+%ImportVTBL.m 
+%% function [pos,ExpKeys] = ImportVT(drInvid,eegtsec)
 % imports baseline Video Tracker file from drIn
 % INPUTS:
 	% drIn/drInvid		Input directory containing VT1.nvt file (already
@@ -17,28 +18,10 @@
 %
 % Created by KJS with assistance from NS&B2017, Youki Tanaka (vdMeer lab).
 % 
-% KJS edit: 2019-10-31: Adjusted sequence of events, added padding and
-% upsampling to 'Trim to LFP' portion
-% KJS edit: 2019-11-10: Divide pos.totaldist by 100 to convert cm -> m (duh)
+% KJS edit: 2019-10-31: Adjusted sequence of events, added padding and upsampling to 'Trim to LFP' portion
+% KJS edit: 2019-11-10: Divide pos.totaldist by 100 to convert cm -> m
 %
-%% function [pos,ExpKeys] = ImportVT(drInvid,eegtsec)
 function [pos,ExpKeys] = ImportVTBL(drInvid,eegtsec,Fs)
-% Add paths to functions if necessary
-if ~exist('LoadPos2.m','file')
-    addpath(uigetdir(pwd,'Select file path containing LoadPos2.m'))
-end
-if ~exist('getd.m','file')
-    addpath(uigetdir(pwd,'Select file path containing getd.m  (util)'))
-end
-if ~exist('PosConKJS.m','file')
-    addpath(uigetdir(pwd,'Select file path containing PosConKJS.m'))
-end
-if ~exist('LinearVelocity.m','file')
-    a = uigetdir(pwd,'Select file path containing LinearVelocity.m  (\Analyses)');
-    addpath(a)
-    addpath([a(1:end-8) 'General']) % contains Diff, used in LinearVelocity
-    clear a
-end
 
 tic; 	% start timer
 

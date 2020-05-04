@@ -20,12 +20,28 @@ Steps:
  6. Save data: Female estrous index (master)
 
 Calls functions (listed alphabetically):
+ - EndTime.m
+ - EPMPosConKJS.m
+ - FindFile.m
+ - FindFiles.m
+ - getd.m
  - HilbKJS.m
  - ImportCSC.m
  - ImportVTBL.m
  - ImportVTEPM.m
+ - LoadPos2.m
+ - MakeCoord.m
+ - Nlx2MatVT.mex
+ - NLXNameCheck.m
+ - PosConKJS.m
+ - PowerEnvelope.m
  - PowSpec.m
+ - ProcessConfig.m
+ - ReadCSC_TF.m, .mex
+ - ReadCSC_TF_tsd.m
+ - StartTime.m
  - TotalDistanceTraveled.m
+ - tsd.m
  - VelCumDist.m
  - VelDist.m
 

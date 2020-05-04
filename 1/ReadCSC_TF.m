@@ -1,7 +1,7 @@
 % Read a CR or CSC file from Cheetah (NT and unix Version 2.x)
 % (MEX FILE) 
 %
-% [cr_ts, cr, sFreq] = ReadCR_TF(fname, start_ts, end_ts);
+% function [cr_ts, cr, sFreq] = ReadCR_TF(fname, start_ts, end_ts)
 %
 % INPUTS: 
 %   fname = full filename of Cheetah_NT CSC*.dat file 
