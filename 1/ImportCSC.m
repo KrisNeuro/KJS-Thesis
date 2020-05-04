@@ -1,4 +1,4 @@
-%% ImportCSC2.m 
+%% ImportCSC.m 
 % Imports and pre-cleans CSC files from NLX format from drIn.
 % Also filters for theta band and does power analysis on the theta band.
 %
@@ -20,7 +20,7 @@
 % KJS edit 2019-10-28: Changed P: to K: (CoM IT server transfer)
 % KJS edit 2019-12-20: Added flexibility to addpath at the beginning,shifted those addpaths to ThesisDesign
 % 
-function [EEG,thetadata,AllDat,Fs]= ImportCSC2(drIn)
+function [EEG,thetadata,AllDat,Fs]= ImportCSC(drIn)
 %% Setup
 
 % Ensure drIn ends with a file separator
