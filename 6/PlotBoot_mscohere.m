@@ -38,9 +38,9 @@ p1 = shadedErrorBar(f,Fx,{@mean,@(x) std(Fx)/sqrt(size(Fx,1))},'lineprops',{'col
 p1.mainLine.LineWidth = 3;
 p1.mainLine.DisplayName = 'Female';
 axis square
-xlim([0.5 50])
+xlim([0.5 100])
 ylim([0 1])
-xticks(10:10:50)
+xticks(10:10:100)
 yticks([0 : 0.2 : 1])
 xlabel('Frequency (Hz)')
 ylabel('Magnitude-squared Coherence')
