@@ -40,22 +40,22 @@ end
 % Set data and figure directories 
 disp('Select RawEEG data directory')
 root_drIn = [uigetdir(pwd,'Select RawEEG data directory') filesep]; % root input data directory (precleaned 16ch data)
-% root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\RawEEG\'; 
+% root_drIn = 'K:\Personal Folders\[user]\Neuralynx\DATA\REVAMPED\dat\RawEEG\'; 
 fprintf('root_drIn: %s\n',root_drIn)
 
 disp('Select ReducedEEG data directory (data output)')
 root_drOut = [uigetdir(root_drIn,'Select ReducedEEG data directory') filesep]; % root output data directory
-% root_drOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\'; 
+% root_drOut = 'K:\Personal Folders\[user]\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\'; 
 fprintf('root_drOut: %s\n',root_drOut)
 
 disp('Select root figure output directory') 
 fig_drOut = [uigetdir(pwd, 'Select root figure output directory') filesep]; % figure/dataviz outputs
-% fig_drOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\figs\'; 
+% fig_drOut = 'K:\Personal Folders\[user]\Neuralynx\DATA\REVAMPED\figs\'; 
 fprintf('fig_drOut: %s\n',fig_drOut)
 
 disp('Select root CP data output directory')
 cp_root = [uigetdir(root_drOut, 'Select root CP data output directory') filesep];
-% cp_root = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\DATA-Backup\PreAnalysis\';
+% cp_root = 'K:\Personal Folders\[user]\Neuralynx\DATA\DATA-Backup\PreAnalysis\';
 fprintf('cp_root: %s\n',cp_root)
 
 % Load RXlist (master trial list)
