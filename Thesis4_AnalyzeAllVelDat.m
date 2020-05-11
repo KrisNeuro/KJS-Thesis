@@ -32,7 +32,7 @@ arenas = {'BL' 'EPM'}; % recording arenas
 
 % Set data directories & ensure scripts are added to file path
 root_drIn = [uigetdir(pwd,'Select root ReducedEEG data directory') filesep];
-%root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\' ;
+%root_drIn = 'K:\Personal Folders\[user]\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\' ;
 
 
 %% 1. ThetaFiltfilt 
@@ -173,44 +173,44 @@ clear ildh ilvh ilpl dhvh dhpl vhpl
 %     save([root_drIn fn],'edges','numbins','*_hist','*_hafmaxidx','*_widthhafmax','width*','x','-v7.3')
 
 %% 3.5 Find width @ 1/2 max on concatenated data
-% fn = 'ThetaPhaseLags-dHthresh-BL-AllTrialsConcat-hist.mat';
-% load([root_drIn fn],'*_hist','x')
-% load([root_drIn 'ThetaPhaseLags-dHthresh-BL-AllTrialsConcat.mat']) %check directory accuracy
-% ildh_phase_diff_hist=hist(ildh,edges);
-% halph_max_ildh=(max(ildh_phase_diff_hist))/2; %identifies half of the peak height of the histogram
-% [~,hafmaxidx] = (max(ildh_phase_diff_hist)); %i
-% width_at_halph_max_ildh=find(ildh_phase_diff_hist>halph_max_ildh); %finds indices of the bins which have height higher than the peak_height/2
-% width_at_halph_max_ildh=length(width_at_halph_max_ildh); %coun
-% ildh_widthhafmax = width_at_halph_max_ildh*mean(diff(edges));
-% ilvh_phase_diff_hist=hist(ilvh,edges);
-% % width at half of maximum peak
-% halph_max_ilvh=(max(ilvh_phase_diff_hist))/2;
-% [~,hafmaxidx] = (max(ilvh_phase_diff_hist));
-% ilvh_hafmaxidx = hafmaxidx;
-% width_at_halph_max_ilvh=find(ilvh_phase_diff_hist>halph_max_ilvh);
-% width_at_halph_max_ilvh=length(width_at_halph_max_ilvh);
-% ilvh_widthhafmax = width_at_halph_max_ilvh*mean(diff(edges));
-% dhpl_phase_diff_hist=hist(dhpl,edges);
-% halph_max_dhpl=(max(dhpl_phase_diff_hist))/2;
-% [~,dhpl_hafmaxidx] = (max(dhpl_phase_diff_hist));
-% [~,hafmaxidx] = (max(dhpl_phase_diff_hist));
-% width_at_halph_max_dhpl=find(dhpl_phase_diff_hist>halph_max_dhpl);
-% width_at_halph_max_dhpl=length(width_at_halph_max_dhpl);
-% dhpl_widthhafmax = width_at_halph_max_dhpl*mean(diff(edges)); 
-% vhpl_phase_diff_hist=hist(vhpl,edges);
-% halph_max_vhpl=(max(vhpl_phase_diff_hist))/2;
-% [~,hafmaxidx] = (max(vhpl_phase_diff_hist));
-% vhpl_hafmaxidx = hafmaxidx
-% width_at_halph_max_vhpl=find(vhpl_phase_diff_hist>halph_max_vhpl);
-% width_at_halph_max_vhpl=length(width_at_halph_max_vhpl);
-% vhpl_widthhafmax = width_at_halph_max_vhpl*mean(diff(edges)); 
-% [~,ildh_hafmaxidx] = (max(ildh_phase_diff_hist));
-% clear dhpl ildh vhpl ilvh
+ fn = 'ThetaPhaseLags-dHthresh-BL-AllTrialsConcat-hist.mat';
+ load([root_drIn fn],'*_hist','x')
+ load([root_drIn 'ThetaPhaseLags-dHthresh-BL-AllTrialsConcat.mat']) %check directory accuracy
+ ildh_phase_diff_hist=hist(ildh,edges);
+ halph_max_ildh=(max(ildh_phase_diff_hist))/2; %identifies half of the peak height of the histogram
+ [~,hafmaxidx] = (max(ildh_phase_diff_hist)); %i
+ width_at_halph_max_ildh=find(ildh_phase_diff_hist>halph_max_ildh); %finds indices of the bins which have height higher than the peak_height/2
+ width_at_halph_max_ildh=length(width_at_halph_max_ildh); %coun
+ ildh_widthhafmax = width_at_halph_max_ildh*mean(diff(edges));
+ ilvh_phase_diff_hist=hist(ilvh,edges);
+ % width at half of maximum peak
+ halph_max_ilvh=(max(ilvh_phase_diff_hist))/2;
+ [~,hafmaxidx] = (max(ilvh_phase_diff_hist));
+ ilvh_hafmaxidx = hafmaxidx;
+ width_at_halph_max_ilvh=find(ilvh_phase_diff_hist>halph_max_ilvh);
+ width_at_halph_max_ilvh=length(width_at_halph_max_ilvh);
+ ilvh_widthhafmax = width_at_halph_max_ilvh*mean(diff(edges));
+ dhpl_phase_diff_hist=hist(dhpl,edges);
+ halph_max_dhpl=(max(dhpl_phase_diff_hist))/2;
+ [~,dhpl_hafmaxidx] = (max(dhpl_phase_diff_hist));
+ [~,hafmaxidx] = (max(dhpl_phase_diff_hist));
+ width_at_halph_max_dhpl=find(dhpl_phase_diff_hist>halph_max_dhpl);
+ width_at_halph_max_dhpl=length(width_at_halph_max_dhpl);
+ dhpl_widthhafmax = width_at_halph_max_dhpl*mean(diff(edges)); 
+ vhpl_phase_diff_hist=hist(vhpl,edges);
+ halph_max_vhpl=(max(vhpl_phase_diff_hist))/2;
+ [~,hafmaxidx] = (max(vhpl_phase_diff_hist));
+ vhpl_hafmaxidx = hafmaxidx
+ width_at_halph_max_vhpl=find(vhpl_phase_diff_hist>halph_max_vhpl);
+ width_at_halph_max_vhpl=length(width_at_halph_max_vhpl);
+ vhpl_widthhafmax = width_at_halph_max_vhpl*mean(diff(edges)); 
+ [~,ildh_hafmaxidx] = (max(ildh_phase_diff_hist));
+ clear dhpl ildh vhpl ilvh
 
     % Save the data
-    % fn = 'ThetaPhaseLags-dHthresh-BL-AllTrialsConcat-hist.mat';
-    % save([root_drIn 'BL' filesep fn],'edges','dhpl*','ildh*','ilvh*','vhpl*','numbins','width_*','x','-v7.3')
-    % clear ildh* ilvh* ilpl* dhvh* dhpl* vhpl* fn
+     fn = 'ThetaPhaseLags-dHthresh-BL-AllTrialsConcat-hist.mat';
+     save([root_drIn 'BL' filesep fn],'edges','dhpl*','ildh*','ilvh*','vhpl*','numbins','width_*','x','-v7.3')
+     clear ildh* ilvh* ilpl* dhvh* dhpl* vhpl* fn
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 4. Band power cross-correlations (theta, gamma, delta) 
