@@ -25,13 +25,12 @@
 % 
 %   Calls functions (listed alphabetically):
 % 	- coherencyc.m  (from Chronux toolbox: http://chronux.org/)
-% 	- colorcet.m  (https://peterkovesi.com/projects/colourmaps/)
 % 	- Format4Bootstrap_BandPower.m
 % 	- Format4Bootstrap_coherency.m
 % 	- Format4Bootstrap_LFP.m
 % 	- get_bootstrapped_sample.m
 % 	- get_direct_prob.m
-%   - ksampL2.m
+%   	- ksampL2.m
 % 	- PlotBoot_mscohere.m
 % 	- PlotBoot_mscohereBands.m
 % 	- PlotBoot_mscohereHormones.m
@@ -61,12 +60,12 @@ subjs = {'A201' 'A202' 'A301' 'A602' 'E105' 'E106' 'E107' 'E108' 'E201'}; % Subj
 % Set data directories
 disp('Select root input directory holding data: Reduced EEG, BL arena')
 root_drIn = [uigetdir(pwd,'Select root input directory holding data: Reduced EEG, BL arena') filesep]; %data input
-% root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\BL\'; 
+% root_drIn = 'K:\Personal Folders\[user]\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\BL\'; 
 fprintf('root_drIn: %s\n',root_drIn)
 
 disp('Select root figure output directory')
 figdrOut = [uigetdir(pwd,'Select root figure output directory') filesep]; %figure output directory
-% figdrOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\figs\';
+% figdrOut = 'K:\Personal Folders\[user]\Neuralynx\DATA\REVAMPED\figs\';
 fprintf('figdrOut: %s\n',figdrOut)
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
