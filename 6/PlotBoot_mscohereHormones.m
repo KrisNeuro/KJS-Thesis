@@ -50,9 +50,9 @@ p1.mainLine.LineWidth = 3;
 p1.mainLine.DisplayName = 'Diestrus';
 
 axis square
-xlim([0.5 50])
+xlim([0.5 100])
 ylim([0 1])
-xticks(10:10:50)
+xticks(10:10:100)
 yticks([0 : 0.2 : 1])
 xlabel('Frequency (Hz)')
 ylabel(sprintf('Magnitude^2 coherence'))
