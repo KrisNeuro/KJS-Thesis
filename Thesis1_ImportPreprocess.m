@@ -53,11 +53,11 @@ for si = 1:length(subjs)
         
         % Set data directories for this arena
         root_drIn = [rt_drIn rt filesep]; % for 16-chan pre-cleaned AllDat
-            %root_drIn = ['K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\RawEEG\' rt filesep];
+            %root_drIn = ['K:\Personal Folders\[user]\Neuralynx\DATA\REVAMPED\dat\RawEEG\' rt filesep];
         vt_drIn = [vt_drin rt '\NLX' filesep]; % contains: subj\sessID\'VT1_PrcFields_OrdCor_SmoothedNoBins.nvt'
-            %vt_drIn = ['K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\VT\' rt '\NLX' filesep];
+            %vt_drIn = ['K:\Personal Folders\[user]\Neuralynx\DATA\REVAMPED\dat\VT\' rt '\NLX' filesep];
         vd_drOut = [vt_drin rt '\MAT' filesep]; % for VT-related data outputs
-            %vd_drOut = ['K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\VT\' rt '\MAT\']; 
+            %vd_drOut = ['K:\Personal Folders\[user]\Neuralynx\DATA\REVAMPED\dat\VT\' rt '\MAT\']; 
         
         % Fetch list of trials
         files = dir(raw_drIn);
