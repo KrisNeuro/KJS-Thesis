@@ -44,11 +44,11 @@ end
 % Set file paths
 disp('Select RawEEG data directory')
 root_drIn = [uigetdir(pwd,'Select RawEEG data directory') filesep];
-% root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\RawEEG\'; % root input data directory (precleaned 16ch data)
+% root_drIn = 'K:\Personal Folders\[user]\Neuralynx\DATA\REVAMPED\dat\RawEEG\'; % root input data directory (precleaned 16ch data)
 
 disp('Select ReducedEEG data directory')
 root_drOut = [uigetdir(pwd,'Select ReducedEEG data directory') filesep];
-% root_drOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\'; % root output data directory
+% root_drOut = 'K:\Personal Folders\[user]\Neuralynx\DATA\REVAMPED\dat\ReducedEEG\'; % root output data directory
 
 % Load trial list (all subjects)
 load([root_drOut 'RXlist.mat'],'RX')
