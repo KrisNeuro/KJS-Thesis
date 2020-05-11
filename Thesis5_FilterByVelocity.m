@@ -29,11 +29,11 @@ subjs = {'A201' 'A202' 'A301' 'A602' 'E105' 'E106' 'E107' 'E108' 'E201'}; % Subj
 % Add file directories & script paths
 disp('Select root input directory holding data: Reduced EEG, BL arena')
 root_drIn = [uigetdir(pwd,'Select root input directory holding data: Reduced EEG, BL arena') filesep]; %input data directory. Generates: raw_drIn, drIn
-% root_drIn = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\dat\'; 
+% root_drIn = 'K:\Personal Folders\[user]\Neuralynx\DATA\REVAMPED\dat\'; 
 
 disp('Select directory for figure output storage')
 figdrOut = [uigetdir(pwd,'Select directory for figure output storage') filesep]; %figure output directory root
-% figdrOut = 'K:\Personal Folders\Kristin Schoepfer\Neuralynx\DATA\REVAMPED\figs\VT\BL\'; 
+% figdrOut = 'K:\Personal Folders\[user]\Neuralynx\DATA\REVAMPED\figs\VT\BL\'; 
 
 
 %% Loop thru subjects
