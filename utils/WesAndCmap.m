@@ -31,6 +31,14 @@ Moonrise3 =    		[133 212 227;  244 181 189;  156 150 74;  205 192 140; 250 215 
   %estyel = Moonrise3(5,:);
   %metred = Moonrise3(4,:);
 
+Darjeeling1 = [255 0 0; 0 160 138; 242 173 0; 249 132 0; 91 188 214]/255;
+	% slow = Darjeeling1(5,:);
+		slow = [0.356862745098039	0.737254901960784	0.839215686274510];
+	% med = Darjeeling1(2,:);
+		med = [0	0.627450980392157	0.541176470588235];
+	% fast = Darjeeling1(1,:);
+		fast = [1	0	0];
+  
 Darjeeling2 = 		[236 203 0174;  4 108 154;  214 156 78; 171 221 222;  0 0 0]/255; % don’t use 1&4 together
   maleblue = Darjeeling2(5,:); %black
   digreen = Darjeeling2(1,:);
