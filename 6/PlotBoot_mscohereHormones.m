@@ -53,13 +53,13 @@ axis square
 xlim([0.5 100])
 ylim([0 1])
 xticks(10:10:100)
-yticks([0 : 0.2 : 1])
+yticks(0 : 0.2 : 1)
 xlabel('Frequency (Hz)')
 ylabel(sprintf('Magnitude^2 coherence'))
-legend([p1.mainLine, p2.mainLine, p3.mainLine, p4.mainLine],{'Diestrus','Proestrus','Estrus','Metestrus'},'bkgd','boxoff')
-set(gca,'fontsize',26)
+legend([p1.mainLine, p2.mainLine, p3.mainLine, p4.mainLine],{'Diestrus','Proestrus','Estrus','Metestrus'})
+legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',2)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',2)
 
 %% One-way ANOVA for functional data: Main-effects test
 y1 = [Dx; Px; Ex];

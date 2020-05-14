@@ -78,12 +78,11 @@ hold on
     axis square
     xlim([0.5 4.5])
     xticks(1:4)
-    set(gca,'fontsize',14)
     xlabel('Frequency (Hz)')
     ylabel(sprintf('Magnitude^2 coherence'))
     title('Delta band')
     box off
-    set(gca,'TitleFontSizeMultiplier',1.5)
+    set(gca,'FontName','Arial','fontsize',14,'TitleFontSizeMultiplier',1.5)
     
     % twosampF: Delta
     [stat.delta] = twosampF(Fx(:,d1:d2),Mx(:,d1:d2),method,parflag);
@@ -104,14 +103,14 @@ hold on
     axis square
     xlim([3.5 12.5])
     xticks(4:12)
-    set(gca,'fontsize',14)
     xlabel('Frequency (Hz)')
     ylabel(sprintf('Magnitude^2 coherence'))
     title('Theta band')
 %     legend([p2.mainLine, p3.mainLine],{'Male','Female'})
 %     legend('location','southwest')
+%     legend('boxoff')
     box off
-    set(gca,'TitleFontSizeMultiplier',1.5)
+    set(gca,'FontName','Arial','fontsize',14,'TitleFontSizeMultiplier',1.5)
     
     % twosampF: Theta
     [stat.theta] = twosampF(Fx(:,t1:t2),Mx(:,t1:t2),method,parflag);
@@ -131,12 +130,11 @@ hold on
     axis square
     xlim([14.5 30.5])
     xticks(15:5:30)
-    set(gca,'fontsize',14)
     xlabel('Frequency (Hz)')
     ylabel(sprintf('Magnitude^2 coherence'))
     title('Beta band')
     box off
-    set(gca,'TitleFontSizeMultiplier',1.5)
+    set(gca,'FontName','Arial','fontsize',14,'TitleFontSizeMultiplier',1.5)
     
     % twosampF: Beta
     [stat.beta] = twosampF(Fx(:,b1:b2),Mx(:,b1:b2),method,parflag);
@@ -157,15 +155,13 @@ hold on
     axis square
     xlim([25 85])
     xticks(30:10:80)
-    set(gca,'fontsize',14)
     xlabel('Frequency (Hz)')
     ylabel(sprintf('Magnitude^2 coherence'))
     title('Broadband gamma')
     box off
-    set(gca,'TitleFontSizeMultiplier',1.5)
+    set(gca,'FontName','Arial','fontsize',14,'TitleFontSizeMultiplier',1.5)
     
     % twosampF: Gamma
     [stat.gamma] = twosampF(Fx(:,g1:g2),Mx(:,g1:g2),method,parflag);
 
 end %function
-

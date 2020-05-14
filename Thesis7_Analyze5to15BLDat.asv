@@ -1102,12 +1102,12 @@ saveas(H26e,[fd 'ThetaPhaseLagBoot_ILPL_MvHorms.fig']); legend('off')
 saveas(H26e,[fd 'ThetaPhaseLagBoot_ILPL_MvHorms.svg']);
 saveas(H26e,[fd 'ThetaPhaseLagBoot_ILPL_MvHorms.png']); close(H26e); clear H26e ans
 
-H26f = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %DHVH
-    PlotHistBoot_MvHorms(gca,M_DHVH_boot,fD_DHVH_boot,fP_DHVH_boot,fE_DHVH_boot);
+H26d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %DHVH
+    PlotHistBoot_MvHorms(gca,M_VHPL_boot,fD_VHPL_boot,fP_VHPL_boot,fE_VHPL_boot);
     xlabel('Theta phase lag: width @ half-max (rad.)'); title('dHPC-vHPC')
-saveas(H26f,[fd 'ThetaPhaseLagBoot_DHVH_MvHorms.fig']); legend('off') 
-saveas(H26f,[fd 'ThetaPhaseLagBoot_DHVH_MvHorms.svg']);
-saveas(H26f,[fd 'ThetaPhaseLagBoot_DHVH_MvHorms.png']); close(H26f); clear H26f ans
+saveas(H26d,[fd 'ThetaPhaseLagBoot_VHPL_MvHorms.fig']); legend('off')
+saveas(H26d,[fd 'ThetaPhaseLagBoot_VHPL_MvHorms.svg']);
+saveas(H26d,[fd 'ThetaPhaseLagBoot_VHPL_MvHorms.png']); close(H26d); clear H26d ans
 
 disp('Theta phase lag figures saved: Male vs Horms')
 clear *_boot fd
@@ -1189,42 +1189,36 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
         PlotHistBoot_MF(gca,M_ILDH_boot,F_ILDH_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('dHPC-IL')
     saveas(H32a,[fd Bands{bi} 'RSqBoot_ILDH_MvF.fig']); legend('off')
-    saveas(H32a,[fd Bands{bi} 'RSqBoot_ILDH_MvF.svg']);
     saveas(H32a,[fd Bands{bi} 'RSqBoot_ILDH_MvF.png']); close(H32a); clear H32a ans
 
     H32b = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILVH
         PlotHistBoot_MF(gca,M_ILVH_boot,F_ILVH_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('vHPC-IL')
     saveas(H32b,[fd Bands{bi} 'RSqBoot_ILVH_MvF.fig']); legend('off')
-    saveas(H32b,[fd Bands{bi} 'RSqBoot_ILVH_MvF.svg']);
     saveas(H32b,[fd Bands{bi} 'RSqBoot_ILVH_MvF.png']); close(H32b); clear H32b ans
 
     H32c = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %DHPL
         PlotHistBoot_MF(gca,M_DHPL_boot,F_DHPL_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('dHPC-PrL')
     saveas(H32c,[fd Bands{bi} 'RSqBoot_DHPL_MvF.fig']); legend('off')
-    saveas(H32c,[fd Bands{bi} 'RSqBoot_DHPL_MvF.svg']);
     saveas(H32c,[fd Bands{bi} 'RSqBoot_DHPL_MvF.png']); close(H32c); clear H32c ans
 
     H32d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %VHPL
         PlotHistBoot_MF(gca,M_VHPL_boot,F_VHPL_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('vHPC-PrL')
     saveas(H32d,[fd Bands{bi} 'RSqBoot_VHPL_MvF.fig']); legend('off')
-    saveas(H32d,[fd Bands{bi} 'RSqBoot_VHPL_MvF.svg']);
     saveas(H32d,[fd Bands{bi} 'RSqBoot_VHPL_MvF.png']); close(H32d); clear H32d ans
     
     H32e = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILPL
         PlotHistBoot_MF(gca,M_ILPL_boot,F_ILPL_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('IL-PrL')
     saveas(H32e,[fd Bands{bi} 'RSqBoot_ILPL_MvF.fig']); legend('off')
-    saveas(H32e,[fd Bands{bi} 'RSqBoot_ILPL_MvF.svg']);
     saveas(H32e,[fd Bands{bi} 'RSqBoot_ILPL_MvF.png']); close(H32e); clear H32e ans
     
     H32f = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %DHVH
         PlotHistBoot_MF(gca,M_DHVH_boot,F_DHVH_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('dHPC-vHPC')
     saveas(H32f,[fd Bands{bi} 'RSqBoot_DHVH_MvF.fig']); legend('off')
-    saveas(H32f,[fd Bands{bi} 'RSqBoot_DHVH_MvF.svg']);
     saveas(H32f,[fd Bands{bi} 'RSqBoot_DHVH_MvF.png']); close(H32f); clear H32f ans
     
     fprintf('%s R^2 bootstrap sample distributions figures saved: MvF\n',Bands{bi})
@@ -1311,42 +1305,36 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
         PlotHistBoot_Estrous(gca,fD_ILDH_boot,fP_ILDH_boot,fE_ILDH_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('dHPC-IL')
     saveas(H34a,[fd Bands{bi} 'RSqBoot_ILDH_Estrous.fig']); legend('off')
-    saveas(H34a,[fd Bands{bi} 'RSqBoot_ILDH_Estrous.svg']);
     saveas(H34a,[fd Bands{bi} 'RSqBoot_ILDH_Estrous.png']); close(H34a); clear H34a ans
     
     H34b = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILVH
         PlotHistBoot_Estrous(gca,fD_ILVH_boot,fP_ILVH_boot,fE_ILVH_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('vHPC-IL')
     saveas(H34b,[fd Bands{bi} 'RSqBoot_ILVH_Estrous.fig']); legend('off')
-    saveas(H34b,[fd Bands{bi} 'RSqBoot_ILVH_Estrous.svg']);
     saveas(H34b,[fd Bands{bi} 'RSqBoot_ILVH_Estrous.png']); close(H34b); clear H34b ans
 
     H34c = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %DHPL
         PlotHistBoot_Estrous(gca,fD_DHPL_boot,fP_DHPL_boot,fE_DHPL_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('dHPC-PrL')
     saveas(H34c,[fd Bands{bi} 'RSqBoot_DHPL_Estrous.fig']); legend('off')
-    saveas(H34c,[fd Bands{bi} 'RSqBoot_DHPL_Estrous.svg']);
     saveas(H34c,[fd Bands{bi} 'RSqBoot_DHPL_Estrous.png']); close(H34c); clear H34c ans
 
     H34d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %VHPL
         PlotHistBoot_Estrous(gca,fD_VHPL_boot,fP_VHPL_boot,fE_VHPL_boot);
        xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('vHPC-PrL')
     saveas(H34d,[fd Bands{bi} 'RSqBoot_VHPL_Estrous.fig']); legend('off')
-    saveas(H34d,[fd Bands{bi} 'RSqBoot_VHPL_Estrous.svg']);
     saveas(H34d,[fd Bands{bi} 'RSqBoot_VHPL_Estrous.png']); close(H34d); clear H34d ans
     
     H34e = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILPL
         PlotHistBoot_Estrous(gca,fD_ILPL_boot,fP_ILPL_boot,fE_ILPL_boot);
        xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('IL-PrL')
     saveas(H34e,[fd Bands{bi} 'RSqBoot_ILPL_Estrous.fig']); legend('off')
-    saveas(H34e,[fd Bands{bi} 'RSqBoot_ILPL_Estrous.svg']);
     saveas(H34e,[fd Bands{bi} 'RSqBoot_ILPL_Estrous.png']); close(H34e); clear H34e ans
     
     H34f = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %DHVH
         PlotHistBoot_Estrous(gca,fD_DHVH_boot,fP_DHVH_boot,fE_DHVH_boot);
        xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('dHPC-vHPC')
     saveas(H34f,[fd Bands{bi} 'RSqBoot_DHVH_Estrous.fig']); legend('off')
-    saveas(H34f,[fd Bands{bi} 'RSqBoot_DHVH_Estrous.svg']);
     saveas(H34f,[fd Bands{bi} 'RSqBoot_DHVH_Estrous.png']); close(H34f); clear H34f ans
     
     fprintf('%s R^2 bootstrap sample distributions figures saved: Estrous\n',Bands{bi})
@@ -1418,42 +1406,36 @@ for bi = 1:length(Bands) %loop: theta, gamma, delta bands
         PlotHistBoot_MvHorms(gca,M_ILDH_boot,fD_ILDH_boot,fP_ILDH_boot,fE_ILDH_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('dHPC-IL')
     saveas(H36a,[fd Bands{bi} 'RSqBoot_ILDH_MvHorms.fig']); legend('off')
-    saveas(H36a,[fd Bands{bi} 'RSqBoot_ILDH_MvHorms.svg']);
     saveas(H36a,[fd Bands{bi} 'RSqBoot_ILDH_MvHorms.png']); close(H36a); clear H36a ans
         
     H36b = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILVH
         PlotHistBoot_MvHorms(gca,M_ILVH_boot,fD_ILVH_boot,fP_ILVH_boot,fE_ILVH_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('vHPC-IL')
     saveas(H36b,[fd Bands{bi} 'RSqBoot_ILVH_MvHorms.fig']); legend('off')
-    saveas(H36b,[fd Bands{bi} 'RSqBoot_ILVH_MvHorms.svg']);
     saveas(H36b,[fd Bands{bi} 'RSqBoot_ILVH_MvHorms.png']); close(H36b); clear H36b ans
         
     H36c = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %DHPL
         PlotHistBoot_MvHorms(gca,M_DHPL_boot,fD_DHPL_boot,fP_DHPL_boot,fE_DHPL_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi})); title('dHPC-PrL')
     saveas(H36c,[fd Bands{bi} 'RSqBoot_DHPL_MvHorms.fig']);  legend('off')
-    saveas(H36c,[fd Bands{bi} 'RSqBoot_DHPL_MvHorms.svg']);
     saveas(H36c,[fd Bands{bi} 'RSqBoot_DHPL_MvHorms.png']); close(H36c); clear H36c ans
         
     H36d = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %VHPL
         PlotHistBoot_MvHorms(gca,M_VHPL_boot,fD_VHPL_boot,fP_VHPL_boot,fE_VHPL_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi}));  title('vHPC-PrL')
     saveas(H36d,[fd Bands{bi} 'RSqBoot_VHPL_MvHorms.fig']); legend('off')
-    saveas(H36d,[fd Bands{bi} 'RSqBoot_VHPL_MvHorms.svg']);
     saveas(H36d,[fd Bands{bi} 'RSqBoot_VHPL_MvHorms.png']); close(H36d); clear H36d ans
     
     H36e = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %ILPL
         PlotHistBoot_MvHorms(gca,M_ILPL_boot,fD_ILPL_boot,fP_ILPL_boot,fE_ILPL_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi}));  title('IL-PrL')
     saveas(H36e,[fd Bands{bi} 'RSqBoot_ILPL_MvHorms.fig']); legend('off')
-    saveas(H36e,[fd Bands{bi} 'RSqBoot_ILPL_MvHorms.svg']);
     saveas(H36e,[fd Bands{bi} 'RSqBoot_ILPL_MvHorms.png']); close(H36e); clear H36e ans
     
     H36f = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %DHVH
         PlotHistBoot_MvHorms(gca,M_DHVH_boot,fD_DHVH_boot,fP_DHVH_boot,fE_DHVH_boot);
         xlabel(sprintf('%s Power Correlations (R^2)',Bands{bi}));  title('dHPC-vHPC')
     saveas(H36f,[fd Bands{bi} 'RSqBoot_DHVH_MvHorms.fig']); legend('off')
-    saveas(H36f,[fd Bands{bi} 'RSqBoot_DHVH_MvHorms.svg']);
     saveas(H36f,[fd Bands{bi} 'RSqBoot_DHVH_MvHorms.png']); close(H36f); clear H36f ans
         
     fprintf('%s R^2 bootstrap sample distributions figures saved: MvHorms\n',Bands{bi})

@@ -61,9 +61,9 @@ ylabel('Power (dB)')
 title('IL')
 
 legend([p1.mainLine, p2.mainLine, p3.mainLine, p4.mainLine],{'Diestrus','Proestrus','Estrus','Metestrus'})
-set(gca,'fontsize',26)
+legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',1.75)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',2)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Dil; Pil; Eil];
@@ -101,9 +101,9 @@ ylabel('Power (dB)')
 title('PrL')
 
 legend([p1.mainLine, p2.mainLine, p3.mainLine, p4.mainLine],{'Diestrus','Proestrus','Estrus','Metestrus'})
-set(gca,'fontsize',26)
+legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',1.75)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',2)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Dpl; Ppl; Epl];
@@ -143,9 +143,9 @@ ylabel('Power (dB)')
 title('dHPC')
 
 legend([p1.mainLine, p2.mainLine, p3.mainLine, p4.mainLine],{'Diestrus','Proestrus','Estrus','Metestrus'})
-set(gca,'fontsize',26)
+legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',1.75)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',2)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Ddh; Pdh; Edh];
@@ -184,9 +184,9 @@ ylabel('Power (dB)')
 title('vHPC')
 
 legend([p1.mainLine, p2.mainLine, p3.mainLine, p4.mainLine],{'Diestrus','Proestrus','Estrus','Metestrus'})
-set(gca,'fontsize',26)
+legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',1.75)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',2)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Dvh; Pvh; Evh];

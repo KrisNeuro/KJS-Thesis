@@ -18,7 +18,7 @@ Fcol = [0.9529    0.9098    0.0824]; %yellow
 Mfa = 0.72; %male
 Ffa = 0.75;  %female
 
-a1 = histogram(ax,Fx_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',Ffa,'FaceColor',Fcol);
+a1 = histogram(ax,Fx_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',Ffa,'FaceColor',Fcol); %#ok<*NASGU>
 hold on
 a2 = histogram(ax,Mx_boot,'normalization','probability','EdgeColor','none','NumBins',numbins,'FaceAlpha',Mfa,'FaceColor',Mcol);
 box off
@@ -26,6 +26,6 @@ axis square
 legend Female Male
 legend('boxoff')
 ylabel('probability')
-set(gca,'fontsize',20,'titlefontsizemultiplier',2)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',1.75)
 Ax=gca;
 end %function

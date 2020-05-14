@@ -61,12 +61,11 @@ p4.mainLine.DisplayName = 'Male';
 axis square
 xlim([0.5 4.5])
 xticks(1:4)
-set(gca,'fontsize',14)
 xlabel('Frequency (Hz)')
 ylabel(sprintf('Magnitude^2 coherence'))
 title('Delta band')
 box off
-set(gca,'TitleFontSizeMultiplier',1.5)
+set(gca,'FontName','Arial','fontsize',14,'TitleFontSizeMultiplier',1.5)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Dx(:,d1:d2); Px(:,d1:d2); Ex(:,d1:d2); Mx(:,d1:d2)];
@@ -105,8 +104,7 @@ ylabel(sprintf('Magnitude^2 coherence'))
 title('Theta band')
 legend([p1.mainLine, p2.mainLine, p3.mainLine, p4.mainLine],{'Diestrus','Proestrus','Estrus','Metestrus'},'location','northwest'); legend('boxoff')
 box off
-set(gca,'fontsize',14)
-set(gca,'TitleFontSizeMultiplier',1.5)
+set(gca,'FontName','Arial','fontsize',14,'TitleFontSizeMultiplier',1.5)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Dx(:,t1:t2); Px(:,t1:t2); Ex(:,t1:t2); Mx(:,t1:t2)];
@@ -139,12 +137,11 @@ p4.mainLine.DisplayName = 'Male';
 axis square
 xlim([14.5 30.5])
 xticks(15:5:30)
-set(gca,'fontsize',14)
 xlabel('Frequency (Hz)')
 ylabel(sprintf('Magnitude^2 coherence'))
 title('Beta band')
 box off
-set(gca,'TitleFontSizeMultiplier',1.5)
+set(gca,'FontName','Arial','fontsize',14,'TitleFontSizeMultiplier',1.5)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Dx(:,b1:b2); Px(:,b1:b2); Ex(:,b1:b2); Mx(:,b1:b2)];
@@ -181,9 +178,8 @@ xlabel('Frequency (Hz)')
 ylabel(sprintf('Magnitude^2 coherence'))
 % legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'})
 title('Gamma band')
-set(gca,'fontsize',14)
 box off
-set(gca,'TitleFontSizeMultiplier',1.5)
+set(gca,'FontName','Arial','fontsize',14,'TitleFontSizeMultiplier',1.5)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Dx(:,g1:g2); Px(:,g1:g2); Ex(:,g1:g2); Mx(:,g1:g2)];

@@ -86,9 +86,9 @@ xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('Delta band')
 legend([p4.mainLine, p2.mainLine, p1.mainLine, p3.mainLine],{'Male','Proestrus','Diestrus','Estrus'},'edgecolor',[1 1 1])
-set(gca,'fontsize',14)
+legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',1.5)
+set(gca,'FontName','Arial','fontsize',14,'TitleFontSizeMultiplier',1.5)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Dx(:,d1:d2); Px(:,d1:d2); Ex(:,d1:d2); Mx(:,d1:d2)];
@@ -128,9 +128,9 @@ ylabel('Power (dB)')
 title('Theta band')
 % legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'})
 % legend('location','southwest')
-set(gca,'fontsize',14)
+% legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',1.5)
+set(gca,'FontName','Arial','fontsize',14,'TitleFontSizeMultiplier',1.5)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Dx(:,t1:t2); Px(:,t1:t2); Ex(:,t1:t2); Mx(:,t1:t2)];
@@ -167,9 +167,8 @@ xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('Beta band')
 % legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'})
-set(gca,'fontsize',14)
 box off
-set(gca,'TitleFontSizeMultiplier',1.5)
+set(gca,'FontName','Arial','fontsize',14,'TitleFontSizeMultiplier',1.5)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Dx(:,b1:b2); Px(:,b1:b2); Ex(:,b1:b2); Mx(:,b1:b2)];
@@ -206,9 +205,8 @@ xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('Gamma band')
 % legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'})
-set(gca,'fontsize',14)
 box off
-set(gca,'TitleFontSizeMultiplier',1.5)
+set(gca,'FontName','Arial','fontsize',14,'TitleFontSizeMultiplier',1.5)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Dx(:,g1:g2); Px(:,g1:g2); Ex(:,g1:g2); Mx(:,g1:g2)];

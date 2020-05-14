@@ -42,9 +42,9 @@ xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('IL')
 legend([p1.mainLine, p2.mainLine],{'Female','Male'})
-set(gca,'fontsize',26)
+legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',1.75)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',2)
 
 % Functional 2-sample F-test
 [ILstat.MvF] = twosampF(Fil,Mil,method,parflag);
@@ -65,9 +65,9 @@ xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('PrL')
 legend([p1.mainLine, p2.mainLine],{'Female','Male'})
-set(gca,'fontsize',26)
+legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',1.75)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',2)
 
 % Functional 2-sample F-test
 [PLstat.MvF] = twosampF(Fpl,Mpl,method,parflag);
@@ -88,9 +88,9 @@ xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('dHPC')
 legend([p1.mainLine, p2.mainLine],{'Female','Male'})
-set(gca,'fontsize',26)
+legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',1.75)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',2)
 
 % Functional 2-sample F-test
 [DHstat.MvF] = twosampF(Fdh,Mdh,method,parflag);
@@ -111,9 +111,9 @@ xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('vHPC')
 legend([p1.mainLine, p2.mainLine],{'Female','Male'})
-set(gca,'fontsize',26)
+legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',1.75)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',2)
 
 % Functional 2-sample F-test
 [VHstat.MvF] = twosampF(Fvh,Mvh,method,parflag);

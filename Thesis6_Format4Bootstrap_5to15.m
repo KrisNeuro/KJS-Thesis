@@ -176,15 +176,19 @@ end
     fd = [figdrOut 'PowSpec_ReducedChannels\BL\FunctionalAnova\']; %output directory
     if ~exist(fd,'dir'); mkdir(fd); end    
     saveas(H1,[fd 'mPFCIL-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(H1,[fd 'mPFCIL-MvF-SubjSEM-5to15BL.svg']);
     saveas(H1,[fd 'mPFCIL-MvF-SubjSEM-5to15BL.png']); close(H1); clear H1
     
     saveas(H2,[fd 'mPFCPL-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(H2,[fd 'mPFCPL-MvF-SubjSEM-5to15BL.svg']);
     saveas(H2,[fd 'mPFCPL-MvF-SubjSEM-5to15BL.png']); close(H2); clear H2
     
     saveas(H3,[fd 'dHPC-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(H3,[fd 'dHPC-MvF-SubjSEM-5to15BL.svg']);
     saveas(H3,[fd 'dHPC-MvF-SubjSEM-5to15BL.png']); close(H3); clear H3
         
     saveas(H4,[fd 'vHPC-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(H4,[fd 'vHPC-MvF-SubjSEM-5to15BL.svg']);
     saveas(H4,[fd 'vHPC-MvF-SubjSEM-5to15BL.png']); close(H4); clear H4
         
         
@@ -204,15 +208,19 @@ end
          
     % Save figures
     saveas(h1,[fd 'mPFCILbands-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(h1,[fd 'mPFCILbands-MvF-SubjSEM-5to15BL.svg']);
     saveas(h1,[fd 'mPFCILbands-MvF-SubjSEM-5to15BL.png']); close(h1); clear h1
 
     saveas(h2,[fd 'mPFCPLbands-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(h2,[fd 'mPFCPLbands-MvF-SubjSEM-5to15BL.svg']);
     saveas(h2,[fd 'mPFCPLbands-MvF-SubjSEM-5to15BL.png']); close(h2); clear h2
 
     saveas(h3,[fd 'dHPCbands-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(h3,[fd 'dHPCbands-MvF-SubjSEM-5to15BL.svg']);
     saveas(h3,[fd 'dHPCbands-MvF-SubjSEM-5to15BL.png']); close(h3); clear h3
      
     saveas(h4,[fd 'vHPCbands-MvF-SubjSEM-5to15BL.fig']); legend off
+    saveas(h4,[fd 'vHPCbands-MvF-SubjSEM-5to15BL.svg']);
     saveas(h4,[fd 'vHPCbands-MvF-SubjSEM-5to15BL.png']); close(h4); clear h4
     
         
@@ -289,15 +297,19 @@ end
     % Save figures
     fd = [figdrOut 'PowSpec_ReducedChannels\BL\FunctionalAnova\']; %output directory
     saveas(H1,[fd 'mPFCIL-Hormones-SubjSEM-5to15BL.fig']); legend off
+    saveas(H1,[fd 'mPFCIL-Hormones-SubjSEM-5to15BL.svg']);
     saveas(H1,[fd 'mPFCIL-Hormones-SubjSEM-5to15BL.png']); close(H1); clear H1       
     
     saveas(H2,[fd 'mPFCPL-Hormones-SubjSEM-5to15BL.fig']); legend off
+    saveas(H2,[fd 'mPFCPL-Hormones-SubjSEM-5to15BL.svg']);
     saveas(H2,[fd 'mPFCPL-Hormones-SubjSEM-5to15BL.png']); close(H2); clear H2
         
     saveas(H3,[fd 'dHPC-Hormones-SubjSEM-5to15BL.fig']); legend off
+    saveas(H3,[fd 'dHPC-Hormones-SubjSEM-5to15BL.svg']);
     saveas(H3,[fd 'dHPC-Hormones-SubjSEM-5to15BL.png']); close(H3); clear H3
 
     saveas(H4,[fd 'vHPC-Hormones-SubjSEM-5to15BL.fig']); legend off
+    saveas(H4,[fd 'vHPC-Hormones-SubjSEM-5to15BL.svg']);
     saveas(H4,[fd 'vHPC-Hormones-SubjSEM-5to15BL.png']); close(H4); clear H4
     
     
@@ -317,15 +329,19 @@ end
          
     % Save figures
     saveas(h1,[fd 'mPFCILbands-Hormones-SubjSEM-5to15BL.fig']); legend off
+    saveas(h1,[fd 'mPFCILbands-Hormones-SubjSEM-5to15BL.svg']);
     saveas(h1,[fd 'mPFCILbands-Hormones-SubjSEM-5to15BL.png']); close(h1); clear h1
 
     saveas(h2,[fd 'mPFCPLbands-Hormones-SubjSEM-5to15BL.fig']); legend off
+    saveas(h2,[fd 'mPFCPLbands-Hormones-SubjSEM-5to15BL.svg']);
     saveas(h2,[fd 'mPFCPLbands-Hormones-SubjSEM-5to15BL.png']); close(h2); clear h2
 
-    saveas(h3,[fd 'dHPCbands-Hormones-SubjSEM-5to15BL.fig']); legend off       
+    saveas(h3,[fd 'dHPCbands-Hormones-SubjSEM-5to15BL.fig']); legend off     
+    saveas(h3,[fd 'dHPCbands-Hormones-SubjSEM-5to15BL.svg']);
     saveas(h3,[fd 'dHPCbands-Hormones-SubjSEM-5to15BL.png']); close(h3); clear h3
 
-    saveas(h4,[fd 'vHPCbands-Hormones-SubjSEM-5to15BL.fig']); legend off      
+    saveas(h4,[fd 'vHPCbands-Hormones-SubjSEM-5to15BL.fig']); legend off   
+    saveas(h4,[fd 'vHPCbands-Hormones-SubjSEM-5to15BL.svg']);
     saveas(h4,[fd 'vHPCbands-Hormones-SubjSEM-5to15BL.png']); close(h4); clear h4
     
 % Save data: One-way functional ANOVAs
@@ -370,15 +386,19 @@ clear fn
 % Save figures
 fd = [figdrOut 'PowSpec_ReducedChannels\BL\FunctionalAnova\']; %output directory
     saveas(H1,[fd 'mPFCIL-MvHorms-SubjSEM-5to15BL.fig']); legend off
+    saveas(H1,[fd 'mPFCIL-MvHorms-SubjSEM-5to15BL.svg']);
     saveas(H1,[fd 'mPFCIL-MvHorms-SubjSEM-5to15BL.png']); close(H1); clear H1
     
-    saveas(H2,[fd 'mPFCPL-MvHorms-SubjSEM-5to15BL.fig']); legend off        
+    saveas(H2,[fd 'mPFCPL-MvHorms-SubjSEM-5to15BL.fig']); legend off   
+    saveas(H2,[fd 'mPFCPL-MvHorms-SubjSEM-5to15BL.svg']);
     saveas(H2,[fd 'mPFCPL-MvHorms-SubjSEM-5to15BL.png']); close(H2); clear H2
 
-    saveas(H3,[fd 'dHPC-MvHorms-SubjSEM-5to15BL.fig']); legend off        
+    saveas(H3,[fd 'dHPC-MvHorms-SubjSEM-5to15BL.fig']); legend off   
+    saveas(H3,[fd 'dHPC-MvHorms-SubjSEM-5to15BL.svg']);
     saveas(H3,[fd 'dHPC-MvHorms-SubjSEM-5to15BL.png']); close(H3); clear H3
 
-    saveas(H4,[fd 'vHPC-MvHorms-SubjSEM-5to15BL.fig']); legend off        
+    saveas(H4,[fd 'vHPC-MvHorms-SubjSEM-5to15BL.fig']); legend off     
+    saveas(H4,[fd 'vHPC-MvHorms-SubjSEM-5to15BL.svg']);
     saveas(H4,[fd 'vHPC-MvHorms-SubjSEM-5to15BL.png']); close(H4); clear H4
     
 
@@ -398,15 +418,19 @@ fd = [figdrOut 'PowSpec_ReducedChannels\BL\FunctionalAnova\']; %output directory
          
     % Save figures
     saveas(h1,[fd 'mPFCILbands-MvHorms-SubjSEM-5to15BL.fig']); legend off
+    saveas(h1,[fd 'mPFCILbands-MvHorms-SubjSEM-5to15BL.svg']);
     saveas(h1,[fd 'mPFCILbands-MvHorms-SubjSEM-5to15BL.png']); close(h1); clear h1
     
-    saveas(h2,[fd 'mPFCPLbands-MvHorms-SubjSEM-5to15BL.fig']); legend off        
+    saveas(h2,[fd 'mPFCPLbands-MvHorms-SubjSEM-5to15BL.fig']); legend off    
+    saveas(h2,[fd 'mPFCPLbands-MvHorms-SubjSEM-5to15BL.svg']);
     saveas(h2,[fd 'mPFCPLbands-MvHorms-SubjSEM-5to15BL.png']); close(h2); clear h2
 
-    saveas(h3,[fd 'dHPCbands-MvHorms-SubjSEM-5to15BL.fig']); legend off        
+    saveas(h3,[fd 'dHPCbands-MvHorms-SubjSEM-5to15BL.fig']); legend off      
+    saveas(h3,[fd 'dHPCbands-MvHorms-SubjSEM-5to15BL.svg']);
     saveas(h3,[fd 'dHPCbands-MvHorms-SubjSEM-5to15BL.png']); close(h3); clear h3
 
-    saveas(h4,[fd 'vHPCbands-MvHorms-SubjSEM-5to15BL.fig']); legend off    
+    saveas(h4,[fd 'vHPCbands-MvHorms-SubjSEM-5to15BL.fig']); legend off   
+    saveas(h4,[fd 'vHPCbands-MvHorms-SubjSEM-5to15BL.svg']);
     saveas(h4,[fd 'vHPCbands-MvHorms-SubjSEM-5to15BL.png']); close(h4); clear h4
         
 % Save data: One-way functional ANOVAs
@@ -592,45 +616,53 @@ end
 %mPFCIL-dHPC
     [H1,ILDHstat.MvF] = PlotBoot_mscohere(f,Mildh,Fildh);
     title('IL - dHPC')
+    legend('boxoff');
 %mPFCIL-vHPC
     [H2,ILVHstat.MvF] = PlotBoot_mscohere(f,Milvh,Filvh);
     title('IL - vHPC')
-    legend('location','northeast')
+    legend('location','northeast'); legend('boxoff');
 %mPFCIL-mPFCPL
     [H3,ILPLstat.MvF] = PlotBoot_mscohere(f,Milpl,Filpl);
     title('IL - PrL')
-    legend('location','northeast')
+    legend('location','northeast'); legend('boxoff');
 %dHPC-vHPC
     [H4,DHVHstat.MvF] = PlotBoot_mscohere(f,Mdhvh,Fdhvh);
     title('dHPC - vHPC')
-    legend('location','northeast')
+    legend('location','northeast'); legend('boxoff');
 %dHPC-mPFCPL
     [H5,DHPLstat.MvF] = PlotBoot_mscohere(f,Mdhpl,Fdhpl);
     title('dHPC - PrL')
-    legend('location','northeast')
+    legend('location','northeast'); legend('boxoff');
 %vHPC-mPFCPL
     [H6,VHPLstat.MvF] = PlotBoot_mscohere(f,Mvhpl,Fvhpl);
     title('vHPC - PrL')
+    legend('boxoff');
 
 % Save figures
 fd = [figdrOut 'Cohereograms\FunctionalAnova\']; %output directory
 	if ~exist(fd,'dir'); mkdir(fd); end    
 saveas(H1,[fd 'ILDHmscohere-MvF-SubjSEM-5to15BL.fig']); legend off
+saveas(H1,[fd 'ILDHmscohere-MvF-SubjSEM-5to15BL.svg']);
 saveas(H1,[fd 'ILDHmscohere-MvF-SubjSEM-5to15BL.png']); close(H1); clear H1
 
 saveas(H2,[fd 'ILVHmscohere-MvF-SubjSEM-5to15BL.fig']); legend off
+saveas(H2,[fd 'ILVHmscohere-MvF-SubjSEM-5to15BL.svg']);
 saveas(H2,[fd 'ILVHmscohere-MvF-SubjSEM-5to15BL.png']); close(H2); clear H2
 
 saveas(H3,[fd 'ILPLmscohere-MvF-SubjSEM-5to15BL.fig']); legend off	
+saveas(H3,[fd 'ILPLmscohere-MvF-SubjSEM-5to15BL.svg']);
 saveas(H3,[fd 'ILPLmscohere-MvF-SubjSEM-5to15BL.png']); close(H3); clear H3
 
 saveas(H4,[fd 'DHVHmscohere-MvF-SubjSEM-5to15BL.fig']); legend off	
+saveas(H4,[fd 'DHVHmscohere-MvF-SubjSEM-5to15BL.svg']);
 saveas(H4,[fd 'DHVHmscohere-MvF-SubjSEM-5to15BL.png']); close(H4); clear H4
 
 saveas(H5,[fd 'DHPLmscohere-MvF-SubjSEM-5to15BL.fig']); legend off	
+saveas(H5,[fd 'DHPLmscohere-MvF-SubjSEM-5to15BL.svg']);
 saveas(H5,[fd 'DHPLmscohere-MvF-SubjSEM-5to15BL.png']); close(H5); clear H5
 
 saveas(H6,[fd 'VHPLmscohere-MvF-SubjSEM-5to15BL.fig']); legend off	
+saveas(H6,[fd 'VHPLmscohere-MvF-SubjSEM-5to15BL.svg']);
 saveas(H6,[fd 'VHPLmscohere-MvF-SubjSEM-5to15BL.png']); close(H6); clear H6
 
 
@@ -656,21 +688,27 @@ saveas(H6,[fd 'VHPLmscohere-MvF-SubjSEM-5to15BL.png']); close(H6); clear H6
 
 % Save figures
 saveas(h1,[fd 'ILDHmscohere-MvFbands-SubjSEM-5to15BL.fig']); legend off
+saveas(h1,[fd 'ILDHmscohere-MvFbands-SubjSEM-5to15BL.svg']);
 saveas(h1,[fd 'ILDHmscohere-MvFbands-SubjSEM-5to15BL.png']); close(h1); clear h1
 
 saveas(h2,[fd 'ILVHmscohere-MvFbands-SubjSEM-5to15BL.fig']); legend off	
+saveas(h2,[fd 'ILVHmscohere-MvFbands-SubjSEM-5to15BL.svg']);
 saveas(h2,[fd 'ILVHmscohere-MvFbands-SubjSEM-5to15BL.png']); close(h2); clear h2
 
 saveas(h3,[fd 'ILPLmscohere-MvFbands-SubjSEM-5to15BL.fig']); legend off	
+saveas(h3,[fd 'ILPLmscohere-MvFbands-SubjSEM-5to15BL.svg']);
 saveas(h3,[fd 'ILPLmscohere-MvFbands-SubjSEM-5to15BL.png']); close(h3); clear h3
 
 saveas(h4,[fd 'DHVHmscohere-MvFbands-SubjSEM-5to15BL.fig']); legend off
+saveas(h4,[fd 'DHVHmscohere-MvFbands-SubjSEM-5to15BL.svg']);
 saveas(h4,[fd 'DHVHmscohere-MvFbands-SubjSEM-5to15BL.png']); close(h4); clear h4
 
 saveas(h5,[fd 'DHPLmscohere-MvFbands-SubjSEM-5to15BL.fig']); legend off
+saveas(h5,[fd 'DHPLmscohere-MvFbands-SubjSEM-5to15BL.svg']);
 saveas(h5,[fd 'DHPLmscohere-MvFbands-SubjSEM-5to15BL.png']); close(h5); clear h5
 
 saveas(h6,[fd 'VHPLmscohere-MvFbands-SubjSEM-5to15BL.fig']); legend off	
+saveas(h6,[fd 'VHPLmscohere-MvFbands-SubjSEM-5to15BL.svg']);
 saveas(h6,[fd 'VHPLmscohere-MvFbands-SubjSEM-5to15BL.png']); close(h6); clear h6
 	
 
@@ -763,21 +801,27 @@ end
 % Save figures
 % fd = [figdrOut 'Cohereograms\FunctionalAnova\']; %output directory (same as above)
 saveas(H1,[fd 'ILDHmscohere-Estrous-SubjSEM-5to15BL.fig']); legend off
+saveas(H1,[fd 'ILDHmscohere-Estrous-SubjSEM-5to15BL.svg']);
 saveas(H1,[fd 'ILDHmscohere-Estrous-SubjSEM-5to15BL.png']); close(H1); clear H1
 
 saveas(H2,[fd 'ILVHmscohere-Estrous-SubjSEM-5to15BL.fig']); legend off
+saveas(H2,[fd 'ILVHmscohere-Estrous-SubjSEM-5to15BL.svg']);
 saveas(H2,[fd 'ILVHmscohere-Estrous-SubjSEM-5to15BL.png']); close(H2); clear H2
 
 saveas(H3,[fd 'ILPLmscohere-Estrous-SubjSEM-5to15BL.fig']); legend off
+saveas(H3,[fd 'ILPLmscohere-Estrous-SubjSEM-5to15BL.svg']);
 saveas(H3,[fd 'ILPLmscohere-Estrous-SubjSEM-5to15BL.png']); close(H3); clear H3
 
 saveas(H4,[fd 'DHVHmscohere-Estrous-SubjSEM-5to15BL.fig']); legend off
+saveas(H4,[fd 'DHVHmscohere-Estrous-SubjSEM-5to15BL.svg']);
 saveas(H4,[fd 'DHVHmscohere-Estrous-SubjSEM-5to15BL.png']); close(H4); clear H4
 
 saveas(H5,[fd 'DHPLmscohere-Estrous-SubjSEM-5to15BL.fig']); legend off
+saveas(H5,[fd 'DHPLmscohere-Estrous-SubjSEM-5to15BL.svg']);
 saveas(H5,[fd 'DHPLmscohere-Estrous-SubjSEM-5to15BL.png']); close(H5); clear H5
 
 saveas(H6,[fd 'VHPLmscohere-Estrous-SubjSEM-5to15BL.fig']); legend off
+saveas(H6,[fd 'VHPLmscohere-Estrous-SubjSEM-5to15BL.svg']);
 saveas(H6,[fd 'VHPLmscohere-Estrous-SubjSEM-5to15BL.png']); close(H6); clear H6
 
 
@@ -792,21 +836,27 @@ clear M*
 
 % Save figures
 saveas(h1,[fd 'ILDHmscohere-EstrousBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h1,[fd 'ILDHmscohere-EstrousBands-SubjSEM-5to15BL.svg']);
 saveas(h1,[fd 'ILDHmscohere-EstrousBands-SubjSEM-5to15BL.png']); close(h1); clear h1
 
 saveas(h2,[fd 'ILVHmscohere-EstrousBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h2,[fd 'ILVHmscohere-EstrousBands-SubjSEM-5to15BL.svg']);
 saveas(h2,[fd 'ILVHmscohere-EstrousBands-SubjSEM-5to15BL.png']); close(h2); clear h2
 
 saveas(h3,[fd 'ILPLmscohere-EstrousBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h3,[fd 'ILPLmscohere-EstrousBands-SubjSEM-5to15BL.svg']);
 saveas(h3,[fd 'ILPLmscohere-EstrousBands-SubjSEM-5to15BL.png']); close(h3); clear h3
 
 saveas(h4,[fd 'DHVHmscohere-EstrousBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h4,[fd 'DHVHmscohere-EstrousBands-SubjSEM-5to15BL.svg']);
 saveas(h4,[fd 'DHVHmscohere-EstrousBands-SubjSEM-5to15BL.png']); close(h4); clear h4
 
 saveas(h5,[fd 'DHPLmscohere-EstrousBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h5,[fd 'DHPLmscohere-EstrousBands-SubjSEM-5to15BL.svg']);
 saveas(h5,[fd 'DHPLmscohere-EstrousBands-SubjSEM-5to15BL.png']); close(h5); clear h5
 
 saveas(h6,[fd 'VHPLmscohere-EstrousBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h6,[fd 'VHPLmscohere-EstrousBands-SubjSEM-5to15BL.svg']);
 saveas(h6,[fd 'VHPLmscohere-EstrousBands-SubjSEM-5to15BL.png']); close(h6); clear h6
 
 % Save data: Functional f-tests
@@ -844,41 +894,47 @@ A = [A; 4; 4; 4; 4];
 % Plot mscohere: Males vs Estrous stages, 0.5-100 Hz
 [H1,ILDHstat] = PlotBoot_mscohereMvHorms(f,A,Dildh,Pildh,Eildh,Mildh);
     title('IL - dHPC')
-    legend('location','northeast')
+    legend('location','northeast'); legend('boxoff');
 [H2,ILVHstat] = PlotBoot_mscohereMvHorms(f,A,Dilvh,Pilvh,Eilvh,Milvh);
     title('IL - vHPC')
-    legend('location','northeast')
+    legend('location','northeast'); legend('boxoff');
 [H3,ILPLstat] = PlotBoot_mscohereMvHorms(f,A,Dilpl,Pilpl,Eilpl,Milpl);
     title('IL - PrL')
-    legend('location','northeast')
+    legend('location','northeast'); legend('boxoff');
 [H4,DHVHstat] = PlotBoot_mscohereMvHorms(f,A,Ddhvh,Pdhvh,Edhvh,Mdhvh);
     title('dHPC - vHPC')
-    legend('location','northeast')
+    legend('location','northeast'); legend('boxoff');
 [H5,DHPLstat] = PlotBoot_mscohereMvHorms(f,A,Ddhpl,Pdhpl,Edhpl,Mdhpl);
     title('dHPC - PrL')
-    legend('location','northeast')
+    legend('location','northeast'); legend('boxoff');
 [H6,VHPLstat] = PlotBoot_mscohereMvHorms(f,A,Dvhpl,Pvhpl,Evhpl,Mvhpl);
     title('vHPC - PrL')
-    legend('location','southwest')
+    legend('location','southwest'); legend('boxoff');
 
 % Save figures
 % fd = [figdrOut 'Cohereograms\FunctionalAnova\']; %output directory (same as above)
 saveas(H1,[fd 'ILDHmscohere-MvHorms-SubjSEM-5to15BL.fig']); legend off
+saveas(H1,[fd 'ILDHmscohere-MvHorms-SubjSEM-5to15BL.svg']);
 saveas(H1,[fd 'ILDHmscohere-MvHorms-SubjSEM-5to15BL.png']); close(H1); clear H1
 
 saveas(H2,[fd 'ILVHmscohere-MvHorms-SubjSEM-5to15BL.fig']); legend off
+saveas(H2,[fd 'ILVHmscohere-MvHorms-SubjSEM-5to15BL.svg']);
 saveas(H2,[fd 'ILVHmscohere-MvHorms-SubjSEM-5to15BL.png']); close(H2); clear H2
 
 saveas(H3,[fd 'ILPLmscohere-MvHorms-SubjSEM-5to15BL.fig']); legend off
+saveas(H3,[fd 'ILPLmscohere-MvHorms-SubjSEM-5to15BL.svg']);
 saveas(H3,[fd 'ILPLmscohere-MvHorms-SubjSEM-5to15BL.png']); close(H3); clear H3
 
 saveas(H4,[fd 'DHVHmscohere-MvHorms-SubjSEM-5to15BL.fig']); legend off
+saveas(H4,[fd 'DHVHmscohere-MvHorms-SubjSEM-5to15BL.svg']);
 saveas(H4,[fd 'DHVHmscohere-MvHorms-SubjSEM-5to15BL.png']); close(H4); clear H4
 
 saveas(H5,[fd 'DHPLmscohere-MvHorms-SubjSEM-5to15BL.fig']); legend off
+saveas(H5,[fd 'DHPLmscohere-MvHorms-SubjSEM-5to15BL.svg']);
 saveas(H5,[fd 'DHPLmscohere-MvHorms-SubjSEM-5to15BL.png']); close(H5); clear H5
 
 saveas(H6,[fd 'VHPLmscohere-MvHorms-SubjSEM-5to15BL.fig']); legend off
+saveas(H6,[fd 'VHPLmscohere-MvHorms-SubjSEM-5to15BL.svg']);
 saveas(H6,[fd 'VHPLmscohere-MvHorms-SubjSEM-5to15BL.png']); close(H6); clear H6
 
 
@@ -893,21 +949,27 @@ clear Di* Dd* Dv* E* M* P* A f
 
 % Save figures
 saveas(h1,[fd 'ILDHmscohere-MvHormsBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h1,[fd 'ILDHmscohere-MvHormsBands-SubjSEM-5to15BL.svg']);
 saveas(h1,[fd 'ILDHmscohere-MvHormsBands-SubjSEM-5to15BL.png']); close(h1); clear h1
 
 saveas(h2,[fd 'ILVHmscohere-MvHormsBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h2,[fd 'ILVHmscohere-MvHormsBands-SubjSEM-5to15BL.svg']);
 saveas(h2,[fd 'ILVHmscohere-MvHormsBands-SubjSEM-5to15BL.png']); close(h2); clear h2
 
 saveas(h3,[fd 'ILPLmscohere-MvHormsBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h3,[fd 'ILPLmscohere-MvHormsBands-SubjSEM-5to15BL.svg']);
 saveas(h3,[fd 'ILPLmscohere-MvHormsBands-SubjSEM-5to15BL.png']); close(h3); clear h3
 
 saveas(h4,[fd 'DHVHmscohere-MvHormsBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h4,[fd 'DHVHmscohere-MvHormsBands-SubjSEM-5to15BL.svg']);
 saveas(h4,[fd 'DHVHmscohere-MvHormsBands-SubjSEM-5to15BL.png']); close(h4); clear h4
 
 saveas(h5,[fd 'DHPLmscohere-MvHormsBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h5,[fd 'DHPLmscohere-MvHormsBands-SubjSEM-5to15BL.svg']);
 saveas(h5,[fd 'DHPLmscohere-MvHormsBands-SubjSEM-5to15BL.png']); close(h5); clear h5
 
 saveas(h6,[fd 'VHPLmscohere-MvHormsBands-SubjSEM-5to15BL.fig']); legend off
+saveas(h6,[fd 'VHPLmscohere-MvHormsBands-SubjSEM-5to15BL.svg']);
 saveas(h6,[fd 'VHPLmscohere-MvHormsBands-SubjSEM-5to15BL.png']); close(h6); clear h6
 
 

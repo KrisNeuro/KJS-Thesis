@@ -33,7 +33,6 @@ p2 = shadedErrorBar(f,Mx,{@mean,@(x) std(Mx)/sqrt(size(Mx,1))},'lineprops',{'col
 p2.mainLine.LineWidth = 3;
 p2.mainLine.DisplayName = 'Male';
 hold on
-% p1 = shadedErrorBar(f,Fildh,{@mean,@std},'lineprops',{'color',Fcol});
 p1 = shadedErrorBar(f,Fx,{@mean,@(x) std(Fx)/sqrt(size(Fx,1))},'lineprops',{'color',Fcol}); 
 p1.mainLine.LineWidth = 3;
 p1.mainLine.DisplayName = 'Female';
@@ -47,9 +46,8 @@ ylabel('Magnitude-squared Coherence')
 legend([p1.mainLine, p2.mainLine],{'Female','Male'})
 legend('location','southwest')
 legend('boxoff')
-set(gca,'fontsize',26)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',2)
 box off
-set(gca,'TitleFontSizeMultiplier',1.5)
 
 % Functional 2-sample F-test
 [stat] = twosampF(Fx,Mx,method,parflag);

@@ -35,6 +35,6 @@ axis square
 legend([a1 a3 a2 a4],{'Male' 'Proestrus' 'Diestrus' 'Estrus'})
 legend('boxoff')
 ylabel('probability')
-set(gca,'fontsize',20,'titlefontsizemultiplier',2)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',1.75)
 Ax=gca;
 end 

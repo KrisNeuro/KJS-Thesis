@@ -59,10 +59,10 @@ xticks(10:10:100)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('IL')
-legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'}); legend('boxoff')
-set(gca,'fontsize',26)
+legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'});
+legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',1.75)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',2)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Dil; Pil; Eil; Mil];
@@ -99,10 +99,10 @@ xticks(10:10:100)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('PrL')
-legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'}); legend('boxoff')
-set(gca,'fontsize',26)
+legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'}); 
+legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',1.75)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',2)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Dpl; Ppl; Epl; Mpl];
@@ -140,10 +140,10 @@ xticks(10:10:100)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('dHPC')
-legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'}); legend('boxoff')
-set(gca,'fontsize',26)
+legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'}); 
+legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',1.75)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',2)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Ddh; Pdh; Edh; Mdh];
@@ -180,10 +180,10 @@ xticks(10:10:100)
 xlabel('Frequency (Hz)')
 ylabel('Power (dB)')
 title('vHPC')
-legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'}); legend('boxoff')
-set(gca,'fontsize',26)
+legend([p4.mainLine, p1.mainLine, p2.mainLine, p3.mainLine],{'Male','Diestrus','Proestrus','Estrus'}); 
+legend('boxoff')
 box off
-set(gca,'TitleFontSizeMultiplier',1.75)
+set(gca,'FontName','Arial','fontsize',24,'TitleFontSizeMultiplier',2)
 
 % One-way ANOVA for functional data: Main-effects test
 y1 = [Dvh; Pvh; Evh; Mvh];
@@ -193,6 +193,5 @@ yy = [A, y1];
 [VHstat.MvP] = twosampF(Pvh,Mvh,method,parflag); %posthoc: Proest v Male
 [VHstat.MvE] = twosampF(Evh,Mvh,method,parflag); %posthoc: Est v Male
 clear y1 yy
-
 
 end
