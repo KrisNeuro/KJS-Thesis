@@ -995,7 +995,7 @@ saveas(H24e,[fd 'ThetaPhaseLagBoot_ILPL_Estrous.svg']);
 saveas(H24e,[fd 'ThetaPhaseLagBoot_ILPL_Estrous.png']); close(H24e); clear H24e ans
 
 H24f = figure('units','normalized','position',[0.1042 0.0380 0.5182 0.8833]); %DHVH
-    PlotHistBoot_Estrous(gca,fD_DHVH_boot,fP_DHVH_boot,fE_DHVHL_boot);
+    PlotHistBoot_Estrous(gca,fD_DHVH_boot,fP_DHVH_boot,fE_DHVH_boot);
     xlabel('Theta phase lag: width @ half-max (rad.)'); title('dHPC-vHPC')
 saveas(H24f,[fd 'ThetaPhaseLagBoot_DHVH_Estrous.fig']); legend('off')
 saveas(H24f,[fd 'ThetaPhaseLagBoot_DHVH_Estrous.svg']);
@@ -1111,6 +1111,7 @@ saveas(H26f,[fd 'ThetaPhaseLagBoot_DHVH_MvHorms.png']); close(H26f); clear H26f 
 
 disp('Theta phase lag figures saved: Male vs Horms')
 clear *_boot fd
+
 
 % %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 3.0 Hierarchical bootstrap: Theta, Gamma, Delta R^2

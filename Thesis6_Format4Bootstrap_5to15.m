@@ -615,11 +615,11 @@ end
 % Plot mscohere: Sex differences, 0.5-50 Hz
 %mPFCIL-dHPC
     [H1,ILDHstat.MvF] = PlotBoot_mscohere(f,Mildh,Fildh);
-    title('IL - dHPC')
+    title('dHPC - IL')
     legend('boxoff');
 %mPFCIL-vHPC
     [H2,ILVHstat.MvF] = PlotBoot_mscohere(f,Milvh,Filvh);
-    title('IL - vHPC')
+    title('vHPC - IL')
     legend('location','northeast'); legend('boxoff');
 %mPFCIL-mPFCPL
     [H3,ILPLstat.MvF] = PlotBoot_mscohere(f,Milpl,Filpl);
